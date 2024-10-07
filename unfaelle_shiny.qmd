@@ -1,0 +1,197 @@
+---
+title: "Interaktive Verkehrsunfälle von Bochum"
+format: 
+  html:
+    page-layout: custom
+server: shiny
+author:
+  - Lukas Arnold
+  - Simone Arnold
+  - Florian Bagemihl
+  - Matthias Baitsch
+  - Marc Fehr
+  - Maik Poetzsch
+  - Sebastian Seipel
+---
+
+```{r}
+#| context: setup
+#| warning: false
+
+library(giscoR)
+library(leaflet)
+library(shiny)
+library(tidyverse)
+library(sf)
+library(lubridate)
+
+#mehrere CSV-Daten einbetten und anpassen
+read_unfaelle <- function(f) {
+  read_csv2(f) |>
+    rename(any_of(c(
+      STRZUSTAND = "USTRZUSTAND",
+      STRZUSTAND = "IstStrassenzustand" ,
+      OBJECTID = "OID_"
+    ))) |>
+    mutate(
+      UWOCHENTAG = wday(as.numeric(UWOCHENTAG), label=T),
+      UMONAT = month(as.numeric(UMONAT), label=T , abbr = FALSE)
+    )
+}
+
+data <- list.files(path="data", pattern = "\\.csv$",full.names=T) |>
+  map(read_unfaelle) |>
+  list_rbind()
+
+# Bochum als Testbegrenzung
+d_bochum <- gisco_get_nuts(nuts_id = "DEA51", nuts_level = 3, resolution = 03)%>% st_transform(25832)
+
+data_sf <-st_as_sf(data, coords = c("LINREFX", "LINREFY"), 
+                 crs = 25832)
+
+Bochum_Unfall <- data_sf |>
+    filter(st_contains(d_bochum, data_sf, sparse = FALSE)[1,])
+
+```
+
+::: {#Lizenz .border}
+::: {layout="[20, 80]" layout-valign="center"}
+![](https://mirrors.creativecommons.org/presskit/buttons/88x31/png/by.png)
+
+Bausteine Computergestützter Datenanalyse. "Interaktive Karte der Verkehrsunfälle in Bochum" von Lukas Arnold, Simone Arnold, Florian Bagemihl, Matthias Baitsch, Marc Fehr, Maik Poetzsch und Sebastian Seipel ist lizensiert unter [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/deed.de). Das Werk ist abrufbar unter \<*Platzhalter*\>. Ausgenommen von der Lizenz sind alle Logos und anders gekennzeichneten Inhalte. 2024
+:::
+:::
+
+```{r}
+#| panel: sidebar
+library(giscoR)
+library(leaflet)
+library(shiny)
+
+#Wählbare Unfallkategorien
+  checkboxGroupInput("kategorie", label = h3("Unfallkategorien"), 
+    choices = list("Unfälle mit Getöteten" = 1, "Unfälle mit Schwerverletzten" = 2, "Unfälle mit Leichtverletzten" = 3),
+    selected = c(1,2,3))
+
+#Wählbare Unfalltypen
+  checkboxGroupInput("typen", label = h3("Unfalltypen"), 
+    choices = list("Fahrunfall" = 1, "Abbiege-Unfall" = 2, "Einbiegen/Kreuzen-Unfall" = 3, "Überschreiten-Unfall" = 4, "Unfall durch ruhenden Verkehr" = 5, "Unfall im Längsverkehr" = 6,"Sonstiger Unfall" = 7),
+    selected = c(1,2,3,4,5,6,7))
+
+#Dropdown-Menü für Verkehrsbeteiligung
+
+  selectInput("beteiligung", label = h3("Verkehrsbeteiligung"), 
+    choices = list("Alle Unfälle" = 1, "Unfälle mit PKW-Beteiligung" = 2, "Unfälle mit Radfahrer-Beteiligung" = 3, "Unfälle mit Fußgänger-Beteiligung" = 4), 
+    selected = 1)
+  
+#Slider für Jahre
+  sliderInput("jahre", label = h3("Jahre auswählen"), min = 2020, 
+      max = 2023, value = c(2022, 2023), sep = "")
+  
+```
+
+```{r}
+#| panel: center
+
+
+# Leaflet-Output anzeigen 
+leafletOutput('mymap')
+
+# Download-Button anzeigen
+downloadButton("downloadData", "Gefilterte Daten als CSV-Datei herunterladen")
+
+# Tabellen-Output anzeigen
+tableOutput('table')
+
+
+```
+
+```{r}
+#| context: server
+
+library(giscoR)
+library(leaflet)
+library(shiny)
+library(tidyverse)
+library(sf)
+library(lubridate)
+
+
+# Filter reagiert auf User-Input
+
+Bochum_Filter <- reactive({
+
+testfilter <- Bochum_Unfall |> filter(
+  UKATEGORIE %in% as.numeric(input$kategorie),
+  UJAHR >= as.numeric(input$jahre[1]),
+  UJAHR <= as.numeric(input$jahre[2]),
+  UTYP1 %in% as.numeric(input$typen)
+  )
+
+testfilter <- as.data.frame(testfilter)
+
+if (input$beteiligung == 2){
+  testfilter <- testfilter |> filter(IstPKW == "1")
+}
+
+if (input$beteiligung == 3){
+  testfilter <- testfilter |> filter(IstRad == "1")
+}
+
+if (input$beteiligung == 4){
+  testfilter <- testfilter |> filter(IstFuss == "1")
+}
+
+testfilter
+})
+
+# Leaflet-Output
+
+output$mymap <- renderLeaflet({
+  
+## Farbeinstellungen
+pal <- colorFactor(c("#04B431", "yellow",  "red", "white", "#00BFFF", "orange", "black"), domain = c(1,2,3,4,5,6,7))
+
+
+## Karte
+leaflet(Bochum_Filter()) %>% 
+  addTiles() %>%
+    addCircleMarkers(lng = ~XGCSWGS84, lat = ~YGCSWGS84,
+                   radius = ~ifelse(UKATEGORIE == "3", 6, 8),
+                   stroke = ~ifelse(UKATEGORIE == "1", TRUE, FALSE), 
+                   fillOpacity = 0.9,
+                   fillColor = ~pal(UTYP1),
+                   color = "black" ,
+                   popup = ~as.character(UWOCHENTAG)
+                   ) %>%
+  addLegend("bottomright", colors = c("#04B431", "yellow",  "red", "white", "#00BFFF", "orange", "black") ,labels = c("Fahrunfall","Abbiege-Unfall", "Einbiegen/Kreuzen-Unfall", "Überschreiten-Unfall","Unfall durch ruhenden Verkehr", "Unfall im Längsverkehr", "Sonstiger Unfall"),title = "Unfalltypen")
+})
+
+# Tabellen-Output
+
+output$table <- renderTable({
+
+
+Bochum_tbl <- Bochum_Filter() %>% 
+  group_by(UJAHR, UMONAT) %>% 
+  summarise(PKWUnfälle = sum(IstPKW == "1") , Radfahrerunfälle = sum(IstRad == "1") , Fußgängerunfälle = sum(IstFuss == "1")) %>%
+  rename(Jahr = "UJAHR" , Monat = "UMONAT") %>%
+  st_drop_geometry()
+
+  Bochum_tbl
+  
+} ,
+digits = 0)
+
+# Download-Funktion
+
+output$downloadData <- downloadHandler(
+    filename = function() {
+      paste("Unfalldaten Bochum", ".csv", sep = "")
+    },
+    content = function(file) {
+      write.csv(Bochum_Filter(), file, row.names = FALSE)
+    }
+  )
+```
+

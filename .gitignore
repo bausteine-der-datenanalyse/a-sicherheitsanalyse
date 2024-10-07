@@ -1,0 +1,6 @@
+*_files/
+.Rhistory
+.RData
+.RDataTmp
+/data/geo
+/data/shp

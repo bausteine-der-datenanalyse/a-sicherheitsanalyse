@@ -1,0 +1,492 @@
+---
+title: "Sicherheitsanalyse von Verkehrsnetzen"
+format: html
+editor: visual
+author:
+  - Lukas Arnold
+  - Simone Arnold
+  - Florian Bagemihl
+  - Matthias Baitsch
+  - Marc Fehr
+  - Maik Poetzsch
+  - Sebastian Seipel
+---
+
+::: {#Lizenz .border}
+::: {layout="[20, 80]" layout-valign="center"}
+![](https://mirrors.creativecommons.org/presskit/buttons/88x31/png/by.png)
+
+Bausteine Computergestützter Datenanalyse. Anwendungsbaustein "Sicherheitsanalyse von Verkehrsnetzen" von Lukas Arnold, Simone Arnold, Florian Bagemihl, Matthias Baitsch, Marc Fehr, Maik Poetzsch und Sebastian Seipel ist lizensiert unter [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/deed.de). Das Werk ist abrufbar unter \<*Platzhalter*\>. Ausgenommen von der Lizenz sind alle Logos und anders gekennzeichneten Inhalte. 2024
+:::
+:::
+
+<!-- ## Ideensammlung -->
+
+<!-- Viele Aspekte von <https://github.com/spiegel-data/2019-02-tempolimit/blob/master/00_Datenaufbereitung.Rmd> übernommen. Umsetzung von manchen Sachen nicht sonderlich elegant bis jetzt. -->
+
+<!-- ## Meeting 27.06 -->
+
+<!-- -   Nur nach Abschnitten (also Ast raus) filtern? Sonst hohe UD weil Länge der Abschnitte teils sehr gering, siehe Datensatz strecke_de (evtl nach Länge filtern, z.B alles unter 500m raus?) -->
+<!-- -   Distanz für Zuordnung? Stand jetzt: 100m , vermutlich zu viel -\> 15m als Distanz -->
+<!-- -   Darstellung Unfalltypenkarten: Jeder Unfall ein farbig markierter Punkt?Fa rben wie in der Erläuterung siehe PDF? Sichtbarkeit? siehe Sektion Unfalltypenkarten -\> Farben nach PDF-Schema anpassen, Größe nach Kategorie -->
+
+<!-- To-Do: Unfalltypenkarten: Nicht nur Autobahnen,alles (OSMdata-Netz); Filter nach z.B Radfahrunfälle möglich, Kategorie und Typen; HTML-Karte mit Filteroption Unfallhäufungslinien/Unfallhäufungsstellen (Zeige alle Unfälle die z.B maximal 10m entfernt sind) = 5 Unfälle in 3 Jahren an einem Punkt -->
+
+<!-- ##Probleme Umsetzung von 27.06 und kleinere Anmerkungen -->
+
+<!-- Unfallatlas hat nun Daten von 2023, für die 3-Jahresauswertung der UHS bereits verwendet. Hat aber zusätzlich die Spalte "PLST" mit Ausprägung 1 oder 2. Steht nicht in der Datensatzbeschreibung. -->
+
+<!-- UHS/UHL : - Innerorts: - Nur 3-JK (UP) möglich, da Unfallatlas keine Unfälle nur mit Sachschäden bereitstellt. - Daten für Knotenpunkte liegen nicht vor, kann Strecke nur von Unfallpunkt zu Unfallpunkt bilden.-\> Radius bilden, andere Unfälle zählen - Für Autobahn: Sind richtungsbezogen, aber Daten liefern keine Grundlage für Richtung, nur Punkt des Unfalls -\> so wie innerorts , alle OSM-Linien und dann welcher Typ am Nächsten -->
+
+<!-- Unfalltypenkarten mit leaflet: - Darstellung für Getöte noch mangelhaft (keine vernünftige Option für schwarzes Quadrat) . Optionen mit Rändern dicker nach Kategorie. - Unfälle mit Fahrradfahren laut M Uko rotes Dreieck zusätzlich - Rausfiltern von Autobahnunfällen analog zu nur Autobahnunfällen möglich, kann aber Unfälle entfernen die nicht auf der Autobahn liegen - Filteroptionen grundsätzlich möglich, aber sehr rigide. Man muss vorher wissen was einen interessiert und daraufhin die Datensätze filtern. -\> Shiny wäre eine bessere Lösung. Zeitaufwand? -->
+
+<!-- Histogram mit bins über Autobahn ziehen (Alternative zu Dichte?) -\> Teil von Unfalldichten-Baustein -->
+
+<!-- Leaflet-Teil als Baustein trennen. -->
+
+<!-- Fragestellung: Mehr Radfahrunfälle nach Jahreszeit? Statistisch auswerten -->
+
+<!-- Add-On: Zeitliche Verteilung -\> Kalendar der Verkehrsunfälle -->
+
+<!-- ## Lösungen Teil 1 -->
+
+<!-- Ideen von : <https://github.com/rstudio/shiny-examples/blob/main/086-bus-dashboard/server.R> -->
+
+<!-- Wie genau UHS darstellen? Umsetzung als Baustein: Tutorial ja/nein? -->
+
+```{r}
+#| include: false
+library(ggplot2)
+library(tidyverse)
+library(lubridate)
+library(readxl)
+library(kableExtra)
+library(sf)
+library(osmdata)
+library(giscoR)
+library(leaflet)
+library(shiny)
+```
+
+Daten der Bundesinformationssystem Straße (BISStra) für Straßennetz: <https://www.bast.de/DE/Verkehrstechnik/Fachthemen/v2-bisstra.html>
+
+Daten für Unfälle vom Unfallatlas: <https://unfallatlas.statistikportal.de/>
+
+## Unfalldichte
+
+```{r}
+#| warning: false
+#unfaelle = st_read("data/shp/Unfallorte2022_LinRef.shp", quiet = T) %>% st_set_crs(25832)
+
+unfall_csv = read_csv2("data/Unfallorte2022_LinRef.csv") 
+unfaelle <- st_as_sf(unfall_csv, coords = c("LINREFX", "LINREFY"), 
+                  crs = 25832)
+```
+
+### A43
+
+Daten einlesen:
+
+```{r}
+strecke <- read_sf("data/geo/BFStr_Netz_SK.geojson")
+knoten <- read_sf("data/geo/BFStr_Netz_NK.geojson")
+nullpunkte <- read_sf("data/geo/BFStr_Netz_NP.geojson")
+a43 <- strecke |>
+  filter(Str_Kennung == "A43" & Sk_Achse == "Hauptachse") |>
+  mutate(rownumber = row_number())
+
+
+knotenpunkt <- knoten |>
+  filter(NK_Kennung == "4508362")
+```
+
+Unfälle filtern:
+
+```{r}
+unfaelle_43 = unfaelle %>%
+	# find out which autobahn is closest by
+	mutate(nearest_autobahn_id = st_nearest_feature(st_zm(.), a43)) %>% 
+	# calculate distance to closest autobahn
+	mutate(nearest_autobahn_distance = st_distance(st_zm(.), a43[nearest_autobahn_id, ], by_element = TRUE))
+```
+
+Alles nicht in der Nähe von BAB raus:
+
+```{r}
+unfaelle_autobahn = unfaelle_43 |> 
+	filter(as.double(nearest_autobahn_distance) <= 15) |>
+  st_zm()
+```
+
+Unfälle zählen:
+
+```{r}
+autobahnen_accident_count = unfaelle_autobahn %>% 
+	as_tibble() %>% 
+	select(-geometry) %>%
+	count(nearest_autobahn_id, UKATEGORIE) %>% 
+  spread(UKATEGORIE, n) %>%
+  rename(Anzahl_UK2 = `2`, Anzahl_UK3 = `3`) %>%
+  replace(is.na(.), 0) %>%
+  mutate(Anzahl_U_G = Anzahl_UK2 + Anzahl_UK3)
+# Hier gehören eigentlich noch Unfaelle nach Kategorie 1 rein
+```
+
+Verbinden mit Daten der A43:
+
+```{r}
+a43 = a43 |> 
+	left_join(autobahnen_accident_count, by = c("rownumber" = "nearest_autobahn_id"))
+```
+
+Plotten:
+
+```{r}
+ggplot () +
+  geom_sf(data = a43, size = 2, mapping = aes(color = Anzahl_U_G)) +
+  scale_color_distiller(palette = 8 , direction = 1, breaks = seq(2,14,2)) +
+  labs(title = "Anzahl der Verkehrsunfälle nach Abschnitten der A43 im Jahr 2022",
+       color = "Anzahl Verkehrsunfälle") +
+ theme(plot.title = element_text(size=10))
+#ggsave("unfall_a43.pdf")
+```
+
+### Gesamtdeutschland
+
+```{r}
+strecke_de <- strecke |>
+  filter(Str_Klasse_kurz == "A" & Sk_Achse == "Hauptachse") |>
+  mutate(rownumber = row_number())
+```
+
+Unfälle filtern:
+
+```{r}
+unfaelle_de = unfaelle %>%
+	# find out which autobahn is closest by
+	mutate(nearest_autobahn_id = st_nearest_feature(st_zm(.), strecke_de)) %>% 
+	# calculate distance to closest autobahn
+	mutate(nearest_autobahn_distance = st_distance(st_zm(.), strecke_de[nearest_autobahn_id, ], by_element = TRUE))
+```
+
+Alles nicht in der Nähe von BAB raus:
+
+```{r}
+unfaelle_de_autobahn = unfaelle_de |> 
+	filter(as.double(nearest_autobahn_distance) <= 15) |>
+  st_zm()
+```
+
+Unfälle zählen:
+
+```{r}
+de_unfall_anzahl = unfaelle_de_autobahn %>% 
+	as_tibble() %>% 
+	select(-geometry) %>%
+	count(nearest_autobahn_id, UKATEGORIE) %>% 
+  spread(UKATEGORIE, n) %>%
+  rename(Anzahl_UK1 = `1`,Anzahl_UK2 = `2`, Anzahl_UK3 = `3`) %>%
+  replace(is.na(.), 0) %>%
+  mutate(Anzahl_U_G = Anzahl_UK1 + Anzahl_UK2 + Anzahl_UK3)
+```
+
+Verbinden mit Daten:
+
+```{r}
+strecke_de = strecke_de |> 
+	left_join(de_unfall_anzahl, by = c("rownumber" = "nearest_autobahn_id"))
+
+strecke_de = strecke_de |>
+  mutate(UD = (Anzahl_U_G)/(Sk_Laenge_km))
+```
+
+Plotten:
+
+```{r}
+d_de <- gisco_get_nuts(country = "Germany", nuts_level = 0, resolution = 03)
+```
+
+```{r}
+ggplot () +
+  geom_sf(data = d_de, fill = NA, size = 0.5) +
+  geom_sf(data = strecke_de, size = 2, mapping = aes(color = Anzahl_U_G)) +
+  scale_color_distiller(palette = 8 , direction = 1) +
+  labs(title = "Anzahl der Verkehrsunfälle nach Abschnitten der BAB im Jahr 2022",
+       color = "Anzahl Verkehrsunfälle") +
+ theme(plot.title = element_text(size=10))
+#ggsave("unfall.pdf")
+```
+
+## Zählstelle als sf
+
+```{r}
+#| warning: false
+
+d_Jawe <- read_csv2("data/zs/Jawe2022.csv", locale = locale(encoding = 'iso-8859-1'))
+```
+
+Überprüfen wieviele Zählstellen Daten haben:
+
+```{r}
+d_Jawe_BAB <- d_Jawe |>
+  filter(Str_Kl == "A")
+Anzahl_BAB_ZST = nrow(d_Jawe_BAB)
+```
+
+```{r}
+d_Jawe_BAB_NA <- d_Jawe_BAB |>
+  drop_na(DTV_Kfz_MobisSo_Q)
+Anzahl_BAB_ZST_Daten = nrow(d_Jawe_BAB_NA)
+```
+
+Wir haben also `Anzahl_BAB_ZST = 1228` Zählstellen auf Autobahnen und davon besitzen `Anzahl_BAB_ZST_Daten = 868` Daten im Jahr 2022.
+
+Koordinaten der Zählstelle als simple feature anlegen, da nur so weitere sf-Funktionen verwendet werden können.
+
+```{r}
+d_Jawe_sf = st_as_sf(d_Jawe, coords =  c("Koor_UTM32_E", "Koor_UTM32_N"),  crs = 25832)
+```
+
+Exemplarisch nur Werte der A43, die auch vorhanden sind. Blöderweise nur noch 1 Wert über.
+
+```{r}
+d_Jawe_sf <- d_Jawe_sf |>
+  filter(Str_Kl == "A" & Str_Nr == "43") |>
+  drop_na(DTV_Kfz_MobisSo_Q)
+```
+
+```{r}
+d_Jawe_sf = d_Jawe_sf %>%
+	# find out which autobahn is closest by
+	mutate(nearest_autobahn_id = st_nearest_feature(st_zm(.), a43))%>% 
+	# calculate distance to closest autobahn
+	mutate(nearest_autobahn_distance = st_distance(st_zm(.), a43[nearest_autobahn_id, ], by_element = TRUE))
+```
+
+```{r}
+d_Jawe_sf2 = d_Jawe_sf |>
+  as_tibble() |>
+	select(DZ_Nr, nearest_autobahn_id, DTV_Kfz_MobisSo_Q, !geometry)
+```
+
+**TO-DO**:Unfallrate-Formel richtig machen
+
+```{r}
+a43_2 = a43 |> 
+	left_join(d_Jawe_sf2, by = c("rownumber" = "nearest_autobahn_id")) |>
+  mutate(UR = (10^6*Anzahl_U_G)/ (DTV_Kfz_MobisSo_Q * Sk_Laenge_km), UD = (Anzahl_U_G)/(Sk_Laenge_km))
+```
+
+```{r}
+ggplot () +
+  geom_sf(data = a43_2, size = 2, mapping = aes(color = UR)) +
+  scale_color_distiller(palette = 8 , direction = 1) +
+  labs(title = "Unfallraten nach Abschnitten der A43 im Jahr 2022",
+       color = "Unfallrate") +
+ theme(plot.title = element_text(size=10))
+#ggsave("unfall_a43_2.pdf")
+```
+
+## Unfalltypenkarten
+
+```{r}
+c_unfalltypen <- c(
+    "#04B431", "yellow",  "red", "white", "#00BFFF", "orange", "black")
+```
+
+### A43
+
+```{r}
+ggplot () +
+  geom_sf(data = a43, size = 5) +
+  geom_sf(data = unfaelle_autobahn,mapping = aes(group = UTYP1,color = as.character(UTYP1),size = as.character(UKATEGORIE) )) +
+  scale_colour_manual(values = c("1" = "#04B431","2" = "yellow","3" = "red","4" = "white","5" = "#00BFFF","6" = "orange","7" = "black")) +
+  scale_size_manual(values = c("2" = 1.25, "3"=1)) +
+  labs(title = "Verkehrsunfalltypen der A43 im Jahr 2022", color = "Unfalltypen" , size = "Unfallkategorien") +
+ theme(plot.title = element_text(size=10))
+#ggsave("unfalltyp_a43.pdf")
+```
+
+### Deutschland
+
+```{r}
+unfaelle_de_kat1 <- unfaelle_de_autobahn |>
+  filter(UKATEGORIE == "1")
+```
+
+```{r}
+ggplot () +
+  geom_sf(data = d_de, fill = NA, size = 0.5) +
+  geom_sf(data = strecke_de, size = 5, color = "pink") +
+  geom_sf(data = unfaelle_de_kat1, shape = 15, size = 0.06) +
+  geom_sf(data = unfaelle_de_autobahn,
+          mapping = aes(group = UTYP1,color = as.factor(UTYP1),size = as.factor(UKATEGORIE))) +
+  scale_colour_manual(values = c("1" = "#04B431","2" = "yellow","3" = "red","4" = "white","5" = "#00BFFF","6" = "orange","7" = "black")) +
+  scale_size_manual(values = c("1" = 0.04,"2" = 0.04, "3"=0.03)) +
+  labs(title = "Verkehrsunfalltypen der A43 im Jahr 2022", color = "Unfalltypen", size = "Unfallkategorie") +
+ theme(plot.title = element_text(size=10))
+#ggsave("unfalltyp_de.pdf")
+```
+
+## Unfalldaten von 3 Jahren laden
+
+```{r}
+#| warning: false
+unfall_csv23 = read_csv2("data/Unfallorte2023_LinRef.csv") 
+unfaelle_23 <- st_as_sf(unfall_csv23, coords = c("LINREFX", "LINREFY"), 
+                 crs = 25832)
+
+unfall_csv21 = read_csv2("data/Unfallorte2022_LinRef.csv") 
+unfaelle_21 <- st_as_sf(unfall_csv21, coords = c("LINREFX", "LINREFY"), 
+                 crs = 25832)
+```
+
+## Leaflet Interaktive HTML-Karte
+
+Palette festlegen
+
+```{r}
+pal <- colorFactor(c("#04B431", "yellow",  "red", "white", "#00BFFF", "orange", "black"), domain = c(1,2,3,4,5,6,7))
+```
+
+Filter für UK1
+
+```{r}
+unfaelle_de_uk1 <- unfaelle_de_autobahn |>
+  filter(UKATEGORIE == "1")
+```
+
+Unfälle alle BAB im Jahr 2022:
+
+```{r}
+leaflet(unfaelle_de_autobahn) %>% 
+  addTiles() %>%
+    addCircleMarkers(lng = ~XGCSWGS84, lat = ~YGCSWGS84,
+                   radius = ~ifelse(UKATEGORIE == "3", 6, 8),
+                   stroke = FALSE, 
+                   fillOpacity = 0.9,
+                   color = ~pal(UTYP1)) 
+
+```
+
+Unfälle A43 im Jahr 2022:
+
+```{r}
+leaflet(unfaelle_autobahn) %>%   
+  addTiles() %>%
+    addCircleMarkers(lng = ~XGCSWGS84, lat = ~YGCSWGS84,
+                   radius = ~ifelse(UKATEGORIE == "3", 6, 8),
+                   stroke = FALSE, 
+                   fillOpacity = 0.9,
+                   color = ~pal(UTYP1))
+```
+
+### Bochum Unfälle zur Erstellung einer Unfallhäufungsstelle
+
+Datensätze kombinieren:
+
+```{r}
+
+all_data <- bind_rows(list(unfaelle_21,unfaelle,unfaelle_23))
+
+Unfall_3J <- all_data |>
+  st_zm()
+```
+
+Bochum als Bounding Box:
+
+```{r}
+#bb_Bochum <- opq(bbox = getbb("Bochum, Germany"))
+
+# d_bochum <- gisco_get_nuts(nuts_id = "DEA51", nuts_level = 3, resolution = 03)
+
+d_bochum <- gisco_get_nuts(nuts_id = "DEA51", nuts_level = 3, resolution = 03)%>% st_transform(25832)
+
+
+
+Unfall_zm <- unfaelle |>
+  st_zm()
+
+Bochum_Unfall <- Unfall_zm |>
+    filter(st_contains(d_bochum, Unfall_zm, sparse = FALSE)[1,])
+
+Bochum_Unfall_3J <- Unfall_3J |>
+    filter(st_contains(d_bochum, Unfall_3J, sparse = FALSE)[1,])
+```
+
+```{r}
+leaflet(Bochum_Unfall) %>%   
+  addTiles() %>%
+    addCircleMarkers(lng = ~XGCSWGS84, lat = ~YGCSWGS84,
+                   radius = ~ifelse(UKATEGORIE == "3", 6, 8),
+                   stroke = ~ifelse(UKATEGORIE == "1", TRUE, FALSE), 
+                   fillOpacity = 0.9,
+                   fillColor = ~pal(UTYP1),
+                   color = "black" ,
+                   popup = ~as.character(UIDENTSTLAE)) %>%
+  addMeasure(primaryLengthUnit = "meters") %>%
+  addLegend("bottomright", colors = c("#04B431", "yellow",  "red", "white", "#00BFFF", "orange", "black") ,labels = c("Fahrunfall","Abbiege-Unfall", "Einbiegen/Kreuzen-Unfall", "Überschreiten-Unfall","Unfall durch ruhenden verkehr", "Unfall im Längsverkehr", "Sonstiger Unfall"),title = "Unfalltypen")
+```
+
+## TO-DO: Unfallhäufungsstellen fertigstellen
+
+Unfälle im Umkreis zählen:
+
+```{r}
+bo_dist <- as_tibble(st_distance(Bochum_Unfall_3J))
+
+# bo_dist2 = bo_dist %>%  
+# 	rowwise() %>% 
+#   mutate(unfaelle_nah = sum((c_across(1:2768))))
+```
+
+Mehrere Dateien importieren Test:
+
+CSV-Dateien Test
+
+```{r}
+#| warning: false
+unfall_csv = read_csv2("data/Unfallorte2020_LinRef.csv", locale = locale(encoding = 'iso-8859-1')) 
+
+unfall_csv_sf = st_as_sf(unfall_csv, coords = c("LINREFX", "LINREFY"), 
+                 crs = 25832)
+
+Bochum_Unfall_csv <- unfall_csv_sf |>
+    filter(st_contains(d_bochum, unfall_csv_sf, sparse = FALSE)[1,])
+```
+
+```{r}
+#| warning: false
+read_unfaelle <- function(f) {
+  read_csv2(f) |>
+    rename(any_of(c(
+      STRZUSTAND = "USTRZUSTAND",
+      STRZUSTAND = "IstStrassenzustand" ,
+      OBJECTID = "OID_"
+    ))) |>
+    mutate(
+      UWOCHENTAG = wday(as.numeric(UWOCHENTAG), label=T) ,
+      UMONAT = month(as.numeric(UMONAT), label=T)
+    )
+}
+
+data <- list.files(path="data", pattern = "\\.csv$",full.names=T) |>
+  map(read_unfaelle) |>
+  list_rbind()
+```
+
+```{r}
+#| warning: false
+data_sf <-st_as_sf(data, coords = c("LINREFX", "LINREFY"), 
+                 crs = 25832)
+
+Bochum_Unfall <- data_sf |>
+    filter(st_contains(d_bochum, data_sf, sparse = FALSE)[1,])
+
+Bochum_tbl <- Bochum_Unfall %>% 
+  group_by(UJAHR) %>% 
+  summarise(PKWUnfall = sum(IstPKW == "1") , Radunfall = sum(IstRad == "1") , Fussunfall = sum(IstFuss == "1")) %>%
+  st_drop_geometry() %>%
+  rename(Jahr = "UJAHR")
+
+```
