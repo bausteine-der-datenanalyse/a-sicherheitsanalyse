@@ -20,40 +20,6 @@ Bausteine Computergestützter Datenanalyse. Anwendungsbaustein "Sicherheitsanaly
 :::
 :::
 
-<!-- ## Ideensammlung -->
-
-<!-- Viele Aspekte von <https://github.com/spiegel-data/2019-02-tempolimit/blob/master/00_Datenaufbereitung.Rmd> übernommen. Umsetzung von manchen Sachen nicht sonderlich elegant bis jetzt. -->
-
-<!-- ## Meeting 27.06 -->
-
-<!-- -   Nur nach Abschnitten (also Ast raus) filtern? Sonst hohe UD weil Länge der Abschnitte teils sehr gering, siehe Datensatz strecke_de (evtl nach Länge filtern, z.B alles unter 500m raus?) -->
-<!-- -   Distanz für Zuordnung? Stand jetzt: 100m , vermutlich zu viel -\> 15m als Distanz -->
-<!-- -   Darstellung Unfalltypenkarten: Jeder Unfall ein farbig markierter Punkt?Fa rben wie in der Erläuterung siehe PDF? Sichtbarkeit? siehe Sektion Unfalltypenkarten -\> Farben nach PDF-Schema anpassen, Größe nach Kategorie -->
-
-<!-- To-Do: Unfalltypenkarten: Nicht nur Autobahnen,alles (OSMdata-Netz); Filter nach z.B Radfahrunfälle möglich, Kategorie und Typen; HTML-Karte mit Filteroption Unfallhäufungslinien/Unfallhäufungsstellen (Zeige alle Unfälle die z.B maximal 10m entfernt sind) = 5 Unfälle in 3 Jahren an einem Punkt -->
-
-<!-- ##Probleme Umsetzung von 27.06 und kleinere Anmerkungen -->
-
-<!-- Unfallatlas hat nun Daten von 2023, für die 3-Jahresauswertung der UHS bereits verwendet. Hat aber zusätzlich die Spalte "PLST" mit Ausprägung 1 oder 2. Steht nicht in der Datensatzbeschreibung. -->
-
-<!-- UHS/UHL : - Innerorts: - Nur 3-JK (UP) möglich, da Unfallatlas keine Unfälle nur mit Sachschäden bereitstellt. - Daten für Knotenpunkte liegen nicht vor, kann Strecke nur von Unfallpunkt zu Unfallpunkt bilden.-\> Radius bilden, andere Unfälle zählen - Für Autobahn: Sind richtungsbezogen, aber Daten liefern keine Grundlage für Richtung, nur Punkt des Unfalls -\> so wie innerorts , alle OSM-Linien und dann welcher Typ am Nächsten -->
-
-<!-- Unfalltypenkarten mit leaflet: - Darstellung für Getöte noch mangelhaft (keine vernünftige Option für schwarzes Quadrat) . Optionen mit Rändern dicker nach Kategorie. - Unfälle mit Fahrradfahren laut M Uko rotes Dreieck zusätzlich - Rausfiltern von Autobahnunfällen analog zu nur Autobahnunfällen möglich, kann aber Unfälle entfernen die nicht auf der Autobahn liegen - Filteroptionen grundsätzlich möglich, aber sehr rigide. Man muss vorher wissen was einen interessiert und daraufhin die Datensätze filtern. -\> Shiny wäre eine bessere Lösung. Zeitaufwand? -->
-
-<!-- Histogram mit bins über Autobahn ziehen (Alternative zu Dichte?) -\> Teil von Unfalldichten-Baustein -->
-
-<!-- Leaflet-Teil als Baustein trennen. -->
-
-<!-- Fragestellung: Mehr Radfahrunfälle nach Jahreszeit? Statistisch auswerten -->
-
-<!-- Add-On: Zeitliche Verteilung -\> Kalendar der Verkehrsunfälle -->
-
-<!-- ## Lösungen Teil 1 -->
-
-<!-- Ideen von : <https://github.com/rstudio/shiny-examples/blob/main/086-bus-dashboard/server.R> -->
-
-<!-- Wie genau UHS darstellen? Umsetzung als Baustein: Tutorial ja/nein? -->
-
 ```{r}
 #| include: false
 library(ggplot2)
@@ -396,13 +362,7 @@ Unfall_3J <- all_data |>
 Bochum als Bounding Box:
 
 ```{r}
-#bb_Bochum <- opq(bbox = getbb("Bochum, Germany"))
-
-# d_bochum <- gisco_get_nuts(nuts_id = "DEA51", nuts_level = 3, resolution = 03)
-
 d_bochum <- gisco_get_nuts(nuts_id = "DEA51", nuts_level = 3, resolution = 03)%>% st_transform(25832)
-
-
 
 Unfall_zm <- unfaelle |>
   st_zm()
