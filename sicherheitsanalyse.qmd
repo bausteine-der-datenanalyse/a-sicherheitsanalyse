@@ -12,13 +12,13 @@ author:
   - Sebastian Seipel
 ---
 
-::: {#Lizenz .border}
+:::: {#Lizenz .border}
 ::: {layout="[20, 80]" layout-valign="center"}
 ![](https://mirrors.creativecommons.org/presskit/buttons/88x31/png/by.png)
 
 Bausteine Computergestützter Datenanalyse. Anwendungsbaustein "Sicherheitsanalyse von Verkehrsnetzen" von Lukas Arnold, Simone Arnold, Florian Bagemihl, Matthias Baitsch, Marc Fehr, Maik Poetzsch und Sebastian Seipel ist lizensiert unter [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/deed.de). Das Werk ist abrufbar unter \<*Platzhalter*\>. Ausgenommen von der Lizenz sind alle Logos und anders gekennzeichneten Inhalte. 2024
 :::
-:::
+::::
 
 ```{r}
 #| include: false
@@ -32,11 +32,22 @@ library(osmdata)
 library(giscoR)
 library(leaflet)
 library(shiny)
+
+source("load-data.R")
 ```
 
 Daten der Bundesinformationssystem Straße (BISStra) für Straßennetz: <https://www.bast.de/DE/Verkehrstechnik/Fachthemen/v2-bisstra.html>
 
 Daten für Unfälle vom Unfallatlas: <https://unfallatlas.statistikportal.de/>
+
+```{r}
+
+```
+
+```{r}
+
+```
+
 
 ## Unfalldichte
 
