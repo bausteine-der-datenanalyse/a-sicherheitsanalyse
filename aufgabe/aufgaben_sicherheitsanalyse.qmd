@@ -1,0 +1,45 @@
+---
+title: "Aufgaben zur Sicherheitsanalyse von Verkehrsnetzen"
+format: html
+---
+
+# Datenquellen
+
+Die statistischen Ämter des Bundes und der Länder erheben und veröffentlichen mit der Straßenverkehrsunfallstatistik die Verkehrsunfälle mit Personenschaden oder Sachschaden in Deutschland. Im [Unfallatlas](https://unfallatlas.statistikportal.de/) werden Unfälle mit Personenschaden geführt. Für die Sicherheitsanalyse von Verkehrsnetzen können diese Daten verwendet und analysiert werden.
+
+Verwenden Sie für das Straßennetz die Daten des Bundesinformationssystems Straße (BISStra) der Bundesanstalt für Straßen- und Verkehrswesen (BAST): <https://www.bast.de/DE/Verkehrstechnik/Fachthemen/v2-bisstra.html>
+
+Versuchen sie bei den nachfolgenden Aufgaben zu Unfalltypenkarten weitestgehend die Vorgaben der Forschungsgesellschaft für Straßen- und
+Verkehrswesen (FGSV) des “Merkblattes zur Örtlichen Unfalluntersuchung in Unfallkommissionen”
+(M Uko) umzusetzen.
+
+## Aufgabe 1 : Unfalldichte und Unfallrate
+
+Bearbeiten Sie die folgende Aufgabenstellung sowohl für eine ausgewählte Autobahn (beispielsweise die A43) als auch für Gesamtdeutschland:
+
+- Stellen Sie die Unfalldichte von Streckenabschnitten grafisch dar.
+- Stellen Sie die Unfallraten von Streckenabschnitten grafisch dar.
+
+## Aufgabe 2 : Unfalltypenkarte
+
+- Erstellen Sie nach den Vorgaben der M Uko eine Unfalltypenkarte für eine ausgewählte Autobahn und für Gesamtdeutschland eine Unfalltypenkarte mit `ggplot`.
+
+- Erstellen Sie nach den Vorgaben der M Uko eine Unfalltypenkarte für eine ausgewählte Autobahn und für Gesamtdeutschland eine Unfalltypenkarte mit `leaflet`.
+
+## Aufgabe 3 : Unfallhäufungsstelle
+
+Überprüfen Sie nach den Vorgaben der M Uko Unfallhäufungsstellen für die Stadt Bochum.
+
+## Aufgabe 4: Interaktive `Leaflet`-Karte mit `Shiny`
+
+Erstellen Sie eine interaktive Leaflet-Karte der Unfälle in Bochum in Shiny. 
+Die Interaktivität soll folgendermaßen gestaltet werden:
+
+- Wählbare Unfallkategorien
+- Wählbare Unfalltypen
+- Wählbare Verkehrsbeteiligte
+- Wählbare Jahre
+
+Zusätzlich soll unter der Karte eine Tabelle mit den gewählten Filtern dargestellt werden.
+
+*Optional* : Ein Download-Button für die gewählten Filtereinstellungen, der eine CSV-Datei erzeugt und herunterlädt.
