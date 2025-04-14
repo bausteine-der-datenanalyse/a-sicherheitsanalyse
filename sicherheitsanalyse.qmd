@@ -32,28 +32,16 @@ library(osmdata)
 library(giscoR)
 library(leaflet)
 library(shiny)
-
-source("load-data.R")
 ```
 
 Daten der Bundesinformationssystem Straße (BISStra) für Straßennetz: <https://www.bast.de/DE/Verkehrstechnik/Fachthemen/v2-bisstra.html>
 
 Daten für Unfälle vom Unfallatlas: <https://unfallatlas.statistikportal.de/>
 
-```{r}
-
-```
-
-```{r}
-
-```
-
-
 ## Unfalldichte
 
 ```{r}
 #| warning: false
-#unfaelle = st_read("data/shp/Unfallorte2022_LinRef.shp", quiet = T) %>% st_set_crs(25832)
 
 unfall_csv = read_csv2("data/Unfallorte2022_LinRef.csv") 
 unfaelle <- st_as_sf(unfall_csv, coords = c("LINREFX", "LINREFY"), 
@@ -278,7 +266,7 @@ ggplot () +
   geom_sf(data = a43, size = 5) +
   geom_sf(data = unfaelle_autobahn,mapping = aes(group = UTYP1,color = as.character(UTYP1),size = as.character(UKATEGORIE) )) +
   scale_colour_manual(values = c("1" = "#04B431","2" = "yellow","3" = "red","4" = "white","5" = "#00BFFF","6" = "orange","7" = "black")) +
-  scale_size_manual(values = c("2" = 1.25, "3"=1)) +
+  scale_size_manual(values = c("2" = 1.33, "3"=1)) +
   labs(title = "Verkehrsunfalltypen der A43 im Jahr 2022", color = "Unfalltypen" , size = "Unfallkategorien") +
  theme(plot.title = element_text(size=10))
 #ggsave("unfalltyp_a43.pdf")
@@ -287,15 +275,9 @@ ggplot () +
 ### Deutschland
 
 ```{r}
-unfaelle_de_kat1 <- unfaelle_de_autobahn |>
-  filter(UKATEGORIE == "1")
-```
-
-```{r}
 ggplot () +
   geom_sf(data = d_de, fill = NA, size = 0.5) +
   geom_sf(data = strecke_de, size = 5, color = "pink") +
-  geom_sf(data = unfaelle_de_kat1, shape = 15, size = 0.06) +
   geom_sf(data = unfaelle_de_autobahn,
           mapping = aes(group = UTYP1,color = as.factor(UTYP1),size = as.factor(UKATEGORIE))) +
   scale_colour_manual(values = c("1" = "#04B431","2" = "yellow","3" = "red","4" = "white","5" = "#00BFFF","6" = "orange","7" = "black")) +
@@ -340,9 +322,10 @@ leaflet(unfaelle_de_autobahn) %>%
   addTiles() %>%
     addCircleMarkers(lng = ~XGCSWGS84, lat = ~YGCSWGS84,
                    radius = ~ifelse(UKATEGORIE == "3", 6, 8),
-                   stroke = FALSE, 
+                   stroke = ~ifelse(UKATEGORIE == "1", TRUE, FALSE), 
                    fillOpacity = 0.9,
-                   color = ~pal(UTYP1)) 
+                   fillColor = ~pal(UTYP1),
+                   color = "black")
 
 ```
 
@@ -353,9 +336,10 @@ leaflet(unfaelle_autobahn) %>%
   addTiles() %>%
     addCircleMarkers(lng = ~XGCSWGS84, lat = ~YGCSWGS84,
                    radius = ~ifelse(UKATEGORIE == "3", 6, 8),
-                   stroke = FALSE, 
+                   stroke = ~ifelse(UKATEGORIE == "1", TRUE, FALSE), 
                    fillOpacity = 0.9,
-                   color = ~pal(UTYP1))
+                   fillColor = ~pal(UTYP1),
+                   color = "black")
 ```
 
 ### Bochum Unfälle zur Erstellung einer Unfallhäufungsstelle
@@ -411,9 +395,7 @@ bo_dist <- as_tibble(st_distance(Bochum_Unfall_3J))
 #   mutate(unfaelle_nah = sum((c_across(1:2768))))
 ```
 
-Mehrere Dateien importieren Test:
-
-CSV-Dateien Test
+Mehrere Dateien importieren:
 
 ```{r}
 #| warning: false
@@ -459,5 +441,4 @@ Bochum_tbl <- Bochum_Unfall %>%
   summarise(PKWUnfall = sum(IstPKW == "1") , Radunfall = sum(IstRad == "1") , Fussunfall = sum(IstFuss == "1")) %>%
   st_drop_geometry() %>%
   rename(Jahr = "UJAHR")
-
 ```

@@ -1,0 +1,248 @@
+---
+title: "Musterlösung"
+format: html
+---
+```{r}
+#| include: false
+library(ggplot2)
+library(tidyverse)
+library(lubridate)
+library(readxl)
+library(kableExtra)
+library(sf)
+library(osmdata)
+library(giscoR)
+library(leaflet)
+library(shiny)
+```
+
+# Daten einlesen und aufbereiten
+
+Deutschlandkarte:
+```{r}
+d_de <- gisco_get_nuts(country = "Germany", nuts_level = 0, resolution = 03)
+```
+
+Unfalldaten:
+
+```{r}
+#| warning: false
+
+unfall_csv = read_csv2("data/Unfallorte2022_LinRef.csv") 
+unfaelle <- st_as_sf(unfall_csv, coords = c("LINREFX", "LINREFY"), 
+                  crs = 25832)
+```
+
+Streckenabschnitte:
+
+```{r}
+strecke <- read_sf("data/geo/BFStr_Netz_SK.geojson")
+knoten <- read_sf("data/geo/BFStr_Netz_NK.geojson")
+nullpunkte <- read_sf("data/geo/BFStr_Netz_NP.geojson")
+```
+
+Streckenabschnitte A43:
+```{r}
+a43 <- strecke |>
+  filter(Str_Kennung == "A43" & Sk_Achse == "Hauptachse") |>
+  mutate(rownumber = row_number())
+```
+
+Streckenabschnitte Deutschland:
+```{r}
+strecke_de <- strecke |>
+  filter(Str_Klasse_kurz == "A" & Sk_Achse == "Hauptachse") |>
+  mutate(rownumber = row_number())
+```
+
+## Aufgabe 1
+
+### Unfalldichte
+
+#### A43
+
+Unfälle filtern:
+
+```{r}
+unfaelle_43 = unfaelle %>%
+	# Welche Autobahn am Nächsten
+	mutate(nearest_autobahn_id = st_nearest_feature(st_zm(.), a43)) %>% 
+	# Distanz zur A43
+	mutate(nearest_autobahn_distance = st_distance(st_zm(.), a43[nearest_autobahn_id, ], by_element = TRUE))
+```
+
+Alles nicht in der Nähe von A43 raus:
+
+```{r}
+unfaelle_autobahn = unfaelle_43 |> 
+	filter(as.double(nearest_autobahn_distance) <= 15) |>
+  st_zm()
+```
+
+Unfälle zählen:
+
+```{r}
+autobahnen_accident_count = unfaelle_autobahn %>% 
+	as_tibble() %>% 
+	select(-geometry) %>%
+	count(nearest_autobahn_id, UKATEGORIE) %>% 
+  spread(UKATEGORIE, n) %>%
+  rename(Anzahl_UK2 = `2`, Anzahl_UK3 = `3`) %>%
+  replace(is.na(.), 0) %>%
+  mutate(Anzahl_U_G = Anzahl_UK2 + Anzahl_UK3)
+# Hier gehören eigentlich noch Unfaelle nach Kategorie 1 rein, existieren aber in diesem Zeitraum nicht.
+```
+
+Verbinden mit Daten der A43:
+
+```{r}
+a43 = a43 |> 
+	left_join(autobahnen_accident_count, by = c("rownumber" = "nearest_autobahn_id"))
+```
+
+Plotten:
+
+```{r}
+ggplot () +
+  geom_sf(data = a43, size = 2, mapping = aes(color = Anzahl_U_G)) +
+  scale_color_distiller(palette = 8 , direction = 1, breaks = seq(2,14,2)) +
+  labs(title = "Anzahl der Verkehrsunfälle nach Abschnitten der A43 im Jahr 2022",
+       color = "Anzahl Verkehrsunfälle") +
+ theme(plot.title = element_text(size=10))
+```
+
+#### Deutschland
+
+Unfälle filtern:
+
+```{r}
+unfaelle_de = unfaelle %>%
+	# Welche Autobahn ist am Nächsten
+	mutate(nearest_autobahn_id = st_nearest_feature(st_zm(.), strecke_de)) %>% 
+	# Distanz zur nächsten Autobahn berechnen
+	mutate(nearest_autobahn_distance = st_distance(st_zm(.), strecke_de[nearest_autobahn_id, ], by_element = TRUE))
+```
+
+Alles nicht in der Nähe von BAB raus:
+
+```{r}
+unfaelle_de_autobahn = unfaelle_de |> 
+	filter(as.double(nearest_autobahn_distance) <= 15) |>
+  st_zm()
+```
+
+Unfälle zählen:
+
+```{r}
+de_unfall_anzahl = unfaelle_de_autobahn %>% 
+	as_tibble() %>% 
+	select(-geometry) %>%
+	count(nearest_autobahn_id, UKATEGORIE) %>% 
+  spread(UKATEGORIE, n) %>%
+  rename(Anzahl_UK1 = `1`,Anzahl_UK2 = `2`, Anzahl_UK3 = `3`) %>%
+  replace(is.na(.), 0) %>%
+  mutate(Anzahl_U_G = Anzahl_UK1 + Anzahl_UK2 + Anzahl_UK3)
+```
+
+Verbinden mit Daten:
+
+```{r}
+strecke_de = strecke_de |> 
+	left_join(de_unfall_anzahl, by = c("rownumber" = "nearest_autobahn_id"))
+
+strecke_de = strecke_de |>
+  mutate(UD = (Anzahl_U_G)/(Sk_Laenge_km))
+```
+
+Plotten:
+
+```{r}
+ggplot () +
+  geom_sf(data = d_de, fill = NA, size = 0.5) +
+  geom_sf(data = strecke_de, size = 2, mapping = aes(color = Anzahl_U_G)) +
+  scale_color_distiller(palette = 8 , direction = 1) +
+  labs(title = "Anzahl der Verkehrsunfälle nach Abschnitten der BAB im Jahr 2022",
+       color = "Anzahl Verkehrsunfälle") +
+ theme(plot.title = element_text(size=10))
+#ggsave("unfall.pdf")
+```
+
+### Unfallrate
+
+#### A43
+
+### Deutschland
+
+## Aufgabe 2
+
+Hinweis: Verwendet aufbereitete Unfalldaten aus vorheriger Aufgabe! 
+ 
+### Mit `ggplot`
+
+Ausgewählte Autobahn:
+
+```{r}
+ggplot () +
+  geom_sf(data = a43, size = 5) +
+  geom_sf(data = unfaelle_autobahn,mapping = aes(group = UTYP1,color = as.character(UTYP1),size = as.character(UKATEGORIE) )) +
+  scale_colour_manual(values = c("1" = "#04B431","2" = "yellow","3" = "red","4" = "white","5" = "#00BFFF","6" = "orange","7" = "black")) +
+  scale_size_manual(values = c("2" = 1.33, "3"=1)) +
+  labs(title = "Verkehrsunfalltypen der A43 im Jahr 2022", color = "Unfalltypen" , size = "Unfallkategorien") +
+ theme(plot.title = element_text(size=10))
+```
+
+Gesamtdeutschland:
+
+```{r}
+ggplot () +
+  geom_sf(data = d_de, fill = NA, size = 0.5) +
+  geom_sf(data = strecke_de, size = 5, color = "pink") +
+  geom_sf(data = unfaelle_de_autobahn,
+          mapping = aes(group = UTYP1,color = as.factor(UTYP1),size = as.factor(UKATEGORIE))) +
+  scale_colour_manual(values = c("1" = "#04B431","2" = "yellow","3" = "red","4" = "white","5" = "#00BFFF","6" = "orange","7" = "black")) +
+  scale_size_manual(values = c("1" = 0.04,"2" = 0.04, "3"=0.03)) +
+  labs(title = "Verkehrsunfalltypen der A43 im Jahr 2022", color = "Unfalltypen", size = "Unfallkategorie") +
+ theme(plot.title = element_text(size=10))
+```
+
+
+### Mit `leaflet`
+
+**Palette festlegen**
+
+```{r}
+pal <- colorFactor(c("#04B431", "yellow",  "red", "white", "#00BFFF", "orange", "black"), domain = c(1,2,3,4,5,6,7))
+```
+
+Ausgewählte Autobahn:
+
+```{r}
+leaflet(unfaelle_autobahn) %>%   
+  addTiles() %>%
+    addCircleMarkers(lng = ~XGCSWGS84, lat = ~YGCSWGS84,
+                   radius = ~ifelse(UKATEGORIE == "3", 6, 8),
+                   stroke = ~ifelse(UKATEGORIE == "1", TRUE, FALSE), 
+                   fillOpacity = 0.9,
+                   fillColor = ~pal(UTYP1),
+                   color = "black")
+```
+
+Gesamtdeutschland:
+
+```{r}
+leaflet(unfaelle_de_autobahn) %>% 
+  addTiles() %>%
+    addCircleMarkers(lng = ~XGCSWGS84, lat = ~YGCSWGS84,
+                   radius = ~ifelse(UKATEGORIE == "3", 6, 8),
+                   stroke = ~ifelse(UKATEGORIE == "1", TRUE, FALSE), 
+                   fillOpacity = 0.9,
+                   fillColor = ~pal(UTYP1),
+                   color = "black")
+
+```
+
+## Aufgabe 3
+
+## Aufgabe 4
+
+Siehe Dokument unfaelle_shiny.qmd

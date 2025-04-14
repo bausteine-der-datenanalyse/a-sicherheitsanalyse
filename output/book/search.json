@@ -1,0 +1,212 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "a-sicherheitsanalyse",
+    "section": "",
+    "text": "Präambel",
+    "crumbs": [
+      "Präambel"
+    ]
+  },
+  {
+    "objectID": "index.html#voraussetzungen",
+    "href": "index.html#voraussetzungen",
+    "title": "a-sicherheitsanalyse",
+    "section": "Voraussetzungen",
+    "text": "Voraussetzungen\nZum erfolgreichen Bearbeiten dieses Anwendungsbausteins benötigen Sie die Inhalte des Methodenbausteins Grundlagen der Statistik [Referenz] und des Werkzeugbausteins Datenmanagements [Referenz]",
+    "crumbs": [
+      "Präambel"
+    ]
+  },
+  {
+    "objectID": "index.html#lernziele",
+    "href": "index.html#lernziele",
+    "title": "a-sicherheitsanalyse",
+    "section": "Lernziele",
+    "text": "Lernziele\nZiel dieses Bausteins ist es, typische Inhalte von sicherheitsrelevanten Fragestellungen von Verkehrsnetzen in grafischer Form mithilfe der Programmiersprache R darzustellen. Dabei lernen Sie wo deutschsprachige Unfalldaten gefunden werden können, wie Unfalldaten eingelesen und analysiert werden und welche verschiedenen Darstellungsformen sich für bestimmte Datentypen eignen.",
+    "crumbs": [
+      "Präambel"
+    ]
+  },
+  {
+    "objectID": "index.html#verwendete-datensätze",
+    "href": "index.html#verwendete-datensätze",
+    "title": "a-sicherheitsanalyse",
+    "section": "Verwendete Datensätze",
+    "text": "Verwendete Datensätze\nDaten des Straßennetzes des Bundesinformationssystem Straße (BISStra)\nUnfalldaten des Unfallatlas des Statistischen Bundesamts",
+    "crumbs": [
+      "Präambel"
+    ]
+  },
+  {
+    "objectID": "aufgabe/aufgaben_sicherheitsanalyse.html",
+    "href": "aufgabe/aufgaben_sicherheitsanalyse.html",
+    "title": "1  Aufgaben zur Sicherheitsanalyse von Verkehrsnetzen",
+    "section": "",
+    "text": "2 Datenquellen\nDie statistischen Ämter des Bundes und der Länder erheben und veröffentlichen mit der Straßenverkehrsunfallstatistik die Verkehrsunfälle mit Personenschaden oder Sachschaden in Deutschland. Im Unfallatlas werden Unfälle mit Personenschaden geführt. Für die Sicherheitsanalyse von Verkehrsnetzen können diese Daten verwendet und analysiert werden.\nVerwenden Sie für das Straßennetz die Daten des Bundesinformationssystems Straße (BISStra) der Bundesanstalt für Straßen- und Verkehrswesen (BAST): https://www.bast.de/DE/Verkehrstechnik/Fachthemen/v2-bisstra.html\nVersuchen sie bei den nachfolgenden Aufgaben zu Unfalltypenkarten weitestgehend die Vorgaben der Forschungsgesellschaft für Straßen- und Verkehrswesen (FGSV) des “Merkblattes zur Örtlichen Unfalluntersuchung in Unfallkommissionen” (M Uko) umzusetzen.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Aufgaben zur Sicherheitsanalyse von Verkehrsnetzen</span>"
+    ]
+  },
+  {
+    "objectID": "aufgabe/aufgaben_sicherheitsanalyse.html#aufgabe-1-unfalldichte-und-unfallrate",
+    "href": "aufgabe/aufgaben_sicherheitsanalyse.html#aufgabe-1-unfalldichte-und-unfallrate",
+    "title": "1  Aufgaben zur Sicherheitsanalyse von Verkehrsnetzen",
+    "section": "2.1 Aufgabe 1 : Unfalldichte und Unfallrate",
+    "text": "2.1 Aufgabe 1 : Unfalldichte und Unfallrate\nBearbeiten Sie die folgende Aufgabenstellung sowohl für eine ausgewählte Autobahn (beispielsweise die A43) als auch für Gesamtdeutschland:\n\nStellen Sie die Unfalldichte von Streckenabschnitten grafisch dar.\nStellen Sie die Unfallraten von Streckenabschnitten grafisch dar.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Aufgaben zur Sicherheitsanalyse von Verkehrsnetzen</span>"
+    ]
+  },
+  {
+    "objectID": "aufgabe/aufgaben_sicherheitsanalyse.html#aufgabe-2-unfalltypenkarte",
+    "href": "aufgabe/aufgaben_sicherheitsanalyse.html#aufgabe-2-unfalltypenkarte",
+    "title": "1  Aufgaben zur Sicherheitsanalyse von Verkehrsnetzen",
+    "section": "2.2 Aufgabe 2 : Unfalltypenkarte",
+    "text": "2.2 Aufgabe 2 : Unfalltypenkarte\n\nErstellen Sie nach den Vorgaben der M Uko eine Unfalltypenkarte für eine ausgewählte Autobahn und für Gesamtdeutschland eine Unfalltypenkarte mit ggplot.\nErstellen Sie nach den Vorgaben der M Uko eine Unfalltypenkarte für eine ausgewählte Autobahn und für Gesamtdeutschland eine Unfalltypenkarte mit leaflet.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Aufgaben zur Sicherheitsanalyse von Verkehrsnetzen</span>"
+    ]
+  },
+  {
+    "objectID": "aufgabe/aufgaben_sicherheitsanalyse.html#aufgabe-3-unfallhäufungsstelle",
+    "href": "aufgabe/aufgaben_sicherheitsanalyse.html#aufgabe-3-unfallhäufungsstelle",
+    "title": "1  Aufgaben zur Sicherheitsanalyse von Verkehrsnetzen",
+    "section": "2.3 Aufgabe 3 : Unfallhäufungsstelle",
+    "text": "2.3 Aufgabe 3 : Unfallhäufungsstelle\nÜberprüfen Sie nach den Vorgaben der M Uko Unfallhäufungsstellen für die Stadt Bochum.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Aufgaben zur Sicherheitsanalyse von Verkehrsnetzen</span>"
+    ]
+  },
+  {
+    "objectID": "aufgabe/aufgaben_sicherheitsanalyse.html#aufgabe-4-interaktive-leaflet-karte-mit-shiny",
+    "href": "aufgabe/aufgaben_sicherheitsanalyse.html#aufgabe-4-interaktive-leaflet-karte-mit-shiny",
+    "title": "1  Aufgaben zur Sicherheitsanalyse von Verkehrsnetzen",
+    "section": "2.4 Aufgabe 4: Interaktive Leaflet-Karte mit Shiny",
+    "text": "2.4 Aufgabe 4: Interaktive Leaflet-Karte mit Shiny\nErstellen Sie eine interaktive Leaflet-Karte der Unfälle in Bochum in Shiny. Die Interaktivität soll folgendermaßen gestaltet werden:\n\nWählbare Unfallkategorien\nWählbare Unfalltypen\nWählbare Verkehrsbeteiligte\nWählbare Jahre\n\nZusätzlich soll unter der Karte eine Tabelle mit den gewählten Filtern dargestellt werden.\nOptional : Ein Download-Button für die gewählten Filtereinstellungen, der eine CSV-Datei erzeugt und herunterlädt.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Aufgaben zur Sicherheitsanalyse von Verkehrsnetzen</span>"
+    ]
+  },
+  {
+    "objectID": "musterloesung.html",
+    "href": "musterloesung.html",
+    "title": "2  Musterlösung",
+    "section": "",
+    "text": "3 Daten einlesen und aufbereiten\nDeutschlandkarte:\nd_de &lt;- gisco_get_nuts(country = \"Germany\", nuts_level = 0, resolution = 03)\nUnfalldaten:\nunfall_csv = read_csv2(\"data/Unfallorte2022_LinRef.csv\") \nunfaelle &lt;- st_as_sf(unfall_csv, coords = c(\"LINREFX\", \"LINREFY\"), \n                  crs = 25832)\nStreckenabschnitte:\nstrecke &lt;- read_sf(\"data/geo/BFStr_Netz_SK.geojson\")\nknoten &lt;- read_sf(\"data/geo/BFStr_Netz_NK.geojson\")\nnullpunkte &lt;- read_sf(\"data/geo/BFStr_Netz_NP.geojson\")\nStreckenabschnitte A43:\na43 &lt;- strecke |&gt;\n  filter(Str_Kennung == \"A43\" & Sk_Achse == \"Hauptachse\") |&gt;\n  mutate(rownumber = row_number())\nStreckenabschnitte Deutschland:\nstrecke_de &lt;- strecke |&gt;\n  filter(Str_Klasse_kurz == \"A\" & Sk_Achse == \"Hauptachse\") |&gt;\n  mutate(rownumber = row_number())",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Musterlösung</span>"
+    ]
+  },
+  {
+    "objectID": "musterloesung.html#aufgabe-1",
+    "href": "musterloesung.html#aufgabe-1",
+    "title": "2  Musterlösung",
+    "section": "3.1 Aufgabe 1",
+    "text": "3.1 Aufgabe 1\n\n3.1.1 Unfalldichte\n\n3.1.1.1 A43\nUnfälle filtern:\n\nunfaelle_43 = unfaelle %&gt;%\n    # Welche Autobahn am Nächsten\n    mutate(nearest_autobahn_id = st_nearest_feature(st_zm(.), a43)) %&gt;% \n    # Distanz zur A43\n    mutate(nearest_autobahn_distance = st_distance(st_zm(.), a43[nearest_autobahn_id, ], by_element = TRUE))\n\nAlles nicht in der Nähe von A43 raus:\n\nunfaelle_autobahn = unfaelle_43 |&gt; \n    filter(as.double(nearest_autobahn_distance) &lt;= 15) |&gt;\n  st_zm()\n\nUnfälle zählen:\n\nautobahnen_accident_count = unfaelle_autobahn %&gt;% \n    as_tibble() %&gt;% \n    select(-geometry) %&gt;%\n    count(nearest_autobahn_id, UKATEGORIE) %&gt;% \n  spread(UKATEGORIE, n) %&gt;%\n  rename(Anzahl_UK2 = `2`, Anzahl_UK3 = `3`) %&gt;%\n  replace(is.na(.), 0) %&gt;%\n  mutate(Anzahl_U_G = Anzahl_UK2 + Anzahl_UK3)\n# Hier gehören eigentlich noch Unfaelle nach Kategorie 1 rein, existieren aber in diesem Zeitraum nicht.\n\nVerbinden mit Daten der A43:\n\na43 = a43 |&gt; \n    left_join(autobahnen_accident_count, by = c(\"rownumber\" = \"nearest_autobahn_id\"))\n\nPlotten:\n\nggplot () +\n  geom_sf(data = a43, size = 2, mapping = aes(color = Anzahl_U_G)) +\n  scale_color_distiller(palette = 8 , direction = 1, breaks = seq(2,14,2)) +\n  labs(title = \"Anzahl der Verkehrsunfälle nach Abschnitten der A43 im Jahr 2022\",\n       color = \"Anzahl Verkehrsunfälle\") +\n theme(plot.title = element_text(size=10))\n\n\n\n\n\n\n\n\n\n\n3.1.1.2 Deutschland\nUnfälle filtern:\n\nunfaelle_de = unfaelle %&gt;%\n    # Welche Autobahn ist am Nächsten\n    mutate(nearest_autobahn_id = st_nearest_feature(st_zm(.), strecke_de)) %&gt;% \n    # Distanz zur nächsten Autobahn berechnen\n    mutate(nearest_autobahn_distance = st_distance(st_zm(.), strecke_de[nearest_autobahn_id, ], by_element = TRUE))\n\nAlles nicht in der Nähe von BAB raus:\n\nunfaelle_de_autobahn = unfaelle_de |&gt; \n    filter(as.double(nearest_autobahn_distance) &lt;= 15) |&gt;\n  st_zm()\n\nUnfälle zählen:\n\nde_unfall_anzahl = unfaelle_de_autobahn %&gt;% \n    as_tibble() %&gt;% \n    select(-geometry) %&gt;%\n    count(nearest_autobahn_id, UKATEGORIE) %&gt;% \n  spread(UKATEGORIE, n) %&gt;%\n  rename(Anzahl_UK1 = `1`,Anzahl_UK2 = `2`, Anzahl_UK3 = `3`) %&gt;%\n  replace(is.na(.), 0) %&gt;%\n  mutate(Anzahl_U_G = Anzahl_UK1 + Anzahl_UK2 + Anzahl_UK3)\n\nVerbinden mit Daten:\n\nstrecke_de = strecke_de |&gt; \n    left_join(de_unfall_anzahl, by = c(\"rownumber\" = \"nearest_autobahn_id\"))\n\nstrecke_de = strecke_de |&gt;\n  mutate(UD = (Anzahl_U_G)/(Sk_Laenge_km))\n\nPlotten:\n\nggplot () +\n  geom_sf(data = d_de, fill = NA, size = 0.5) +\n  geom_sf(data = strecke_de, size = 2, mapping = aes(color = Anzahl_U_G)) +\n  scale_color_distiller(palette = 8 , direction = 1) +\n  labs(title = \"Anzahl der Verkehrsunfälle nach Abschnitten der BAB im Jahr 2022\",\n       color = \"Anzahl Verkehrsunfälle\") +\n theme(plot.title = element_text(size=10))\n\n\n\n\n\n\n\n#ggsave(\"unfall.pdf\")\n\n\n\n\n3.1.2 Unfallrate\n\n3.1.2.1 A43\n\n\n\n3.1.3 Deutschland",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Musterlösung</span>"
+    ]
+  },
+  {
+    "objectID": "musterloesung.html#aufgabe-2",
+    "href": "musterloesung.html#aufgabe-2",
+    "title": "2  Musterlösung",
+    "section": "3.2 Aufgabe 2",
+    "text": "3.2 Aufgabe 2\nHinweis: Verwendet aufbereitete Unfalldaten aus vorheriger Aufgabe!\n\n3.2.1 Mit ggplot\nAusgewählte Autobahn:\n\nggplot () +\n  geom_sf(data = a43, size = 5) +\n  geom_sf(data = unfaelle_autobahn,mapping = aes(group = UTYP1,color = as.character(UTYP1),size = as.character(UKATEGORIE) )) +\n  scale_colour_manual(values = c(\"1\" = \"#04B431\",\"2\" = \"yellow\",\"3\" = \"red\",\"4\" = \"white\",\"5\" = \"#00BFFF\",\"6\" = \"orange\",\"7\" = \"black\")) +\n  scale_size_manual(values = c(\"2\" = 1.33, \"3\"=1)) +\n  labs(title = \"Verkehrsunfalltypen der A43 im Jahr 2022\", color = \"Unfalltypen\" , size = \"Unfallkategorien\") +\n theme(plot.title = element_text(size=10))\n\n\n\n\n\n\n\n\nGesamtdeutschland:\n\nggplot () +\n  geom_sf(data = d_de, fill = NA, size = 0.5) +\n  geom_sf(data = strecke_de, size = 5, color = \"pink\") +\n  geom_sf(data = unfaelle_de_autobahn,\n          mapping = aes(group = UTYP1,color = as.factor(UTYP1),size = as.factor(UKATEGORIE))) +\n  scale_colour_manual(values = c(\"1\" = \"#04B431\",\"2\" = \"yellow\",\"3\" = \"red\",\"4\" = \"white\",\"5\" = \"#00BFFF\",\"6\" = \"orange\",\"7\" = \"black\")) +\n  scale_size_manual(values = c(\"1\" = 0.04,\"2\" = 0.04, \"3\"=0.03)) +\n  labs(title = \"Verkehrsunfalltypen der A43 im Jahr 2022\", color = \"Unfalltypen\", size = \"Unfallkategorie\") +\n theme(plot.title = element_text(size=10))\n\n\n\n\n\n\n\n\n\n\n3.2.2 Mit leaflet\nPalette festlegen\n\npal &lt;- colorFactor(c(\"#04B431\", \"yellow\",  \"red\", \"white\", \"#00BFFF\", \"orange\", \"black\"), domain = c(1,2,3,4,5,6,7))\n\nAusgewählte Autobahn:\n\nleaflet(unfaelle_autobahn) %&gt;%   \n  addTiles() %&gt;%\n    addCircleMarkers(lng = ~XGCSWGS84, lat = ~YGCSWGS84,\n                   radius = ~ifelse(UKATEGORIE == \"3\", 6, 8),\n                   stroke = ~ifelse(UKATEGORIE == \"1\", TRUE, FALSE), \n                   fillOpacity = 0.9,\n                   fillColor = ~pal(UTYP1),\n                   color = \"black\")\n\n\n\n\n\nGesamtdeutschland:\n\nleaflet(unfaelle_de_autobahn) %&gt;% \n  addTiles() %&gt;%\n    addCircleMarkers(lng = ~XGCSWGS84, lat = ~YGCSWGS84,\n                   radius = ~ifelse(UKATEGORIE == \"3\", 6, 8),\n                   stroke = ~ifelse(UKATEGORIE == \"1\", TRUE, FALSE), \n                   fillOpacity = 0.9,\n                   fillColor = ~pal(UTYP1),\n                   color = \"black\")",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Musterlösung</span>"
+    ]
+  },
+  {
+    "objectID": "musterloesung.html#aufgabe-3",
+    "href": "musterloesung.html#aufgabe-3",
+    "title": "2  Musterlösung",
+    "section": "3.3 Aufgabe 3",
+    "text": "3.3 Aufgabe 3",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Musterlösung</span>"
+    ]
+  },
+  {
+    "objectID": "musterloesung.html#aufgabe-4",
+    "href": "musterloesung.html#aufgabe-4",
+    "title": "2  Musterlösung",
+    "section": "3.4 Aufgabe 4",
+    "text": "3.4 Aufgabe 4\nSiehe Dokument unfaelle_shiny.qmd",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Musterlösung</span>"
+    ]
+  },
+  {
+    "objectID": "sicherheitsanalyse.html",
+    "href": "sicherheitsanalyse.html",
+    "title": "3  Sicherheitsanalyse von Verkehrsnetzen",
+    "section": "",
+    "text": "3.1 Unfalldichte\nunfall_csv = read_csv2(\"data/Unfallorte2022_LinRef.csv\") \nunfaelle &lt;- st_as_sf(unfall_csv, coords = c(\"LINREFX\", \"LINREFY\"), \n                  crs = 25832)",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Sicherheitsanalyse von Verkehrsnetzen</span>"
+    ]
+  },
+  {
+    "objectID": "sicherheitsanalyse.html#unfalldichte",
+    "href": "sicherheitsanalyse.html#unfalldichte",
+    "title": "3  Sicherheitsanalyse von Verkehrsnetzen",
+    "section": "",
+    "text": "3.1.1 A43\nDaten einlesen:\n\nstrecke &lt;- read_sf(\"data/geo/BFStr_Netz_SK.geojson\")\nknoten &lt;- read_sf(\"data/geo/BFStr_Netz_NK.geojson\")\nnullpunkte &lt;- read_sf(\"data/geo/BFStr_Netz_NP.geojson\")\na43 &lt;- strecke |&gt;\n  filter(Str_Kennung == \"A43\" & Sk_Achse == \"Hauptachse\") |&gt;\n  mutate(rownumber = row_number())\n\n\nknotenpunkt &lt;- knoten |&gt;\n  filter(NK_Kennung == \"4508362\")\n\nUnfälle filtern:\n\nunfaelle_43 = unfaelle %&gt;%\n    # find out which autobahn is closest by\n    mutate(nearest_autobahn_id = st_nearest_feature(st_zm(.), a43)) %&gt;% \n    # calculate distance to closest autobahn\n    mutate(nearest_autobahn_distance = st_distance(st_zm(.), a43[nearest_autobahn_id, ], by_element = TRUE))\n\nAlles nicht in der Nähe von BAB raus:\n\nunfaelle_autobahn = unfaelle_43 |&gt; \n    filter(as.double(nearest_autobahn_distance) &lt;= 15) |&gt;\n  st_zm()\n\nUnfälle zählen:\n\nautobahnen_accident_count = unfaelle_autobahn %&gt;% \n    as_tibble() %&gt;% \n    select(-geometry) %&gt;%\n    count(nearest_autobahn_id, UKATEGORIE) %&gt;% \n  spread(UKATEGORIE, n) %&gt;%\n  rename(Anzahl_UK2 = `2`, Anzahl_UK3 = `3`) %&gt;%\n  replace(is.na(.), 0) %&gt;%\n  mutate(Anzahl_U_G = Anzahl_UK2 + Anzahl_UK3)\n# Hier gehören eigentlich noch Unfaelle nach Kategorie 1 rein\n\nVerbinden mit Daten der A43:\n\na43 = a43 |&gt; \n    left_join(autobahnen_accident_count, by = c(\"rownumber\" = \"nearest_autobahn_id\"))\n\nPlotten:\n\nggplot () +\n  geom_sf(data = a43, size = 2, mapping = aes(color = Anzahl_U_G)) +\n  scale_color_distiller(palette = 8 , direction = 1, breaks = seq(2,14,2)) +\n  labs(title = \"Anzahl der Verkehrsunfälle nach Abschnitten der A43 im Jahr 2022\",\n       color = \"Anzahl Verkehrsunfälle\") +\n theme(plot.title = element_text(size=10))\n\n\n\n\n\n\n\n#ggsave(\"unfall_a43.pdf\")\n\n\n\n3.1.2 Gesamtdeutschland\n\nstrecke_de &lt;- strecke |&gt;\n  filter(Str_Klasse_kurz == \"A\" & Sk_Achse == \"Hauptachse\") |&gt;\n  mutate(rownumber = row_number())\n\nUnfälle filtern:\n\nunfaelle_de = unfaelle %&gt;%\n    # find out which autobahn is closest by\n    mutate(nearest_autobahn_id = st_nearest_feature(st_zm(.), strecke_de)) %&gt;% \n    # calculate distance to closest autobahn\n    mutate(nearest_autobahn_distance = st_distance(st_zm(.), strecke_de[nearest_autobahn_id, ], by_element = TRUE))\n\nAlles nicht in der Nähe von BAB raus:\n\nunfaelle_de_autobahn = unfaelle_de |&gt; \n    filter(as.double(nearest_autobahn_distance) &lt;= 15) |&gt;\n  st_zm()\n\nUnfälle zählen:\n\nde_unfall_anzahl = unfaelle_de_autobahn %&gt;% \n    as_tibble() %&gt;% \n    select(-geometry) %&gt;%\n    count(nearest_autobahn_id, UKATEGORIE) %&gt;% \n  spread(UKATEGORIE, n) %&gt;%\n  rename(Anzahl_UK1 = `1`,Anzahl_UK2 = `2`, Anzahl_UK3 = `3`) %&gt;%\n  replace(is.na(.), 0) %&gt;%\n  mutate(Anzahl_U_G = Anzahl_UK1 + Anzahl_UK2 + Anzahl_UK3)\n\nVerbinden mit Daten:\n\nstrecke_de = strecke_de |&gt; \n    left_join(de_unfall_anzahl, by = c(\"rownumber\" = \"nearest_autobahn_id\"))\n\nstrecke_de = strecke_de |&gt;\n  mutate(UD = (Anzahl_U_G)/(Sk_Laenge_km))\n\nPlotten:\n\nd_de &lt;- gisco_get_nuts(country = \"Germany\", nuts_level = 0, resolution = 03)\n\n\nggplot () +\n  geom_sf(data = d_de, fill = NA, size = 0.5) +\n  geom_sf(data = strecke_de, size = 2, mapping = aes(color = Anzahl_U_G)) +\n  scale_color_distiller(palette = 8 , direction = 1) +\n  labs(title = \"Anzahl der Verkehrsunfälle nach Abschnitten der BAB im Jahr 2022\",\n       color = \"Anzahl Verkehrsunfälle\") +\n theme(plot.title = element_text(size=10))\n\n\n\n\n\n\n\n#ggsave(\"unfall.pdf\")",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Sicherheitsanalyse von Verkehrsnetzen</span>"
+    ]
+  },
+  {
+    "objectID": "sicherheitsanalyse.html#zählstelle-als-sf",
+    "href": "sicherheitsanalyse.html#zählstelle-als-sf",
+    "title": "3  Sicherheitsanalyse von Verkehrsnetzen",
+    "section": "3.2 Zählstelle als sf",
+    "text": "3.2 Zählstelle als sf\n\nd_Jawe &lt;- read_csv2(\"data/zs/Jawe2022.csv\", locale = locale(encoding = 'iso-8859-1'))\n\nÜberprüfen wieviele Zählstellen Daten haben:\n\nd_Jawe_BAB &lt;- d_Jawe |&gt;\n  filter(Str_Kl == \"A\")\nAnzahl_BAB_ZST = nrow(d_Jawe_BAB)\n\n\nd_Jawe_BAB_NA &lt;- d_Jawe_BAB |&gt;\n  drop_na(DTV_Kfz_MobisSo_Q)\nAnzahl_BAB_ZST_Daten = nrow(d_Jawe_BAB_NA)\n\nWir haben also Anzahl_BAB_ZST = 1228 Zählstellen auf Autobahnen und davon besitzen Anzahl_BAB_ZST_Daten = 868 Daten im Jahr 2022.\nKoordinaten der Zählstelle als simple feature anlegen, da nur so weitere sf-Funktionen verwendet werden können.\n\nd_Jawe_sf = st_as_sf(d_Jawe, coords =  c(\"Koor_UTM32_E\", \"Koor_UTM32_N\"),  crs = 25832)\n\nExemplarisch nur Werte der A43, die auch vorhanden sind. Blöderweise nur noch 1 Wert über.\n\nd_Jawe_sf &lt;- d_Jawe_sf |&gt;\n  filter(Str_Kl == \"A\" & Str_Nr == \"43\") |&gt;\n  drop_na(DTV_Kfz_MobisSo_Q)\n\n\nd_Jawe_sf = d_Jawe_sf %&gt;%\n    # find out which autobahn is closest by\n    mutate(nearest_autobahn_id = st_nearest_feature(st_zm(.), a43))%&gt;% \n    # calculate distance to closest autobahn\n    mutate(nearest_autobahn_distance = st_distance(st_zm(.), a43[nearest_autobahn_id, ], by_element = TRUE))\n\n\nd_Jawe_sf2 = d_Jawe_sf |&gt;\n  as_tibble() |&gt;\n    select(DZ_Nr, nearest_autobahn_id, DTV_Kfz_MobisSo_Q, !geometry)\n\nTO-DO:Unfallrate-Formel richtig machen\n\na43_2 = a43 |&gt; \n    left_join(d_Jawe_sf2, by = c(\"rownumber\" = \"nearest_autobahn_id\")) |&gt;\n  mutate(UR = (10^6*Anzahl_U_G)/ (DTV_Kfz_MobisSo_Q * Sk_Laenge_km), UD = (Anzahl_U_G)/(Sk_Laenge_km))\n\n\nggplot () +\n  geom_sf(data = a43_2, size = 2, mapping = aes(color = UR)) +\n  scale_color_distiller(palette = 8 , direction = 1) +\n  labs(title = \"Unfallraten nach Abschnitten der A43 im Jahr 2022\",\n       color = \"Unfallrate\") +\n theme(plot.title = element_text(size=10))\n\n\n\n\n\n\n\n#ggsave(\"unfall_a43_2.pdf\")",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Sicherheitsanalyse von Verkehrsnetzen</span>"
+    ]
+  },
+  {
+    "objectID": "sicherheitsanalyse.html#unfalltypenkarten",
+    "href": "sicherheitsanalyse.html#unfalltypenkarten",
+    "title": "3  Sicherheitsanalyse von Verkehrsnetzen",
+    "section": "3.3 Unfalltypenkarten",
+    "text": "3.3 Unfalltypenkarten\n\nc_unfalltypen &lt;- c(\n    \"#04B431\", \"yellow\",  \"red\", \"white\", \"#00BFFF\", \"orange\", \"black\")\n\n\n3.3.1 A43\n\nggplot () +\n  geom_sf(data = a43, size = 5) +\n  geom_sf(data = unfaelle_autobahn,mapping = aes(group = UTYP1,color = as.character(UTYP1),size = as.character(UKATEGORIE) )) +\n  scale_colour_manual(values = c(\"1\" = \"#04B431\",\"2\" = \"yellow\",\"3\" = \"red\",\"4\" = \"white\",\"5\" = \"#00BFFF\",\"6\" = \"orange\",\"7\" = \"black\")) +\n  scale_size_manual(values = c(\"2\" = 1.33, \"3\"=1)) +\n  labs(title = \"Verkehrsunfalltypen der A43 im Jahr 2022\", color = \"Unfalltypen\" , size = \"Unfallkategorien\") +\n theme(plot.title = element_text(size=10))\n\n\n\n\n\n\n\n#ggsave(\"unfalltyp_a43.pdf\")\n\n\n\n3.3.2 Deutschland\n\nggplot () +\n  geom_sf(data = d_de, fill = NA, size = 0.5) +\n  geom_sf(data = strecke_de, size = 5, color = \"pink\") +\n  geom_sf(data = unfaelle_de_autobahn,\n          mapping = aes(group = UTYP1,color = as.factor(UTYP1),size = as.factor(UKATEGORIE))) +\n  scale_colour_manual(values = c(\"1\" = \"#04B431\",\"2\" = \"yellow\",\"3\" = \"red\",\"4\" = \"white\",\"5\" = \"#00BFFF\",\"6\" = \"orange\",\"7\" = \"black\")) +\n  scale_size_manual(values = c(\"1\" = 0.04,\"2\" = 0.04, \"3\"=0.03)) +\n  labs(title = \"Verkehrsunfalltypen der A43 im Jahr 2022\", color = \"Unfalltypen\", size = \"Unfallkategorie\") +\n theme(plot.title = element_text(size=10))\n\n\n\n\n\n\n\n#ggsave(\"unfalltyp_de.pdf\")",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Sicherheitsanalyse von Verkehrsnetzen</span>"
+    ]
+  },
+  {
+    "objectID": "sicherheitsanalyse.html#unfalldaten-von-3-jahren-laden",
+    "href": "sicherheitsanalyse.html#unfalldaten-von-3-jahren-laden",
+    "title": "3  Sicherheitsanalyse von Verkehrsnetzen",
+    "section": "3.4 Unfalldaten von 3 Jahren laden",
+    "text": "3.4 Unfalldaten von 3 Jahren laden\n\nunfall_csv23 = read_csv2(\"data/Unfallorte2023_LinRef.csv\") \nunfaelle_23 &lt;- st_as_sf(unfall_csv23, coords = c(\"LINREFX\", \"LINREFY\"), \n                 crs = 25832)\n\nunfall_csv21 = read_csv2(\"data/Unfallorte2022_LinRef.csv\") \nunfaelle_21 &lt;- st_as_sf(unfall_csv21, coords = c(\"LINREFX\", \"LINREFY\"), \n                 crs = 25832)",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Sicherheitsanalyse von Verkehrsnetzen</span>"
+    ]
+  },
+  {
+    "objectID": "sicherheitsanalyse.html#leaflet-interaktive-html-karte",
+    "href": "sicherheitsanalyse.html#leaflet-interaktive-html-karte",
+    "title": "3  Sicherheitsanalyse von Verkehrsnetzen",
+    "section": "3.5 Leaflet Interaktive HTML-Karte",
+    "text": "3.5 Leaflet Interaktive HTML-Karte\nPalette festlegen\n\npal &lt;- colorFactor(c(\"#04B431\", \"yellow\",  \"red\", \"white\", \"#00BFFF\", \"orange\", \"black\"), domain = c(1,2,3,4,5,6,7))\n\nFilter für UK1\n\nunfaelle_de_uk1 &lt;- unfaelle_de_autobahn |&gt;\n  filter(UKATEGORIE == \"1\")\n\nUnfälle alle BAB im Jahr 2022:\n\nleaflet(unfaelle_de_autobahn) %&gt;% \n  addTiles() %&gt;%\n    addCircleMarkers(lng = ~XGCSWGS84, lat = ~YGCSWGS84,\n                   radius = ~ifelse(UKATEGORIE == \"3\", 6, 8),\n                   stroke = ~ifelse(UKATEGORIE == \"1\", TRUE, FALSE), \n                   fillOpacity = 0.9,\n                   fillColor = ~pal(UTYP1),\n                   color = \"black\")\n\n\n\n\n\nUnfälle A43 im Jahr 2022:\n\nleaflet(unfaelle_autobahn) %&gt;%   \n  addTiles() %&gt;%\n    addCircleMarkers(lng = ~XGCSWGS84, lat = ~YGCSWGS84,\n                   radius = ~ifelse(UKATEGORIE == \"3\", 6, 8),\n                   stroke = ~ifelse(UKATEGORIE == \"1\", TRUE, FALSE), \n                   fillOpacity = 0.9,\n                   fillColor = ~pal(UTYP1),\n                   color = \"black\")\n\n\n\n\n\n\n3.5.1 Bochum Unfälle zur Erstellung einer Unfallhäufungsstelle\nDatensätze kombinieren:\n\nall_data &lt;- bind_rows(list(unfaelle_21,unfaelle,unfaelle_23))\n\nUnfall_3J &lt;- all_data |&gt;\n  st_zm()\n\nBochum als Bounding Box:\n\nd_bochum &lt;- gisco_get_nuts(nuts_id = \"DEA51\", nuts_level = 3, resolution = 03)%&gt;% st_transform(25832)\n\nUnfall_zm &lt;- unfaelle |&gt;\n  st_zm()\n\nBochum_Unfall &lt;- Unfall_zm |&gt;\n    filter(st_contains(d_bochum, Unfall_zm, sparse = FALSE)[1,])\n\nBochum_Unfall_3J &lt;- Unfall_3J |&gt;\n    filter(st_contains(d_bochum, Unfall_3J, sparse = FALSE)[1,])\n\n\nleaflet(Bochum_Unfall) %&gt;%   \n  addTiles() %&gt;%\n    addCircleMarkers(lng = ~XGCSWGS84, lat = ~YGCSWGS84,\n                   radius = ~ifelse(UKATEGORIE == \"3\", 6, 8),\n                   stroke = ~ifelse(UKATEGORIE == \"1\", TRUE, FALSE), \n                   fillOpacity = 0.9,\n                   fillColor = ~pal(UTYP1),\n                   color = \"black\" ,\n                   popup = ~as.character(UIDENTSTLAE)) %&gt;%\n  addMeasure(primaryLengthUnit = \"meters\") %&gt;%\n  addLegend(\"bottomright\", colors = c(\"#04B431\", \"yellow\",  \"red\", \"white\", \"#00BFFF\", \"orange\", \"black\") ,labels = c(\"Fahrunfall\",\"Abbiege-Unfall\", \"Einbiegen/Kreuzen-Unfall\", \"Überschreiten-Unfall\",\"Unfall durch ruhenden verkehr\", \"Unfall im Längsverkehr\", \"Sonstiger Unfall\"),title = \"Unfalltypen\")",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Sicherheitsanalyse von Verkehrsnetzen</span>"
+    ]
+  },
+  {
+    "objectID": "sicherheitsanalyse.html#to-do-unfallhäufungsstellen-fertigstellen",
+    "href": "sicherheitsanalyse.html#to-do-unfallhäufungsstellen-fertigstellen",
+    "title": "3  Sicherheitsanalyse von Verkehrsnetzen",
+    "section": "3.6 TO-DO: Unfallhäufungsstellen fertigstellen",
+    "text": "3.6 TO-DO: Unfallhäufungsstellen fertigstellen\nUnfälle im Umkreis zählen:\n\nbo_dist &lt;- as_tibble(st_distance(Bochum_Unfall_3J))\n\n# bo_dist2 = bo_dist %&gt;%  \n#   rowwise() %&gt;% \n#   mutate(unfaelle_nah = sum((c_across(1:2768))))\n\nMehrere Dateien importieren:\n\nunfall_csv = read_csv2(\"data/Unfallorte2020_LinRef.csv\", locale = locale(encoding = 'iso-8859-1')) \n\nunfall_csv_sf = st_as_sf(unfall_csv, coords = c(\"LINREFX\", \"LINREFY\"), \n                 crs = 25832)\n\nBochum_Unfall_csv &lt;- unfall_csv_sf |&gt;\n    filter(st_contains(d_bochum, unfall_csv_sf, sparse = FALSE)[1,])\n\n\nread_unfaelle &lt;- function(f) {\n  read_csv2(f) |&gt;\n    rename(any_of(c(\n      STRZUSTAND = \"USTRZUSTAND\",\n      STRZUSTAND = \"IstStrassenzustand\" ,\n      OBJECTID = \"OID_\"\n    ))) |&gt;\n    mutate(\n      UWOCHENTAG = wday(as.numeric(UWOCHENTAG), label=T) ,\n      UMONAT = month(as.numeric(UMONAT), label=T)\n    )\n}\n\ndata &lt;- list.files(path=\"data\", pattern = \"\\\\.csv$\",full.names=T) |&gt;\n  map(read_unfaelle) |&gt;\n  list_rbind()\n\n\ndata_sf &lt;-st_as_sf(data, coords = c(\"LINREFX\", \"LINREFY\"), \n                 crs = 25832)\n\nBochum_Unfall &lt;- data_sf |&gt;\n    filter(st_contains(d_bochum, data_sf, sparse = FALSE)[1,])\n\nBochum_tbl &lt;- Bochum_Unfall %&gt;% \n  group_by(UJAHR) %&gt;% \n  summarise(PKWUnfall = sum(IstPKW == \"1\") , Radunfall = sum(IstRad == \"1\") , Fussunfall = sum(IstFuss == \"1\")) %&gt;%\n  st_drop_geometry() %&gt;%\n  rename(Jahr = \"UJAHR\")",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Sicherheitsanalyse von Verkehrsnetzen</span>"
+    ]
+  }
+]

@@ -1,7 +1,13 @@
-*_files/
+unfaelle_shiny_files/
 .Rhistory
 .RData
 .RDataTmp
 *.html
 /data/geo
 /data/shp
+.Rproj.user
+*.Rproj
+csv/
+
+/.quarto/
+*site_libs/
