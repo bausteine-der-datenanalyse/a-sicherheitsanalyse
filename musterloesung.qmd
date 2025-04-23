@@ -2,6 +2,7 @@
 title: "Musterlösung"
 format: html
 ---
+
 ```{r}
 #| include: false
 library(ggplot2)
@@ -18,7 +19,9 @@ library(shiny)
 
 # Daten einlesen und aufbereiten
 
+
 Deutschlandkarte:
+
 ```{r}
 d_de <- gisco_get_nuts(country = "Germany", nuts_level = 0, resolution = 03)
 ```
@@ -42,6 +45,7 @@ nullpunkte <- read_sf("data/geo/BFStr_Netz_NP.geojson")
 ```
 
 Streckenabschnitte A43:
+
 ```{r}
 a43 <- strecke |>
   filter(Str_Kennung == "A43" & Sk_Achse == "Hauptachse") |>
@@ -49,6 +53,7 @@ a43 <- strecke |>
 ```
 
 Streckenabschnitte Deutschland:
+
 ```{r}
 strecke_de <- strecke |>
   filter(Str_Klasse_kurz == "A" & Sk_Achse == "Hauptachse") |>
@@ -175,8 +180,8 @@ ggplot () +
 
 ## Aufgabe 2
 
-Hinweis: Verwendet aufbereitete Unfalldaten aus vorheriger Aufgabe! 
- 
+Hinweis: Verwendet aufbereitete Unfalldaten aus vorheriger Aufgabe!
+
 ### Mit `ggplot`
 
 Ausgewählte Autobahn:
@@ -204,7 +209,6 @@ ggplot () +
   labs(title = "Verkehrsunfalltypen der A43 im Jahr 2022", color = "Unfalltypen", size = "Unfallkategorie") +
  theme(plot.title = element_text(size=10))
 ```
-
 
 ### Mit `leaflet`
 
@@ -245,4 +249,5 @@ leaflet(unfaelle_de_autobahn) %>%
 
 ## Aufgabe 4
 
-Siehe Dokument unfaelle_shiny.qmd
+Siehe Dokument unfaelle_shiny.qmd  
+
