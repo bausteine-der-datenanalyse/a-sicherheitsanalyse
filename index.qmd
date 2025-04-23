@@ -35,6 +35,8 @@ BibTeX-Vorlage
 
 ## Voraussetzungen
 
+Teständerung
+
 Zum erfolgreichen Bearbeiten dieses Anwendungsbausteins benötigen Sie die Inhalte des Methodenbausteins Grundlagen der Statistik \[Referenz\] und des Werkzeugbausteins Datenmanagements \[Referenz\]
 
 ## Lernziele
