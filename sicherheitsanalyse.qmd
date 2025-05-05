@@ -1,24 +1,9 @@
 ---
 title: "Sicherheitsanalyse von Verkehrsnetzen"
 format: html
-editor: visual
-author:
-  - Lukas Arnold
-  - Simone Arnold
-  - Florian Bagemihl
-  - Matthias Baitsch
-  - Marc Fehr
-  - Maik Poetzsch
-  - Sebastian Seipel
+execute:
+  cache: true
 ---
-
-:::: {#Lizenz .border}
-::: {layout="[20, 80]" layout-valign="center"}
-![](https://mirrors.creativecommons.org/presskit/buttons/88x31/png/by.png)
-
-Bausteine Computergestützter Datenanalyse. Anwendungsbaustein "Sicherheitsanalyse von Verkehrsnetzen" von Lukas Arnold, Simone Arnold, Florian Bagemihl, Matthias Baitsch, Marc Fehr, Maik Poetzsch und Sebastian Seipel ist lizensiert unter [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/deed.de). Das Werk ist abrufbar unter \<*Platzhalter*\>. Ausgenommen von der Lizenz sind alle Logos und anders gekennzeichneten Inhalte. 2024
-:::
-::::
 
 ```{r}
 #| include: false
@@ -32,6 +17,7 @@ library(osmdata)
 library(giscoR)
 library(leaflet)
 library(shiny)
+library(htmltools)
 ```
 
 Daten der Bundesinformationssystem Straße (BISStra) für Straßennetz: <https://www.bast.de/DE/Verkehrstechnik/Fachthemen/v2-bisstra.html>
@@ -113,7 +99,6 @@ ggplot () +
   labs(title = "Anzahl der Verkehrsunfälle nach Abschnitten der A43 im Jahr 2022",
        color = "Anzahl Verkehrsunfälle") +
  theme(plot.title = element_text(size=10))
-#ggsave("unfall_a43.pdf")
 ```
 
 ### Gesamtdeutschland
@@ -179,7 +164,6 @@ ggplot () +
   labs(title = "Anzahl der Verkehrsunfälle nach Abschnitten der BAB im Jahr 2022",
        color = "Anzahl Verkehrsunfälle") +
  theme(plot.title = element_text(size=10))
-#ggsave("unfall.pdf")
 ```
 
 ## Zählstelle als sf
@@ -249,7 +233,6 @@ ggplot () +
   labs(title = "Unfallraten nach Abschnitten der A43 im Jahr 2022",
        color = "Unfallrate") +
  theme(plot.title = element_text(size=10))
-#ggsave("unfall_a43_2.pdf")
 ```
 
 ## Unfalltypenkarten
@@ -269,7 +252,6 @@ ggplot () +
   scale_size_manual(values = c("2" = 1.33, "3"=1)) +
   labs(title = "Verkehrsunfalltypen der A43 im Jahr 2022", color = "Unfalltypen" , size = "Unfallkategorien") +
  theme(plot.title = element_text(size=10))
-#ggsave("unfalltyp_a43.pdf")
 ```
 
 ### Deutschland
@@ -284,7 +266,6 @@ ggplot () +
   scale_size_manual(values = c("1" = 0.04,"2" = 0.04, "3"=0.03)) +
   labs(title = "Verkehrsunfalltypen der A43 im Jahr 2022", color = "Unfalltypen", size = "Unfallkategorie") +
  theme(plot.title = element_text(size=10))
-#ggsave("unfalltyp_de.pdf")
 ```
 
 ## Unfalldaten von 3 Jahren laden
@@ -388,12 +369,54 @@ leaflet(Bochum_Unfall) %>%
 Unfälle im Umkreis zählen:
 
 ```{r}
-bo_dist <- as_tibble(st_distance(Bochum_Unfall_3J))
+bo_dist <- as_tibble(st_distance(Bochum_Unfall_3J))%>%
+  mutate_all(as.numeric)
 
-# bo_dist2 = bo_dist %>%  
-# 	rowwise() %>% 
-#   mutate(unfaelle_nah = sum((c_across(1:2768))))
+bo_dist_3 <- bo_dist %>% 
+  mutate(sum_unfall = rowSums(. <= 25) - 1)
+
+bo_dist_anzahl <- bo_dist_3 %>%
+  select(sum_unfall)
+
+Test_UHS <- bind_cols(Bochum_Unfall_3J,bo_dist_anzahl) 
+
+Test_UHS_2 <- Test_UHS |>
+  mutate(popup = paste0("Anzahl der Unfälle in der Nähe:", sum_unfall,
+                               "<br/> Unfalltyp:", UTYP1) ,
+         popup_UHS = paste0("Hier liegt eine Unfallhäufungsstelle vor.",
+                               "<br/> Anzahl der Unfälle in der Nähe:", sum_unfall))
 ```
+
+Leaflet Test mehrere Marker
+
+```{r}
+leaflet(Test_UHS_2) %>%   
+  addTiles() %>%
+    addCircleMarkers(lng = ~XGCSWGS84, lat = ~YGCSWGS84,
+                   radius = ~ifelse(UKATEGORIE == "3", 6, 8),
+                   stroke = ~ifelse(UKATEGORIE == "1", TRUE, FALSE), 
+                   fillOpacity = 0.9,
+                   fillColor = ~pal(UTYP1),
+                   color = "black" ,
+                   popup = ~popup) %>%
+  addCircleMarkers(lng = ~XGCSWGS84, lat = ~YGCSWGS84,
+                   radius = ~ifelse(sum_unfall >= "5", 15, 0),
+                   fillOpacity = ~ifelse(sum_unfall >= "5", 0, 0) ,
+                   stroke = ~ifelse(sum_unfall >= "5", TRUE, FALSE),
+                   fillColor = "pink",
+                   color = "black" ,
+                   popup = ~popup_UHS) %>%
+  addMeasure(primaryLengthUnit = "meters") %>%
+  addLegend("bottomright", colors = c("#04B431", "yellow",  "red", "white", "#00BFFF", "orange", "black") ,labels = c("Fahrunfall","Abbiege-Unfall", "Einbiegen/Kreuzen-Unfall", "Überschreiten-Unfall","Unfall durch ruhenden verkehr", "Unfall im Längsverkehr", "Sonstiger Unfall"),title = "Unfalltypen")
+```
+
+
+**Wichtige Anmerkung** 
+
+Der Code funktioniert. Allerdings stellt Leaflet nur einen Punkt bei exakt denselben Koordinaten dar. Beispielsweise mehrere Unfälle an dem Ort "POINT (378618.6 5701196)" stellt nur den aktuellsten Unfall dar.
+
+Gefilterte CSV-Ausgabe für UHS
+Zu der UHS die jeweiligen Unfälle: Liste der Unfälle aufgeben lassen
 
 Mehrere Dateien importieren:
 
