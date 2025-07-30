@@ -116,7 +116,7 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Präambel</span></a>
+ <span class="menu-text">Einleitung</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -134,7 +134,7 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../sicherheitsanalyse.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Sicherheitsanalyse von Verkehrsnetzen</span></span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Ausführliche Erläuterungen zur Musterlösung</span></span></a>
   </div>
 </li>
     </ul>
@@ -150,9 +150,6 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#datenquellen" id="toc-datenquellen" class="nav-link active" data-scroll-target="#datenquellen"><span class="header-section-number">2</span> Datenquellen</a>
   <ul class="collapse">
   <li><a href="#aufgabe-1-unfalldichte-und-unfallrate" id="toc-aufgabe-1-unfalldichte-und-unfallrate" class="nav-link" data-scroll-target="#aufgabe-1-unfalldichte-und-unfallrate"><span class="header-section-number">2.1</span> Aufgabe 1 : Unfalldichte und Unfallrate</a></li>
-  <li><a href="#aufgabe-2-unfalltypenkarte" id="toc-aufgabe-2-unfalltypenkarte" class="nav-link" data-scroll-target="#aufgabe-2-unfalltypenkarte"><span class="header-section-number">2.2</span> Aufgabe 2 : Unfalltypenkarte</a></li>
-  <li><a href="#aufgabe-3-unfallhäufungsstelle" id="toc-aufgabe-3-unfallhäufungsstelle" class="nav-link" data-scroll-target="#aufgabe-3-unfallhäufungsstelle"><span class="header-section-number">2.3</span> Aufgabe 3 : Unfallhäufungsstelle</a></li>
-  <li><a href="#aufgabe-4-interaktive-leaflet-karte-mit-shiny" id="toc-aufgabe-4-interaktive-leaflet-karte-mit-shiny" class="nav-link" data-scroll-target="#aufgabe-4-interaktive-leaflet-karte-mit-shiny"><span class="header-section-number">2.4</span> Aufgabe 4: Interaktive <code>Leaflet</code>-Karte mit <code>Shiny</code></a></li>
   </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/bausteine-der-datenanalyse/a-sicherheitsanalyse/blob/main/aufgabe/aufgaben_sicherheitsanalyse.qmd" class="toc-action"><i class="bi bi-github"></i>Quellcode anzeigen</a></li></ul></div></nav>
@@ -191,29 +188,6 @@ ul.task-list li input[type="checkbox"] {
 <li>Stellen Sie die Unfalldichte von Streckenabschnitten grafisch dar.</li>
 <li>Stellen Sie die Unfallraten von Streckenabschnitten grafisch dar.</li>
 </ul>
-</section>
-<section id="aufgabe-2-unfalltypenkarte" class="level2" data-number="2.2">
-<h2 data-number="2.2" class="anchored" data-anchor-id="aufgabe-2-unfalltypenkarte"><span class="header-section-number">2.2</span> Aufgabe 2 : Unfalltypenkarte</h2>
-<ul>
-<li><p>Erstellen Sie nach den Vorgaben der M Uko eine Unfalltypenkarte für eine ausgewählte Autobahn und für Gesamtdeutschland eine Unfalltypenkarte mit <code>ggplot</code>.</p></li>
-<li><p>Erstellen Sie nach den Vorgaben der M Uko eine Unfalltypenkarte für eine ausgewählte Autobahn und für Gesamtdeutschland eine Unfalltypenkarte mit <code>leaflet</code>.</p></li>
-</ul>
-</section>
-<section id="aufgabe-3-unfallhäufungsstelle" class="level2" data-number="2.3">
-<h2 data-number="2.3" class="anchored" data-anchor-id="aufgabe-3-unfallhäufungsstelle"><span class="header-section-number">2.3</span> Aufgabe 3 : Unfallhäufungsstelle</h2>
-<p>Überprüfen Sie nach den Vorgaben der M Uko Unfallhäufungsstellen für die Stadt Bochum.</p>
-</section>
-<section id="aufgabe-4-interaktive-leaflet-karte-mit-shiny" class="level2" data-number="2.4">
-<h2 data-number="2.4" class="anchored" data-anchor-id="aufgabe-4-interaktive-leaflet-karte-mit-shiny"><span class="header-section-number">2.4</span> Aufgabe 4: Interaktive <code>Leaflet</code>-Karte mit <code>Shiny</code></h2>
-<p>Erstellen Sie eine interaktive Leaflet-Karte der Unfälle in Bochum in Shiny. Die Interaktivität soll folgendermaßen gestaltet werden:</p>
-<ul>
-<li>Wählbare Unfallkategorien</li>
-<li>Wählbare Unfalltypen</li>
-<li>Wählbare Verkehrsbeteiligte</li>
-<li>Wählbare Jahre</li>
-</ul>
-<p>Zusätzlich soll unter der Karte eine Tabelle mit den gewählten Filtern dargestellt werden.</p>
-<p><em>Optional</em> : Ein Download-Button für die gewählten Filtereinstellungen, der eine CSV-Datei erzeugt und herunterlädt.</p>
 
 
 </section>
@@ -642,8 +616,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../index.html" class="pagination-link" aria-label="Präambel">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Präambel</span>
+      <a href="../index.html" class="pagination-link" aria-label="Einleitung">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Einleitung</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">

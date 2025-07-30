@@ -150,7 +150,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Präambel</span></a>
+ <span class="menu-text">Einleitung</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -168,7 +168,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./sicherheitsanalyse.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Sicherheitsanalyse von Verkehrsnetzen</span></span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Ausführliche Erläuterungen zur Musterlösung</span></span></a>
   </div>
 </li>
     </ul>
@@ -187,11 +187,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#unfallrate" id="toc-unfallrate" class="nav-link" data-scroll-target="#unfallrate"><span class="header-section-number">2.1.2</span> Unfallrate</a></li>
   <li><a href="#deutschland-1" id="toc-deutschland-1" class="nav-link" data-scroll-target="#deutschland-1"><span class="header-section-number">2.1.3</span> Deutschland</a></li>
   </ul></li>
-  <li><a href="#aufgabe-2" id="toc-aufgabe-2" class="nav-link" data-scroll-target="#aufgabe-2"><span class="header-section-number">2.2</span> Aufgabe 2</a>
-  <ul class="collapse">
-  <li><a href="#mit-ggplot" id="toc-mit-ggplot" class="nav-link" data-scroll-target="#mit-ggplot"><span class="header-section-number">2.2.1</span> Mit <code>ggplot</code></a></li>
-  <li><a href="#mit-leaflet" id="toc-mit-leaflet" class="nav-link" data-scroll-target="#mit-leaflet"><span class="header-section-number">2.2.2</span> Mit <code>leaflet</code></a></li>
-  </ul></li>
+  <li><a href="#aufgabe-2" id="toc-aufgabe-2" class="nav-link" data-scroll-target="#aufgabe-2"><span class="header-section-number">2.2</span> Aufgabe 2</a></li>
   <li><a href="#aufgabe-3" id="toc-aufgabe-3" class="nav-link" data-scroll-target="#aufgabe-3"><span class="header-section-number">2.3</span> Aufgabe 3</a></li>
   <li><a href="#aufgabe-4" id="toc-aufgabe-4" class="nav-link" data-scroll-target="#aufgabe-4"><span class="header-section-number">2.4</span> Aufgabe 4</a></li>
   </ul>
@@ -370,69 +366,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="aufgabe-2" class="level2" data-number="2.2">
 <h2 data-number="2.2" class="anchored" data-anchor-id="aufgabe-2"><span class="header-section-number">2.2</span> Aufgabe 2</h2>
-<p>Hinweis: Verwendet aufbereitete Unfalldaten aus vorheriger Aufgabe!</p>
-<section id="mit-ggplot" class="level3" data-number="2.2.1">
-<h3 data-number="2.2.1" class="anchored" data-anchor-id="mit-ggplot"><span class="header-section-number">2.2.1</span> Mit <code>ggplot</code></h3>
-<p>Ausgewählte Autobahn:</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="in">ggplot () +</span></span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_sf(data = a43, size = 5) +</span></span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_sf(data = unfaelle_autobahn,mapping = aes(group = UTYP1,color = as.character(UTYP1),size = as.character(UKATEGORIE) )) +</span></span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="in">  scale_colour_manual(values = c("1" = "#04B431","2" = "yellow","3" = "red","4" = "white","5" = "#00BFFF","6" = "orange","7" = "black")) +</span></span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="in">  scale_size_manual(values = c("2" = 1.33, "3"=1)) +</span></span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="in">  labs(title = "Verkehrsunfalltypen der A43 im Jahr 2022", color = "Unfalltypen" , size = "Unfallkategorien") +</span></span>
-<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="in"> theme(plot.title = element_text(size=10))</span></span>
-<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Gesamtdeutschland:</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="in">ggplot () +</span></span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_sf(data = d_de, fill = NA, size = 0.5) +</span></span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_sf(data = strecke_de, size = 5, color = "pink") +</span></span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_sf(data = unfaelle_de_autobahn,</span></span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="in">          mapping = aes(group = UTYP1,color = as.factor(UTYP1),size = as.factor(UKATEGORIE))) +</span></span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="in">  scale_colour_manual(values = c("1" = "#04B431","2" = "yellow","3" = "red","4" = "white","5" = "#00BFFF","6" = "orange","7" = "black")) +</span></span>
-<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a><span class="in">  scale_size_manual(values = c("1" = 0.04,"2" = 0.04, "3"=0.03)) +</span></span>
-<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a><span class="in">  labs(title = "Verkehrsunfalltypen der A43 im Jahr 2022", color = "Unfalltypen", size = "Unfallkategorie") +</span></span>
-<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a><span class="in"> theme(plot.title = element_text(size=10))</span></span>
-<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-<section id="mit-leaflet" class="level3" data-number="2.2.2">
-<h3 data-number="2.2.2" class="anchored" data-anchor-id="mit-leaflet"><span class="header-section-number">2.2.2</span> Mit <code>leaflet</code></h3>
-<p><strong>Palette festlegen</strong></p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="in">pal &lt;- colorFactor(c("#04B431", "yellow",  "red", "white", "#00BFFF", "orange", "black"), domain = c(1,2,3,4,5,6,7))</span></span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Ausgewählte Autobahn:</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="in">leaflet(unfaelle_autobahn) %&gt;%   </span></span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="in">  addTiles() %&gt;%</span></span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="in">    addCircleMarkers(lng = ~XGCSWGS84, lat = ~YGCSWGS84,</span></span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="in">                   radius = ~ifelse(UKATEGORIE == "3", 6, 8),</span></span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="in">                   stroke = ~ifelse(UKATEGORIE == "1", TRUE, FALSE), </span></span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="in">                   fillOpacity = 0.9,</span></span>
-<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a><span class="in">                   fillColor = ~pal(UTYP1),</span></span>
-<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a><span class="in">                   color = "black")</span></span>
-<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Gesamtdeutschland:</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="in">leaflet(unfaelle_de_autobahn) %&gt;% </span></span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="in">  addTiles() %&gt;%</span></span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="in">    addCircleMarkers(lng = ~XGCSWGS84, lat = ~YGCSWGS84,</span></span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="in">                   radius = ~ifelse(UKATEGORIE == "3", 6, 8),</span></span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a><span class="in">                   stroke = ~ifelse(UKATEGORIE == "1", TRUE, FALSE), </span></span>
-<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="in">                   fillOpacity = 0.9,</span></span>
-<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a><span class="in">                   fillColor = ~pal(UTYP1),</span></span>
-<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a><span class="in">                   color = "black")</span></span>
-<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
 </section>
 <section id="aufgabe-3" class="level2" data-number="2.3">
 <h2 data-number="2.3" class="anchored" data-anchor-id="aufgabe-3"><span class="header-section-number">2.3</span> Aufgabe 3</h2>
 </section>
 <section id="aufgabe-4" class="level2" data-number="2.4">
 <h2 data-number="2.4" class="anchored" data-anchor-id="aufgabe-4"><span class="header-section-number">2.4</span> Aufgabe 4</h2>
-<p>Siehe Dokument unfaelle_shiny.qmd</p>
 
 
 </section>
@@ -865,8 +804,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./sicherheitsanalyse.html" class="pagination-link" aria-label="Sicherheitsanalyse von Verkehrsnetzen">
-        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Sicherheitsanalyse von Verkehrsnetzen</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./sicherheitsanalyse.html" class="pagination-link" aria-label="Ausführliche Erläuterungen zur Musterlösung">
+        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Ausführliche Erläuterungen zur Musterlösung</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

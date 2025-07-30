@@ -1,5 +1,5 @@
 ---
-title: "Sicherheitsanalyse von Verkehrsnetzen"
+title: "Ausführliche Erläuterungen zur Musterlösung"
 format: html
 execute:
   cache: true
@@ -40,15 +40,9 @@ Daten einlesen:
 
 ```{r}
 strecke <- read_sf("data/geo/BFStr_Netz_SK.geojson")
-knoten <- read_sf("data/geo/BFStr_Netz_NK.geojson")
-nullpunkte <- read_sf("data/geo/BFStr_Netz_NP.geojson")
 a43 <- strecke |>
   filter(Str_Kennung == "A43" & Sk_Achse == "Hauptachse") |>
   mutate(rownumber = row_number())
-
-
-knotenpunkt <- knoten |>
-  filter(NK_Kennung == "4508362")
 ```
 
 Unfälle filtern:
@@ -166,7 +160,9 @@ ggplot () +
  theme(plot.title = element_text(size=10))
 ```
 
-## Zählstelle als sf
+## Unfallrate: 
+
+Zählstelle als sf
 
 ```{r}
 #| warning: false
@@ -233,235 +229,4 @@ ggplot () +
   labs(title = "Unfallraten nach Abschnitten der A43 im Jahr 2022",
        color = "Unfallrate") +
  theme(plot.title = element_text(size=10))
-```
-
-## Unfalltypenkarten
-
-```{r}
-c_unfalltypen <- c(
-    "#04B431", "yellow",  "red", "white", "#00BFFF", "orange", "black")
-```
-
-### A43
-
-```{r}
-ggplot () +
-  geom_sf(data = a43, size = 5) +
-  geom_sf(data = unfaelle_autobahn,mapping = aes(group = UTYP1,color = as.character(UTYP1),size = as.character(UKATEGORIE) )) +
-  scale_colour_manual(values = c("1" = "#04B431","2" = "yellow","3" = "red","4" = "white","5" = "#00BFFF","6" = "orange","7" = "black")) +
-  scale_size_manual(values = c("2" = 1.33, "3"=1)) +
-  labs(title = "Verkehrsunfalltypen der A43 im Jahr 2022", color = "Unfalltypen" , size = "Unfallkategorien") +
- theme(plot.title = element_text(size=10))
-```
-
-### Deutschland
-
-```{r}
-ggplot () +
-  geom_sf(data = d_de, fill = NA, size = 0.5) +
-  geom_sf(data = strecke_de, size = 5, color = "pink") +
-  geom_sf(data = unfaelle_de_autobahn,
-          mapping = aes(group = UTYP1,color = as.factor(UTYP1),size = as.factor(UKATEGORIE))) +
-  scale_colour_manual(values = c("1" = "#04B431","2" = "yellow","3" = "red","4" = "white","5" = "#00BFFF","6" = "orange","7" = "black")) +
-  scale_size_manual(values = c("1" = 0.04,"2" = 0.04, "3"=0.03)) +
-  labs(title = "Verkehrsunfalltypen der A43 im Jahr 2022", color = "Unfalltypen", size = "Unfallkategorie") +
- theme(plot.title = element_text(size=10))
-```
-
-## Unfalldaten von 3 Jahren laden
-
-```{r}
-#| warning: false
-unfall_csv23 = read_csv2("data/Unfallorte2023_LinRef.csv") 
-unfaelle_23 <- st_as_sf(unfall_csv23, coords = c("LINREFX", "LINREFY"), 
-                 crs = 25832)
-
-unfall_csv21 = read_csv2("data/Unfallorte2022_LinRef.csv") 
-unfaelle_21 <- st_as_sf(unfall_csv21, coords = c("LINREFX", "LINREFY"), 
-                 crs = 25832)
-```
-
-## Leaflet Interaktive HTML-Karte
-
-Palette festlegen
-
-```{r}
-pal <- colorFactor(c("#04B431", "yellow",  "red", "white", "#00BFFF", "orange", "black"), domain = c(1,2,3,4,5,6,7))
-```
-
-Filter für UK1
-
-```{r}
-unfaelle_de_uk1 <- unfaelle_de_autobahn |>
-  filter(UKATEGORIE == "1")
-```
-
-Unfälle alle BAB im Jahr 2022:
-
-```{r}
-leaflet(unfaelle_de_autobahn) %>% 
-  addTiles() %>%
-    addCircleMarkers(lng = ~XGCSWGS84, lat = ~YGCSWGS84,
-                   radius = ~ifelse(UKATEGORIE == "3", 6, 8),
-                   stroke = ~ifelse(UKATEGORIE == "1", TRUE, FALSE), 
-                   fillOpacity = 0.9,
-                   fillColor = ~pal(UTYP1),
-                   color = "black")
-
-```
-
-Unfälle A43 im Jahr 2022:
-
-```{r}
-leaflet(unfaelle_autobahn) %>%   
-  addTiles() %>%
-    addCircleMarkers(lng = ~XGCSWGS84, lat = ~YGCSWGS84,
-                   radius = ~ifelse(UKATEGORIE == "3", 6, 8),
-                   stroke = ~ifelse(UKATEGORIE == "1", TRUE, FALSE), 
-                   fillOpacity = 0.9,
-                   fillColor = ~pal(UTYP1),
-                   color = "black")
-```
-
-### Bochum Unfälle zur Erstellung einer Unfallhäufungsstelle
-
-Datensätze kombinieren:
-
-```{r}
-
-all_data <- bind_rows(list(unfaelle_21,unfaelle,unfaelle_23))
-
-Unfall_3J <- all_data |>
-  st_zm()
-```
-
-Bochum als Bounding Box:
-
-```{r}
-d_bochum <- gisco_get_nuts(nuts_id = "DEA51", nuts_level = 3, resolution = 03)%>% st_transform(25832)
-
-Unfall_zm <- unfaelle |>
-  st_zm()
-
-Bochum_Unfall <- Unfall_zm |>
-    filter(st_contains(d_bochum, Unfall_zm, sparse = FALSE)[1,])
-
-Bochum_Unfall_3J <- Unfall_3J |>
-    filter(st_contains(d_bochum, Unfall_3J, sparse = FALSE)[1,])
-```
-
-```{r}
-leaflet(Bochum_Unfall) %>%   
-  addTiles() %>%
-    addCircleMarkers(lng = ~XGCSWGS84, lat = ~YGCSWGS84,
-                   radius = ~ifelse(UKATEGORIE == "3", 6, 8),
-                   stroke = ~ifelse(UKATEGORIE == "1", TRUE, FALSE), 
-                   fillOpacity = 0.9,
-                   fillColor = ~pal(UTYP1),
-                   color = "black" ,
-                   popup = ~as.character(UIDENTSTLAE)) %>%
-  addMeasure(primaryLengthUnit = "meters") %>%
-  addLegend("bottomright", colors = c("#04B431", "yellow",  "red", "white", "#00BFFF", "orange", "black") ,labels = c("Fahrunfall","Abbiege-Unfall", "Einbiegen/Kreuzen-Unfall", "Überschreiten-Unfall","Unfall durch ruhenden verkehr", "Unfall im Längsverkehr", "Sonstiger Unfall"),title = "Unfalltypen")
-```
-
-## TO-DO: Unfallhäufungsstellen fertigstellen
-
-Unfälle im Umkreis zählen:
-
-```{r}
-bo_dist <- as_tibble(st_distance(Bochum_Unfall_3J))%>%
-  mutate_all(as.numeric)
-
-bo_dist_3 <- bo_dist %>% 
-  mutate(sum_unfall = rowSums(. <= 25) - 1)
-
-bo_dist_anzahl <- bo_dist_3 %>%
-  select(sum_unfall)
-
-Test_UHS <- bind_cols(Bochum_Unfall_3J,bo_dist_anzahl) 
-
-Test_UHS_2 <- Test_UHS |>
-  mutate(popup = paste0("Anzahl der Unfälle in der Nähe:", sum_unfall,
-                               "<br/> Unfalltyp:", UTYP1) ,
-         popup_UHS = paste0("Hier liegt eine Unfallhäufungsstelle vor.",
-                               "<br/> Anzahl der Unfälle in der Nähe:", sum_unfall))
-```
-
-Leaflet Test mehrere Marker
-
-```{r}
-leaflet(Test_UHS_2) %>%   
-  addTiles() %>%
-    addCircleMarkers(lng = ~XGCSWGS84, lat = ~YGCSWGS84,
-                   radius = ~ifelse(UKATEGORIE == "3", 6, 8),
-                   stroke = ~ifelse(UKATEGORIE == "1", TRUE, FALSE), 
-                   fillOpacity = 0.9,
-                   fillColor = ~pal(UTYP1),
-                   color = "black" ,
-                   popup = ~popup) %>%
-  addCircleMarkers(lng = ~XGCSWGS84, lat = ~YGCSWGS84,
-                   radius = ~ifelse(sum_unfall >= "5", 15, 0),
-                   fillOpacity = ~ifelse(sum_unfall >= "5", 0, 0) ,
-                   stroke = ~ifelse(sum_unfall >= "5", TRUE, FALSE),
-                   fillColor = "pink",
-                   color = "black" ,
-                   popup = ~popup_UHS) %>%
-  addMeasure(primaryLengthUnit = "meters") %>%
-  addLegend("bottomright", colors = c("#04B431", "yellow",  "red", "white", "#00BFFF", "orange", "black") ,labels = c("Fahrunfall","Abbiege-Unfall", "Einbiegen/Kreuzen-Unfall", "Überschreiten-Unfall","Unfall durch ruhenden verkehr", "Unfall im Längsverkehr", "Sonstiger Unfall"),title = "Unfalltypen")
-```
-
-
-**Wichtige Anmerkung** 
-
-Der Code funktioniert. Allerdings stellt Leaflet nur einen Punkt bei exakt denselben Koordinaten dar. Beispielsweise mehrere Unfälle an dem Ort "POINT (378618.6 5701196)" stellt nur den aktuellsten Unfall dar.
-
-Gefilterte CSV-Ausgabe für UHS
-Zu der UHS die jeweiligen Unfälle: Liste der Unfälle aufgeben lassen
-
-Mehrere Dateien importieren:
-
-```{r}
-#| warning: false
-unfall_csv = read_csv2("data/Unfallorte2020_LinRef.csv", locale = locale(encoding = 'iso-8859-1')) 
-
-unfall_csv_sf = st_as_sf(unfall_csv, coords = c("LINREFX", "LINREFY"), 
-                 crs = 25832)
-
-Bochum_Unfall_csv <- unfall_csv_sf |>
-    filter(st_contains(d_bochum, unfall_csv_sf, sparse = FALSE)[1,])
-```
-
-```{r}
-#| warning: false
-read_unfaelle <- function(f) {
-  read_csv2(f) |>
-    rename(any_of(c(
-      STRZUSTAND = "USTRZUSTAND",
-      STRZUSTAND = "IstStrassenzustand" ,
-      OBJECTID = "OID_"
-    ))) |>
-    mutate(
-      UWOCHENTAG = wday(as.numeric(UWOCHENTAG), label=T) ,
-      UMONAT = month(as.numeric(UMONAT), label=T)
-    )
-}
-
-data <- list.files(path="data", pattern = "\\.csv$",full.names=T) |>
-  map(read_unfaelle) |>
-  list_rbind()
-```
-
-```{r}
-#| warning: false
-data_sf <-st_as_sf(data, coords = c("LINREFX", "LINREFY"), 
-                 crs = 25832)
-
-Bochum_Unfall <- data_sf |>
-    filter(st_contains(d_bochum, data_sf, sparse = FALSE)[1,])
-
-Bochum_tbl <- Bochum_Unfall %>% 
-  group_by(UJAHR) %>% 
-  summarise(PKWUnfall = sum(IstPKW == "1") , Radunfall = sum(IstRad == "1") , Fussunfall = sum(IstFuss == "1")) %>%
-  st_drop_geometry() %>%
-  rename(Jahr = "UJAHR")
 ```
