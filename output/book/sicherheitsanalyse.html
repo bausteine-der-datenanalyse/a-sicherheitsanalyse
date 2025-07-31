@@ -180,12 +180,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Inhaltsverzeichnis</h2>
    
   <ul>
-  <li><a href="#unfalldichte" id="toc-unfalldichte" class="nav-link active" data-scroll-target="#unfalldichte"><span class="header-section-number">3.1</span> Unfalldichte</a>
+  <li><a href="#unfallrate" id="toc-unfallrate" class="nav-link active" data-scroll-target="#unfallrate"><span class="header-section-number">3.1</span> Unfallrate</a>
   <ul class="collapse">
   <li><a href="#a43" id="toc-a43" class="nav-link" data-scroll-target="#a43"><span class="header-section-number">3.1.1</span> A43</a></li>
   <li><a href="#gesamtdeutschland" id="toc-gesamtdeutschland" class="nav-link" data-scroll-target="#gesamtdeutschland"><span class="header-section-number">3.1.2</span> Gesamtdeutschland</a></li>
   </ul></li>
-  <li><a href="#unfallrate" id="toc-unfallrate" class="nav-link" data-scroll-target="#unfallrate"><span class="header-section-number">3.2</span> Unfallrate:</a></li>
+  <li><a href="#unfallrate-1" id="toc-unfallrate-1" class="nav-link" data-scroll-target="#unfallrate-1"><span class="header-section-number">3.2</span> Unfallrate:</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/bausteine-der-datenanalyse/a-sicherheitsanalyse/blob/main/sicherheitsanalyse.qmd" class="toc-action"><i class="bi bi-github"></i>Quellcode anzeigen</a></li></ul></div></nav>
     </div>
@@ -213,8 +213,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <p>Daten der Bundesinformationssystem Straße (BISStra) für Straßennetz: <a href="https://www.bast.de/DE/Verkehrstechnik/Fachthemen/v2-bisstra.html" class="uri">https://www.bast.de/DE/Verkehrstechnik/Fachthemen/v2-bisstra.html</a></p>
 <p>Daten für Unfälle vom Unfallatlas: <a href="https://unfallatlas.statistikportal.de/" class="uri">https://unfallatlas.statistikportal.de/</a></p>
-<section id="unfalldichte" class="level2" data-number="3.1">
-<h2 data-number="3.1" class="anchored" data-anchor-id="unfalldichte"><span class="header-section-number">3.1</span> Unfalldichte</h2>
+<section id="unfallrate" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="unfallrate"><span class="header-section-number">3.1</span> Unfallrate</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>unfall_csv <span class="ot">=</span> <span class="fu">read_csv2</span>(<span class="st">"data/Unfallorte2022_LinRef.csv"</span>) </span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>unfaelle <span class="ot">&lt;-</span> <span class="fu">st_as_sf</span>(unfall_csv, <span class="at">coords =</span> <span class="fu">c</span>(<span class="st">"LINREFX"</span>, <span class="st">"LINREFY"</span>), </span>
@@ -258,9 +258,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Verbinden mit Daten der A43:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>a43 <span class="ot">=</span> a43 <span class="sc">|&gt;</span> </span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">left_join</span>(autobahnen_accident_count, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"rownumber"</span> <span class="ot">=</span> <span class="st">"nearest_autobahn_id"</span>))</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">left_join</span>(autobahnen_accident_count, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"rownumber"</span> <span class="ot">=</span> <span class="st">"nearest_autobahn_id"</span>))</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>a43 <span class="ot">&lt;-</span> <span class="fu">replace</span>(a43, <span class="fu">is.na</span>(a43), <span class="dv">0</span>)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Plotten:</p>
+<p>Reine deskriptive Darstellung aller Unfälle Plotten:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span> () <span class="sc">+</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> a43, <span class="at">size =</span> <span class="dv">2</span>, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">color =</span> Anzahl_U_G)) <span class="sc">+</span></span>
@@ -339,8 +341,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </section>
 </section>
-<section id="unfallrate" class="level2" data-number="3.2">
-<h2 data-number="3.2" class="anchored" data-anchor-id="unfallrate"><span class="header-section-number">3.2</span> Unfallrate:</h2>
+<section id="unfallrate-1" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="unfallrate-1"><span class="header-section-number">3.2</span> Unfallrate:</h2>
 <p>Zählstelle als sf</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>d_Jawe <span class="ot">&lt;-</span> <span class="fu">read_csv2</span>(<span class="st">"data/zs/Jawe2022.csv"</span>, <span class="at">locale =</span> <span class="fu">locale</span>(<span class="at">encoding =</span> <span class="st">'iso-8859-1'</span>))</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>

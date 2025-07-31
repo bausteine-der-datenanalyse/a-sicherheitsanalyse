@@ -24,7 +24,7 @@ Daten der Bundesinformationssystem Straße (BISStra) für Straßennetz: <https:/
 
 Daten für Unfälle vom Unfallatlas: <https://unfallatlas.statistikportal.de/>
 
-## Unfalldichte
+## Unfallrate
 
 ```{r}
 #| warning: false
@@ -82,9 +82,11 @@ Verbinden mit Daten der A43:
 ```{r}
 a43 = a43 |> 
 	left_join(autobahnen_accident_count, by = c("rownumber" = "nearest_autobahn_id"))
+
+a43 <- replace(a43, is.na(a43), 0)
 ```
 
-Plotten:
+Reine deskriptive Darstellung aller Unfälle Plotten:
 
 ```{r}
 ggplot () +
