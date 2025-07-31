@@ -9,7 +9,11 @@ Die statistischen Ämter des Bundes und der Länder erheben und veröffentlichen
 
 Verwenden Sie für das Straßennetz die Daten des Bundesinformationssystems Straße (BISStra) der Bundesanstalt für Straßen- und Verkehrswesen (BAST): <https://www.bast.de/DE/Verkehrstechnik/Fachthemen/v2-bisstra.html>
 
-## Aufgabe 1 : Unfalldichte und Unfallrate
+## Aufgabe 1 : Unfälle zählen
+
+Stellen Sie eine rein deskriptive Übersicht über die Unfallanzahl einer beliebigen Autobahn und für Gesamtdeutschland dar.
+
+## Aufgabe 2 : Unfalldichte und Unfallrate
 
 Bearbeiten Sie die folgende Aufgabenstellung sowohl für eine ausgewählte Autobahn als auch für Gesamtdeutschland:
 

@@ -2,7 +2,7 @@
 title: "Ausführliche Erläuterungen zur Musterlösung"
 format: html
 execute:
-  cache: true
+  cache: false
 ---
 
 ```{r}
@@ -24,7 +24,7 @@ Daten der Bundesinformationssystem Straße (BISStra) für Straßennetz: <https:/
 
 Daten für Unfälle vom Unfallatlas: <https://unfallatlas.statistikportal.de/>
 
-## Unfallrate
+## Unfälle zählen
 
 ```{r}
 #| warning: false
@@ -97,6 +97,17 @@ ggplot () +
  theme(plot.title = element_text(size=10))
 ```
 
+*Barrierefreiheit Plot-Test*
+
+```{r}
+ggplot () +
+  geom_sf(data = a43, size = 2, mapping = aes(color = Anzahl_U_G)) +
+  scale_color_viridis_b(direction = -1, breaks = seq(2,14,2)) +
+  labs(title = "Anzahl der Verkehrsunfälle nach Abschnitten der A43 im Jahr 2022",
+       color = "Anzahl Verkehrsunfälle") +
+ theme(plot.title = element_text(size=10))
+```
+
 ### Gesamtdeutschland
 
 ```{r}
@@ -144,6 +155,8 @@ strecke_de = strecke_de |>
 
 strecke_de = strecke_de |>
   mutate(UD = (Anzahl_U_G)/(Sk_Laenge_km))
+
+strecke_de <- replace(strecke_de, is.na(strecke_de), 0)
 ```
 
 Plotten:
@@ -162,7 +175,7 @@ ggplot () +
  theme(plot.title = element_text(size=10))
 ```
 
-## Unfallrate: 
+## Unfallrate und Unfalldichten: 
 
 Zählstelle als sf
 
@@ -216,13 +229,26 @@ d_Jawe_sf2 = d_Jawe_sf |>
 	select(DZ_Nr, nearest_autobahn_id, DTV_Kfz_MobisSo_Q, !geometry)
 ```
 
-**TO-DO**:Unfallrate-Formel richtig machen
+**TO-DO**: Sinnhaftigkeit klären
 
 ```{r}
 a43_2 = a43 |> 
 	left_join(d_Jawe_sf2, by = c("rownumber" = "nearest_autobahn_id")) |>
   mutate(UR = (10^6*Anzahl_U_G)/ (DTV_Kfz_MobisSo_Q * Sk_Laenge_km), UD = (Anzahl_U_G)/(Sk_Laenge_km))
 ```
+
+*Unfalldichte Plot*
+
+```{r}
+ggplot () +
+  geom_sf(data = a43_2, size = 2, mapping = aes(color = UD)) +
+  scale_color_viridis_b(direction = -1) +
+  labs(title = "Unfalldichten nach Abschnitten der A43 im Jahr 2022",
+       color = "Unfalldichte") +
+ theme(plot.title = element_text(size=10))
+```
+
+*Unfallrate Plot*
 
 ```{r}
 ggplot () +
