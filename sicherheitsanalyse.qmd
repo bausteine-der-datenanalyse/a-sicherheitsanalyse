@@ -231,10 +231,17 @@ d_Jawe_sf2 = d_Jawe_sf |>
 
 **TO-DO**: Sinnhaftigkeit klären
 
+*Variable für Anzahl der Jahre festlegen*
+
+```{r}
+t = 1
+```
+
+
 ```{r}
 a43_2 = a43 |> 
 	left_join(d_Jawe_sf2, by = c("rownumber" = "nearest_autobahn_id")) |>
-  mutate(UR = (10^6*Anzahl_U_G)/ (DTV_Kfz_MobisSo_Q * Sk_Laenge_km), UD = (Anzahl_U_G)/(Sk_Laenge_km))
+  mutate(UR = (10^6*Anzahl_U_G)/ (365*DTV_Kfz_MobisSo_Q * Sk_Laenge_km* t), UD = (Anzahl_U_G)/(Sk_Laenge_km))
 ```
 
 *Unfalldichte Plot*
