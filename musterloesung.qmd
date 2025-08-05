@@ -43,8 +43,6 @@ Streckenabschnitte:
 
 ```{{r}}
 strecke <- read_sf("data/geo/BFStr_Netz_SK.geojson")
-knoten <- read_sf("data/geo/BFStr_Netz_NK.geojson")
-nullpunkte <- read_sf("data/geo/BFStr_Netz_NP.geojson")
 ```
 
 Streckenabschnitte A43:
@@ -63,7 +61,61 @@ strecke_de <- strecke |>
   mutate(rownumber = row_number())
 ```
 
-## Aufgabe 1
+## Aufgabe 1 : Unfälle zählen
+
+Unfälle filtern:
+
+```{{r}}
+unfaelle_43 = unfaelle %>%
+	# find out which autobahn is closest by
+	mutate(nearest_autobahn_id = st_nearest_feature(st_zm(.), a43)) %>% 
+	# calculate distance to closest autobahn
+	mutate(nearest_autobahn_distance = st_distance(st_zm(.), a43[nearest_autobahn_id, ], by_element = TRUE))
+```
+
+Alles nicht in der Nähe von A43 raus:
+
+```{{r}}
+unfaelle_autobahn = unfaelle_43 |> 
+	filter(as.double(nearest_autobahn_distance) <= 15) |>
+  st_zm()
+```
+
+Unfälle zählen:
+
+```{{r}}
+autobahnen_accident_count = unfaelle_autobahn %>% 
+	as_tibble() %>% 
+	select(-geometry) %>%
+	count(nearest_autobahn_id, UKATEGORIE) %>% 
+  spread(UKATEGORIE, n) %>%
+  rename(Anzahl_UK2 = `2`, Anzahl_UK3 = `3`) %>%
+  replace(is.na(.), 0) %>%
+  mutate(Anzahl_U_G = Anzahl_UK2 + Anzahl_UK3)
+# Hier gehören eigentlich noch Unfaelle nach Kategorie 1 rein
+```
+
+Verbinden mit Daten der A43:
+
+```{{r}}
+a43 = a43 |> 
+	left_join(autobahnen_accident_count, by = c("rownumber" = "nearest_autobahn_id"))
+
+a43 <- replace(a43, is.na(a43), 0)
+```
+
+Anzahl der Unfälle in `ggplot` plotten:
+
+```{{r}}
+ggplot () +
+  geom_sf(data = a43, size = 2, mapping = aes(color = Anzahl_U_G)) +
+  scale_color_viridis_b(direction = -1, breaks = seq(2,14,2)) +
+  labs(title = "Anzahl der Verkehrsunfälle nach Abschnitten der A43 im Jahr 2022",
+       color = "Anzahl Verkehrsunfälle") +
+ theme(plot.title = element_text(size=10))
+```
+
+## Aufgabe 2
 
 ### Unfalldichte
 
@@ -180,11 +232,6 @@ ggplot () +
 
 ### Deutschland
 
-## Aufgabe 2
-
-## Aufgabe 3
-
-## Aufgabe 4
 
 
 

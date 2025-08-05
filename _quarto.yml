@@ -3,7 +3,7 @@ project:
   output-dir: output/book/
 
 book:
-  title: "a-sicherheitsanalyse"
+  title: "Anwendungsbaustein Sicherheitsanalyse"
   author:
     - Lukas Arnold
     - Simone Arnold
