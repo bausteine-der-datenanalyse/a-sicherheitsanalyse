@@ -74,7 +74,7 @@ autobahnen_accident_count = unfaelle_autobahn %>%
   rename(Anzahl_UK2 = `2`, Anzahl_UK3 = `3`) %>%
   replace(is.na(.), 0) %>%
   mutate(Anzahl_U_G = Anzahl_UK2 + Anzahl_UK3)
-# Hier gehören eigentlich noch Unfaelle nach Kategorie 1 rein
+# Hier gehören eigentlich noch Unfaelle nach Kategorie 1 dazu. Gibt es aber in diesem Jahr auf der A43 nicht, also kann die Variable nicht erzeugt werden.
 ```
 
 Verbinden mit Daten der A43:
@@ -177,6 +177,8 @@ ggplot () +
 
 ## Unfallrate und Unfalldichten: 
 
+### A43
+
 Zählstelle als sf
 
 ```{r}
@@ -229,7 +231,7 @@ d_Jawe_sf2 = d_Jawe_sf |>
 	select(DZ_Nr, nearest_autobahn_id, DTV_Kfz_MobisSo_Q, !geometry)
 ```
 
-**TO-DO**: Sinnhaftigkeit klären
+**TO-DO / Frage an Sebastian**: Sind die Werte realistisch?
 
 *Variable für Anzahl der Jahre festlegen*
 
@@ -244,7 +246,7 @@ a43_2 = a43 |>
   mutate(UR = (10^6*Anzahl_U_G)/ (365*DTV_Kfz_MobisSo_Q * Sk_Laenge_km* t), UD = (Anzahl_U_G)/(Sk_Laenge_km))
 ```
 
-*Unfalldichte Plot*
+*Unfalldichte Plot A43*
 
 ```{r}
 ggplot () +
@@ -255,11 +257,116 @@ ggplot () +
  theme(plot.title = element_text(size=10))
 ```
 
-*Unfallrate Plot*
+*Unfallrate Plot A43*
 
 ```{r}
 ggplot () +
   geom_sf(data = a43_2, size = 2, mapping = aes(color = UR)) +
+  scale_color_distiller(palette = 8 , direction = 1) +
+  labs(title = "Unfallraten nach Abschnitten der A43 im Jahr 2022",
+       color = "Unfallrate") +
+ theme(plot.title = element_text(size=10))
+```
+
+
+### Vergleich mit mehr Daten/anderer Autobahn**
+
+*Unfalldaten einlesen und bearbeiten*
+
+```{r}
+a3 <- strecke |>
+  filter(Str_Kennung == "A3" & Sk_Achse == "Hauptachse") |>
+  mutate(rownumber = row_number())
+```
+
+Unfälle filtern:
+
+```{r}
+unfaelle_3 = unfaelle %>%
+	# find out which autobahn is closest by
+	mutate(nearest_autobahn_id = st_nearest_feature(st_zm(.), a3)) %>% 
+	# calculate distance to closest autobahn
+	mutate(nearest_autobahn_distance = st_distance(st_zm(.), a3[nearest_autobahn_id, ], by_element = TRUE))
+```
+
+```{r}
+unfaelle_autobahn_a3 = unfaelle_3 |> 
+	filter(as.double(nearest_autobahn_distance) <= 15) |>
+  st_zm()
+```
+
+Unfälle zählen:
+
+```{r}
+autobahnen_accident_count_a3 = unfaelle_autobahn_a3 %>% 
+	as_tibble() %>% 
+	select(-geometry) %>%
+	count(nearest_autobahn_id, UKATEGORIE) %>% 
+  spread(UKATEGORIE, n) %>%
+  rename(Anzahl_UK1 = `1`,Anzahl_UK2 = `2`, Anzahl_UK3 = `3`) %>%
+  replace(is.na(.), 0) %>%
+  mutate(Anzahl_U_G = Anzahl_UK1 +Anzahl_UK2 + Anzahl_UK3)
+```
+
+Verbinden mit Daten der A3:
+
+```{r}
+a3 = a3 |> 
+	left_join(autobahnen_accident_count_a3, by = c("rownumber" = "nearest_autobahn_id"))
+
+a3 <- replace(a3, is.na(a3), 0)
+```
+
+*Zählstellendaten einlesen und verarbeiten*
+
+```{r}
+d_Jawe_a3 = st_as_sf(d_Jawe, coords =  c("Koor_UTM32_E", "Koor_UTM32_N"),  crs = 25832)
+```
+
+Exemplarisch nur Werte der A43, die auch vorhanden sind. Blöderweise nur noch 1 Wert über.
+
+```{r}
+d_Jawe_a3 <- d_Jawe_a3 |>
+  filter(Str_Kl == "A" & Str_Nr == "3") |>
+  drop_na(DTV_Kfz_MobisSo_Q)
+```
+
+```{r}
+d_Jawe_a3 = d_Jawe_a3 %>%
+	# find out which autobahn is closest by
+	mutate(nearest_autobahn_id = st_nearest_feature(st_zm(.), a3))%>% 
+	# calculate distance to closest autobahn
+	mutate(nearest_autobahn_distance = st_distance(st_zm(.), a3[nearest_autobahn_id, ], by_element = TRUE))
+```
+
+```{r}
+d_Jawe_a3_2 = d_Jawe_a3 |>
+  as_tibble() |>
+	select(DZ_Nr, nearest_autobahn_id, DTV_Kfz_MobisSo_Q, !geometry)
+```
+
+```{r}
+a3_2 = a3 |> 
+	left_join(d_Jawe_a3_2, by = c("rownumber" = "nearest_autobahn_id")) |>
+  mutate(UR = (10^6*Anzahl_U_G)/ (365*DTV_Kfz_MobisSo_Q * Sk_Laenge_km* t), UD = (Anzahl_U_G)/(Sk_Laenge_km))
+```
+
+*Unfalldichte Plot A3*
+
+```{r}
+ggplot () +
+  geom_sf(data = a3_2, size = 2, mapping = aes(color = UD)) +
+  scale_color_viridis_b(direction = -1) +
+  labs(title = "Unfalldichten nach Abschnitten der A43 im Jahr 2022",
+       color = "Unfalldichte") +
+ theme(plot.title = element_text(size=10))
+```
+
+*Unfallrate Plot A3*
+
+```{r}
+ggplot () +
+  geom_sf(data = a3_2, size = 2, mapping = aes(color = UR)) +
   scale_color_distiller(palette = 8 , direction = 1) +
   labs(title = "Unfallraten nach Abschnitten der A43 im Jahr 2022",
        color = "Unfallrate") +
