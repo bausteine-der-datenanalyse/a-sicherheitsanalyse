@@ -269,7 +269,7 @@ ggplot () +
 ```
 
 
-### Vergleich mit mehr Daten/anderer Autobahn**
+### Vergleich mit mehr Daten/anderer Autobahn
 
 *Unfalldaten einlesen und bearbeiten*
 
@@ -357,7 +357,7 @@ a3_2 = a3 |>
 ggplot () +
   geom_sf(data = a3_2, size = 2, mapping = aes(color = UD)) +
   scale_color_viridis_b(direction = -1) +
-  labs(title = "Unfalldichten nach Abschnitten der A43 im Jahr 2022",
+  labs(title = "Unfalldichten nach Abschnitten der A3 im Jahr 2022",
        color = "Unfalldichte") +
  theme(plot.title = element_text(size=10))
 ```
@@ -368,7 +368,7 @@ ggplot () +
 ggplot () +
   geom_sf(data = a3_2, size = 2, mapping = aes(color = UR)) +
   scale_color_distiller(palette = 8 , direction = 1) +
-  labs(title = "Unfallraten nach Abschnitten der A43 im Jahr 2022",
+  labs(title = "Unfallraten nach Abschnitten der A3 im Jahr 2022",
        color = "Unfallrate") +
  theme(plot.title = element_text(size=10))
 ```

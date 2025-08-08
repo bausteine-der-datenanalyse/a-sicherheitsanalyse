@@ -188,7 +188,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#unfallrate-und-unfalldichten" id="toc-unfallrate-und-unfalldichten" class="nav-link" data-scroll-target="#unfallrate-und-unfalldichten"><span class="header-section-number">3.2</span> Unfallrate und Unfalldichten:</a>
   <ul class="collapse">
   <li><a href="#a43-1" id="toc-a43-1" class="nav-link" data-scroll-target="#a43-1"><span class="header-section-number">3.2.1</span> A43</a></li>
-  <li><a href="#vergleich-mit-mehr-datenanderer-autobahn" id="toc-vergleich-mit-mehr-datenanderer-autobahn" class="nav-link" data-scroll-target="#vergleich-mit-mehr-datenanderer-autobahn"><span class="header-section-number">3.2.2</span> Vergleich mit mehr Daten/anderer Autobahn**</a></li>
+  <li><a href="#vergleich-mit-mehr-datenanderer-autobahn" id="toc-vergleich-mit-mehr-datenanderer-autobahn" class="nav-link" data-scroll-target="#vergleich-mit-mehr-datenanderer-autobahn"><span class="header-section-number">3.2.2</span> Vergleich mit mehr Daten/anderer Autobahn</a></li>
   </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/bausteine-der-datenanalyse/a-sicherheitsanalyse/blob/main/sicherheitsanalyse.qmd" class="toc-action"><i class="bi bi-github"></i>Quellcode anzeigen</a></li></ul></div></nav>
@@ -449,7 +449,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </section>
 <section id="vergleich-mit-mehr-datenanderer-autobahn" class="level3" data-number="3.2.2">
-<h3 data-number="3.2.2" class="anchored" data-anchor-id="vergleich-mit-mehr-datenanderer-autobahn"><span class="header-section-number">3.2.2</span> Vergleich mit mehr Daten/anderer Autobahn**</h3>
+<h3 data-number="3.2.2" class="anchored" data-anchor-id="vergleich-mit-mehr-datenanderer-autobahn"><span class="header-section-number">3.2.2</span> Vergleich mit mehr Daten/anderer Autobahn</h3>
 <p><em>Unfalldaten einlesen und bearbeiten</em></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>a3 <span class="ot">&lt;-</span> strecke <span class="sc">|&gt;</span></span>
@@ -519,7 +519,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span> () <span class="sc">+</span></span>
 <span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> a3_2, <span class="at">size =</span> <span class="dv">2</span>, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">color =</span> UD)) <span class="sc">+</span></span>
 <span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_viridis_b</span>(<span class="at">direction =</span> <span class="sc">-</span><span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Unfalldichten nach Abschnitten der A43 im Jahr 2022"</span>,</span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Unfalldichten nach Abschnitten der A3 im Jahr 2022"</span>,</span>
 <span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">color =</span> <span class="st">"Unfalldichte"</span>) <span class="sc">+</span></span>
 <span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a> <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">10</span>))</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -535,7 +535,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span> () <span class="sc">+</span></span>
 <span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> a3_2, <span class="at">size =</span> <span class="dv">2</span>, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">color =</span> UR)) <span class="sc">+</span></span>
 <span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_distiller</span>(<span class="at">palette =</span> <span class="dv">8</span> , <span class="at">direction =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Unfallraten nach Abschnitten der A43 im Jahr 2022"</span>,</span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Unfallraten nach Abschnitten der A3 im Jahr 2022"</span>,</span>
 <span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">color =</span> <span class="st">"Unfallrate"</span>) <span class="sc">+</span></span>
 <span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a> <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">10</span>))</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
