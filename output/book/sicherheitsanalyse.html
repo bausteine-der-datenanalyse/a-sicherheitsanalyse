@@ -264,7 +264,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>a43 <span class="ot">=</span> a43 <span class="sc">|&gt;</span> </span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">left_join</span>(autobahnen_accident_count, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"rownumber"</span> <span class="ot">=</span> <span class="st">"nearest_autobahn_id"</span>))</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>a43 <span class="ot">&lt;-</span> <span class="fu">replace</span>(a43, <span class="fu">is.na</span>(a43), <span class="dv">0</span>)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co">#a43 &lt;- replace(a43, is.na(a43), 0)</span></span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Reine deskriptive Darstellung aller Unfälle Plotten:</p>
 <div class="cell">
@@ -485,7 +485,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>a3 <span class="ot">=</span> a3 <span class="sc">|&gt;</span> </span>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">left_join</span>(autobahnen_accident_count_a3, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"rownumber"</span> <span class="ot">=</span> <span class="st">"nearest_autobahn_id"</span>))</span>
 <span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>a3 <span class="ot">&lt;-</span> <span class="fu">replace</span>(a3, <span class="fu">is.na</span>(a3), <span class="dv">0</span>)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a><span class="co">#a3 &lt;- replace(a3, is.na(a3), 0)</span></span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><em>Zählstellendaten einlesen und verarbeiten</em></p>
 <div class="cell">

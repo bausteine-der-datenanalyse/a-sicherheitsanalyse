@@ -83,7 +83,7 @@ Verbinden mit Daten der A43:
 a43 = a43 |> 
 	left_join(autobahnen_accident_count, by = c("rownumber" = "nearest_autobahn_id"))
 
-a43 <- replace(a43, is.na(a43), 0)
+#a43 <- replace(a43, is.na(a43), 0)
 ```
 
 Reine deskriptive Darstellung aller Unfälle Plotten:
@@ -314,7 +314,7 @@ Verbinden mit Daten der A3:
 a3 = a3 |> 
 	left_join(autobahnen_accident_count_a3, by = c("rownumber" = "nearest_autobahn_id"))
 
-a3 <- replace(a3, is.na(a3), 0)
+#a3 <- replace(a3, is.na(a3), 0)
 ```
 
 *Zählstellendaten einlesen und verarbeiten*
