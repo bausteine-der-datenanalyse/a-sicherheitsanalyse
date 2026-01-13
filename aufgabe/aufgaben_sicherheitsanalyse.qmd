@@ -7,15 +7,35 @@ format: html
 
 Die statistischen Ämter des Bundes und der Länder erheben und veröffentlichen mit der Straßenverkehrsunfallstatistik die Verkehrsunfälle mit Personenschaden oder Sachschaden in Deutschland. Im [Unfallatlas](https://unfallatlas.statistikportal.de/) werden Unfälle mit Personenschaden geführt. Für die Sicherheitsanalyse von Verkehrsnetzen können diese Daten verwendet und analysiert werden.
 
-Verwenden Sie für das Straßennetz die Daten des Bundesinformationssystems Straße (BISStra) der Bundesanstalt für Straßen- und Verkehrswesen (BAST): <https://www.bast.de/DE/Verkehrstechnik/Fachthemen/v2-bisstra.html>
+Verwenden Sie für das Straßennetz die Daten des Bundesinformationssystems Straße (BISStra) der Bundesanstalt für Straßen- und Verkehrswesen (BASt).
 
-## Aufgabe 1 : Unfälle zählen
+Die durchschnittliche Verkehrsstärke (DTV) auf Autobahnen kann ebenfalls über die BASt unter dem Stichwort "Dauerzählstellen" bezogen werden. 
 
-Stellen Sie eine rein deskriptive Übersicht über die Unfallanzahl einer beliebigen Autobahn und für Gesamtdeutschland dar.
+Die Formeln der Kenngrößen für die Sicherheitsbewertung werden den Empfehlungen für die Sicherheitsanalyse von Straßennetzen (ESN) (2003) und dem Merkblatt zur Örtlichen Unfalluntersuchung in Unfallkommissionen (M Uko) (2012) der Forschungsgesellschaft für Straßen- und Verkehrswesen (FGSV) entnommen.
 
-## Aufgabe 2 : Unfalldichte und Unfallrate
+To-Do: Stadtstraßen: OSM, Verkehrsstärken
 
-Bearbeiten Sie die folgende Aufgabenstellung sowohl für eine ausgewählte Autobahn als auch für Gesamtdeutschland:
+## Aufgabe 1 : Anzahl der Verkehrsunfälle
 
-- Stellen Sie die Unfallraten von Streckenabschnitten grafisch dar.
-- Stellen Sie die Unfalldichten von Streckenabschnitten grafisch dar.
+Erstellen Sie eine tabellarische Übersicht der Unfallzahlen nach Unfallkategorie für eine ausgewählte Autobahn und für Gesamtdeutschland in einem frei wählbaren Jahr.
+
+## Aufgabe 2 : Unfallkenngrößen auf Autobahnen
+
+Stellen Sie die folgende Unfallkenngrößen für eine ausgewählte Autobahn in einem frei wählbaren Jahr grafisch dar:
+
+- die Unfallrate UR,
+- die Unfalldichte UD,
+- die Unfallkostenrate UKR,
+- die Unfallkostendichte UKD und
+- das Sicherheitspotential SIPO
+
+## To-Do Optional: Aufgabe 3 : Unfallkenngrößen auf Stadtstraßen
+
+Stellen Sie die folgende Unfallkenngrößen sowohl für eine ausgewählte Stadt in einem frei wählbaren Jahr grafisch dar:
+
+- die Unfallrate UR,
+- die Unfalldichte UD,
+- die Unfallkostenrate UKR,
+- die Unfallkostendichte UKD und
+- das Sicherheitspotential SIPO
+
