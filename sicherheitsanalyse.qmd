@@ -536,7 +536,7 @@ ggplot () +
   )
 ```
 
-Wir sehen, dass fast alle Abschnitte eine Unfallkostenrate von unter 10 Euro pro 1000 Kfz und km und Jahr haben. Auffällig ist ein Abschnitt zwischen Nordhausen und Göttigen. Ein Blick in den Datensatz verrät, dass es hier innerhalb der drei beobachteten Jahre 10 schwere und 4 leichte Unfälle auf etwa 6,5 km Länge und bei etwa 22.000 Kfz pro Tag gab. 
+Wir sehen, dass viele Abschnitte eine Unfallkostenrate von unter 15 Euro pro 1000 Kfz und km und Jahr haben. Auffällig ist ein Abschnitt zwischen Nordhausen und Göttigen. Ein Blick in den Datensatz verrät, dass es hier innerhalb der drei beobachteten Jahre 10 schwere und 4 leichte Unfälle auf etwa 6,5 km Länge und bei etwa 22.000 Kfz pro Tag gab. 
 
 ### Unfallkostendichte UKD
 
@@ -636,4 +636,4 @@ ggplot () +
     axis.ticks = element_blank()
   )
 ```
-Ein Sicherheitspotenziel, dass kleiner gleich 0 ist, bedeutet, dass die Unfallkostendichte geringer als oder gleich der Grundunfallkostendichte ist. Das heißt, dass hier weniger (schwere) Unfälle aufgetreten sind, als aufgrund des Ausbaus zu erwarten wären. Das ist also entwas positives, hier gibt es (zumindest für den beobachteten Zeitraum) wenig Handlungsdruck. Je größer das Sicherheitspotenzial ist, desto mehr Bedarf besteht, die Infrastruktur sicherer zu gestalten. In unserer Grafik ist das der Abschnitt zwischen Nordhausen und Göttingen, der schon bei der Unfallkostenrate auffällig war.
+Ein Sicherheitspotenziel, dass kleiner gleich 0 ist, bedeutet, dass die Unfallkostendichte geringer als oder gleich der Grundunfallkostendichte ist. Das heißt, dass hier weniger (schwere) Unfälle aufgetreten sind, als aufgrund des Ausbaus zu erwarten wären. Das ist also etwas positives, hier gibt es (zumindest für den beobachteten Zeitraum) wenig Handlungsdruck. Je größer das Sicherheitspotenzial ist, desto mehr Bedarf besteht, die Infrastruktur sicherer zu gestalten. In unserer Grafik ist das vor allem der Abschnitt zwischen Nordhausen und Göttingen, der schon bei der Unfallkostenrate auffällig war.

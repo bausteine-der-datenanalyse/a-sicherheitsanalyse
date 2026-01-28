@@ -20,6 +20,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -228,12 +263,74 @@ window.Quarto = {
 <section id="aufgabe-1-anzahl-der-verkehrsunfälle" class="level2" data-number="3.1">
 <h2 data-number="3.1" class="anchored" data-anchor-id="aufgabe-1-anzahl-der-verkehrsunfälle"><span class="header-section-number">3.1</span> Aufgabe 1 : Anzahl der Verkehrsunfälle</h2>
 <p>Als frei wählbare Jahr wird 2023 gewählt und als frei wählbare Autobahn die A38.</p>
-<p>Als erstes werden die Daten vom Unfallatlas heruntergeladen und in R geladen. Danach wird der Datensatz in ein räumliches Punktobjekt umgewandelt. Die Koordinaten stammen aus den Spalten “LINREFX” und “LINREFY”. Mit CRS (Coordinate Reference System) wird das Koordinatenreferenzsystem EPSG:25832 definiert. Falls sich in den geometrischen Daten noch Informationen zur Höhe (z-Dimension) oder Messwerte oder Attribute (m-Dimension) enthalten sind, werden diese nun entfernt, damit wir gleich sauber mit ihnen weiterrechnen können.</p>
-<p>Als nächstes wird das Straßennetz der Bundesfernstraßen als Datensatz ins Projekt geladen. Diese Daten bekommen wir von der Bundesanstalt für Straßen- und Verkehrswesen (BASt). Das Bundesfernstraßennetz beinhaltet Daten zu Bundesautobahnen und Bundesstraßen. Da für uns nur die Autobahnen relevant sind, filtern wir nur diese heraus. Wir wählen als Achse die Bestandsachse, da dies die mittlere Achse der Straße ist und wir keine Unterscheidung der Fahrtrichtung vornehmen müssen. Falls sich in den geometrischen Daten noch Informationen zur Höhe (z-Dimension) oder Messwerte oder Attribute (m-Dimension) enthalten sind, werden diese nun entfernt, damit wir gleich sauber mit ihnen weiterrechnen können.</p>
-<p>Den Unfalldaten soll nun aufgrund ihrer Lage in Deutschland der nächstgelegene Autobahnabschnitt und die Entfernung zu diesem hinzugefügt werden. “st_nearest_feature” gibt dabei die Zeilennummer des nächstgelegenen Autobahnabschnitts im Datensatz “bfstn” wieder. Außerdem suchen wir mit “bfstn$Str_Kennung[abschnitt_id]” aus dem Datensatz “bfstn” und der Spalte “Str_Kennung” genau den Eintrag, dessen Zeile durch “abschnitt_id” angegeben wird. Damit bekommen wir statt einer Nummer eines Autobahnabschnittes den Namen der Autobahn (z.B. A1). Zudem wollen wir nur Unfälle, die auf Autobahnen passiert sind, berücksichtigen. Dafür filtern wir nach Unfällen, die in einem 20 m Umkreis zur Bestandsachse der Autobahnen sind. Die 20 m wählen wir, um fast alle Unfälle auf den Fahrbahnen, auch bei 6- oder 8-spurigen Autobahnen, einzuschließen und fast alle Unfälle daneben auszuschließen. Es gibt uns aber keine Garantie, dass alle Unfälle, die wir nun filtern, tatsächlich auf Autobahnen liegen. Den Unterschied des Filters sehen wir im Environment: Der Unfalldatensatz aus 2023 beinhaltet 269.048 Unfälle insgesamt, der Unfalldatensatz für Autobahnen nur noch 22.114. Für mehr Übersichtlichkeit vereinfachen wir unseren Datensatz und lassen uns mit “select” nur bestimmte Spalten anzeigen.</p>
-<p>Für die tabellarische Übersicht der Unfälle erstellen wir einen neuen Datensatz, der nur Unfälle auf der Autobahn 38 beinhaltet.</p>
-<p>Nun folgt die tabellarische Darstellung. Sowohl für alle Unfälle auf deutschen Autobahnen als auch auf der A38 führen wir folgende Schritte durch: Mit “st_set_geometry(NULL)” entfernen wir die Geometriespalte, da für die Auswertung in Tabellenform nur die Attributdaten benötigt werden. Anschließend gruppieren wir die Unfalldaten nach ihrer Kategorie und berechnen mit “summarise” die Anzahl der Unfälle je Unfallkategorie. Um eine weitere Zeile mit den Summen hinzufügen zu können, muss die Spalte zur Unfallkategorie in einen Zeichenvektor umgewandelt werden (“mutate(UKATEGORIE = as.character(UKATEGORIE))”). Die neue Zeile hängen wir mit “bind_rows()” an. Diese letzte Zeile der Spalte UKATEGORIE („Summe“) enthält nun die Gesamtanzahl aller Unfälle über alle Kategorien hinweg und dient als übersichtliche Gesamtsumme in der Ergebnistabelle. Nun fügen wir die beiden einzelnen Tabellen noch zu einer Tabelle zusammen mit “left_join()” und benennen die Zeilennamen um. Mit “kable()” stellen wir die Tabelle dar und können ihr noch eine Überschrift hinzufügen.</p>
+<p>Als erstes werden die Daten vom Unfallatlas heruntergeladen und in R geladen. Danach wird der Datensatz mit “st_as_sf” in ein räumliches Punktobjekt umgewandelt. Die Koordinaten stammen aus den Spalten “LINREFX” und “LINREFY”. Mit CRS (Coordinate Reference System) wird das Koordinatenreferenzsystem EPSG:25832 definiert. Falls sich in den geometrischen Daten noch Informationen zur Höhe (z-Dimension) oder Messwerte oder Attribute (m-Dimension) enthalten sind, werden diese nun entfernt, damit wir gleich sauber mit ihnen weiterrechnen können.</p>
 <div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>unfaelle_2023 <span class="ot">=</span> <span class="fu">read_csv2</span>(<span class="st">"data/Unfallorte2023_LinRef.csv"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_as_sf</span>(<span class="at">coords =</span> <span class="fu">c</span>(<span class="st">"LINREFX"</span>, <span class="st">"LINREFY"</span>), <span class="at">crs =</span> <span class="dv">25832</span>) <span class="sc">|&gt;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_zm</span>()</span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Als nächstes wird das Straßennetz der Bundesfernstraßen als Datensatz ins Projekt geladen. Diese Daten bekommen wir von der Bundesanstalt für Straßen- und Verkehrswesen (BASt). Das Bundesfernstraßennetz beinhaltet Daten zu Bundesautobahnen und Bundesstraßen. Da für uns nur die Autobahnen relevant sind, filtern wir nur diese heraus. Wir wählen als Achse die Bestandsachse, da dies die mittlere Achse der Straße ist und wir keine Unterscheidung der Fahrtrichtung vornehmen müssen. Wir ergänzen eine Spalte (“mutate”) mit der Zeilennummer (brauchen wir gleich für die Unfälle). Auch hier entfernen wir potentielle Daten der z- oder m-Dimension.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>bfstn <span class="ot">&lt;-</span> <span class="fu">read_sf</span>(<span class="st">"data/BFStr_Netz_v2025q3.gpkg"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Str_Klasse_kurz <span class="sc">==</span> <span class="st">"A"</span> <span class="sc">&amp;</span> Sk_Achse <span class="sc">==</span> <span class="st">"Bestandsachse"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">rownumber =</span> <span class="fu">row_number</span>()) <span class="sc">|&gt;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_zm</span>()</span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Den Unfalldaten soll nun aufgrund ihrer Lage in Deutschland der nächstgelegene Autobahnabschnitt und die Entfernung zu diesem hinzugefügt werden. “st_nearest_feature” gibt dabei die Zeilennummer des nächstgelegenen Autobahnabschnitts im Datensatz “bfstn” wieder. “st_dinstance” berechnet die Entfernung vom Unfallpunkt zum nächstgelegenen Autobahnabschnitt, dies kann unter Umständen länger dauern. Außerdem suchen wir mit “bfstn$Str_Kennung[abschnitt_id]” aus dem Datensatz “bfstn” und der Spalte “Str_Kennung” genau den Eintrag, dessen Zeile durch “abschnitt_id” angegeben wird. Damit bekommen wir statt einer Nummer eines Autobahnabschnittes den Namen der Autobahn (z.B. A1). Zudem wollen wir nur Unfälle, die auf Autobahnen passiert sind, berücksichtigen. Dafür filtern wir nach Unfällen, die in einem 20 m Umkreis zur Bestandsachse der Autobahnen sind. Die 20 m wählen wir, um fast alle Unfälle auf den Fahrbahnen, auch bei 6- oder 8-spurigen Autobahnen, einzuschließen und fast alle Unfälle daneben auszuschließen. Es gibt uns aber keine Garantie, dass alle Unfälle, die wir nun filtern, tatsächlich auf Autobahnen liegen. Den Unterschied des Filters sehen wir im Environment: Der Unfalldatensatz aus 2023 beinhaltet 269.048 Unfälle insgesamt, der Unfalldatensatz für Autobahnen nur noch 22.114. Für mehr Übersichtlichkeit vereinfachen wir unseren Datensatz und lassen uns mit “select” nur bestimmte Spalten anzeigen.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>unfaelle_bab_2023 <span class="ot">=</span> unfaelle_2023 <span class="sc">|&gt;</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>      <span class="at">nearest_autobahn_id =</span> <span class="fu">st_nearest_feature</span>(geometry, bfstn),</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>      <span class="at">nearest_autobahn_distance =</span> <span class="fu">st_distance</span>(geometry, bfstn[nearest_autobahn_id, ], <span class="at">by_element =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>      <span class="at">nearest_autobahn_name =</span> bfstn<span class="sc">$</span>Str_Kennung[nearest_autobahn_id]</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">as.double</span>(nearest_autobahn_distance) <span class="sc">&lt;=</span> <span class="dv">20</span>) <span class="sc">|&gt;</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">abschnitt_id =</span> nearest_autobahn_id) <span class="sc">|&gt;</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(UKATEGORIE, nearest_autobahn_name, abschnitt_id)</span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Für die tabellarische Übersicht der Unfälle erstellen wir einen neuen Datensatz, der nur Unfälle auf der Autobahn 38 beinhaltet.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>unfaelle_A38_2023 <span class="ot">=</span> unfaelle_bab_2023 <span class="sc">|&gt;</span> </span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(nearest_autobahn_name <span class="sc">==</span> <span class="st">"A38"</span>)</span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Nun folgt die tabellarische Darstellung. Wir nutzen “function”, da wir sowohl für alle Unfälle auf deutschen Autobahnen als auch auf der A38 folgende Schritte durchführen wollen: Mit “st_set_geometry(NULL)” entfernen wir die Geometriespalte, da für die Auswertung in Tabellenform nur die Attributdaten benötigt werden. Anschließend gruppieren wir die Unfalldaten nach ihrer Kategorie (1, 2 oder 3) und berechnen mit “summarise” die Anzahl der Unfälle je Unfallkategorie. Um eine weitere Zeile mit den Summen hinzufügen zu können, muss die Spalte zur Unfallkategorie in einen Zeichenvektor umgewandelt werden (“mutate(UKATEGORIE = as.character(UKATEGORIE))”). Die neue Zeile hängen wir mit “bind_rows()” an. Diese letzte Zeile der Spalte UKATEGORIE („Summe“) enthält nun die Gesamtanzahl aller Unfälle über alle Kategorien hinweg und dient als übersichtliche Gesamtsumme in der Ergebnistabelle. Nun fügen wir die beiden einzelnen Tabellen noch zu einer Tabelle zusammen mit “left_join()” und benennen die Zeilennamen um. Mit “kable()” stellen wir die Tabelle dar und können ihr noch eine Überschrift hinzufügen.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>zaehle_unfaelle <span class="ot">&lt;-</span> <span class="cf">function</span>(daten, spaltenname) {</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  tmp <span class="ot">&lt;-</span> daten <span class="sc">|&gt;</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">st_set_geometry</span>(<span class="cn">NULL</span>) <span class="sc">|&gt;</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">count</span>(UKATEGORIE, <span class="at">name =</span> spaltenname) <span class="sc">|&gt;</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">UKATEGORIE =</span> <span class="fu">as.character</span>(UKATEGORIE))</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>(</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    tmp,</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise</span>(</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>      tmp,</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>      <span class="at">UKATEGORIE =</span> <span class="st">"Summe"</span>,</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>      <span class="st">"{spaltenname}"</span> <span class="sc">:</span><span class="er">=</span> <span class="fu">sum</span>(.data[[spaltenname]])</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>tabelle_unfaelle <span class="ot">&lt;-</span> <span class="fu">left_join</span>(</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">zaehle_unfaelle</span>(unfaelle_A38_2023, <span class="st">"A38"</span>),</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">zaehle_unfaelle</span>(unfaelle_bab_2023, <span class="st">"Autobahnen"</span>),</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>  <span class="at">by =</span> <span class="st">"UKATEGORIE"</span></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">Unfallkategorie =</span> UKATEGORIE) <span class="sc">|&gt;</span></span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">Unfallkategorie =</span> <span class="fu">case_when</span>(</span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>      Unfallkategorie <span class="sc">==</span> <span class="st">"1"</span> <span class="sc">~</span> <span class="st">"Unfall mit Getöteten"</span>,</span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>      Unfallkategorie <span class="sc">==</span> <span class="st">"2"</span> <span class="sc">~</span> <span class="st">"Unfall mit Schwerverletzten"</span>,</span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>      Unfallkategorie <span class="sc">==</span> <span class="st">"3"</span> <span class="sc">~</span> <span class="st">"Unfall mit Leichtverletzten"</span>,</span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>      <span class="cn">TRUE</span> <span class="sc">~</span> Unfallkategorie</span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(</span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>  tabelle_unfaelle,</span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a>  <span class="at">caption =</span> <span class="st">"Anzahl der Verkehrsunfälle nach Unfallkategorie (A38 und alle deutschen Autobahnen) im Jahr 2023"</span></span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <caption>Anzahl der Verkehrsunfälle nach Unfallkategorie (A38 und alle deutschen Autobahnen) im Jahr 2023</caption>
@@ -274,7 +371,8 @@ window.Quarto = {
 <h2 data-number="3.2" class="anchored" data-anchor-id="aufgabe-2-unfallkenngrößen-auf-autobahnen"><span class="header-section-number">3.2</span> Aufgabe 2 : Unfallkenngrößen auf Autobahnen</h2>
 <section id="die-unfallrate-ur" class="level3" data-number="3.2.1">
 <h3 data-number="3.2.1" class="anchored" data-anchor-id="die-unfallrate-ur"><span class="header-section-number">3.2.1</span> Die Unfallrate UR</h3>
-<p>“Die Unfallrate ist ein Maß für das (fahrleistungsbezogene) Risiko des Verkehrsteilnehmers, in einen Unfall verwickelt zu werden oder dabei zu verunglücken.” (ESN, 2003, S. 5) Die Formel lautet <span class="math display">\[
+<p>“Die Unfallrate ist ein Maß für das (fahrleistungsbezogene) Risiko des Verkehrsteilnehmers, in einen Unfall verwickelt zu werden oder dabei zu verunglücken.” (FGSV (2003), S. 5) Die Formel lautet</p>
+<p><span class="math display">\[
 UR = \frac{U \cdot 10^6}{DTV \cdot L \cdot 365 \cdot t}
 \]</span> mit den Kenngrößen</p>
 <ul>
@@ -284,9 +382,22 @@ UR = \frac{U \cdot 10^6}{DTV \cdot L \cdot 365 \cdot t}
 <li><strong>t</strong> : untersuchter Zeitraum [a].</li>
 </ul>
 <p>Die DTV kann den Dauerzählstellen der BASt entnommen werden. Die Streckenlänge ist im Datensatz des Bundesfernstraßennetzes bereits enthalten.</p>
-<p>Als erstes laden wir die Daten der Dauerzählstellen in unser Projekt. Mit dem Argument “locale(encoding =”iso-8859-1”)” stellen wir sicher, dass Umlaute und Sonderzeichen, die in deutschsprachigen Datensätzen häufig vorkommen, korrekt eingelesen werden. Da wir die Dauerzählstellen später mit dem Bundesfernstraßennetz verknüpfen möchten, berücksichtigen wir wie bei den anderen Datensätzen ausschließlich Autobahnen. Dazu filtern wir nach der Straßenklasse “Str_Kl ==”A”“. Anschließend entfernen wir mit”drop_na(DTV_Kfz_MobisSo_Q)” alle Beobachtungen, für die keine Verkehrsstärkewerte vorliegen, sodass nur vollständige und auswertbare Zählstellen verbleiben. Im nächsten Schritt wird der Datensatz in ein sf-Objekt umgewandelt. Aus den Koordinatenspalten “Koor_UTM32_E” und “Koor_UTM32_N” werden Punktgeometrien mit dem gleichen Koordinatensystem wie bei den anderen Datensätzen erzeugt. Dadurch sind spätere räumliche Operationen kompatibel. Wie auch bei den anderen räumlichen Datensätzen entfernen wir anschließend mögliche z- und m-Dimensionen aus den Geometrien. Dies stellt sicher, dass alle Geometrien zweidimensional sind und problemlos in weiteren räumlichen Analysen verwendet werden können. Im nächsten Schritt werden die Dauerzählstellen wie bei den Unfällen den nächstgelegenen Autobahnabschnitten des Bundesfernstraßennetzes zugeordnet. Mit “st_nearest_feature()” wird für jede Zählstelle der Index des nächstgelegenen Abschnitts ermittelt und als “abschnitt_id” gespeichert. Im Gegensatz zu den Unfalldaten müssen wir keine Entfernung zur Autobahn ermitteln, weil wir wissen, dass die Zählstellen tatsächlich an Autobahnen sind.</p>
+<p>Als erstes laden wir die Daten der Dauerzählstellen in unser Projekt. Mit dem Argument “locale(encoding =”iso-8859-1”)” stellen wir sicher, dass Umlaute und Sonderzeichen, die in deutschsprachigen Datensätzen häufig vorkommen, korrekt eingelesen werden. Da wir die Dauerzählstellen später mit dem Bundesfernstraßennetz verknüpfen möchten, berücksichtigen wir wie bei den anderen Datensätzen ausschließlich Autobahnen. Dazu filtern wir nach der Straßenklasse “Str_Kl ==”A”“. Anschließend entfernen wir mit”drop_na(DTV_Kfz_MobisSo_Q)” alle Beobachtungen, für die keine Verkehrsstärkewerte vorliegen, sodass nur vollständige und auswertbare Zählstellen verbleiben. Im nächsten Schritt wird der Datensatz in ein sf-Objekt umgewandelt. Aus den Koordinatenspalten “Koor_UTM32_E” und “Koor_UTM32_N” werden Punktgeometrien mit dem gleichen Koordinatensystem wie bei den anderen Datensätzen erzeugt. Dadurch sind spätere räumliche Operationen kompatibel. Wie auch bei den anderen räumlichen Datensätzen entfernen wir anschließend mögliche z- und m-Dimensionen aus den Geometrien. Im nächsten Schritt werden die Dauerzählstellen wie bei den Unfällen den nächstgelegenen Autobahnabschnitten des Bundesfernstraßennetzes zugeordnet. Mit “st_nearest_feature()” wird für jede Zählstelle der Index des nächstgelegenen Abschnitts ermittelt und als “abschnitt_id” gespeichert. Im Gegensatz zu den Unfalldaten müssen wir keine Entfernung zur Autobahn ermitteln, weil wir wissen, dass die Zählstellen tatsächlich an Autobahnen sind.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>dzs_2023 <span class="ot">&lt;-</span> <span class="fu">read_csv2</span>(<span class="st">"data/Jawe2023.csv"</span>, <span class="at">locale =</span> <span class="fu">locale</span>(<span class="at">encoding =</span> <span class="st">'iso-8859-1'</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Str_Kl <span class="sc">==</span> <span class="st">"A"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>(DTV_Kfz_MobisSo_Q) <span class="sc">|&gt;</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_as_sf</span>(<span class="at">coords =</span>  <span class="fu">c</span>(<span class="st">"Koor_UTM32_E"</span>, <span class="st">"Koor_UTM32_N"</span>),  <span class="at">crs =</span> <span class="dv">25832</span>) <span class="sc">|&gt;</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_zm</span>() <span class="sc">|&gt;</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">abschnitt_id =</span> <span class="fu">st_nearest_feature</span>(geometry, bfstn))</span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
 <p>Bevor wir mit den Daten der Dauerzählstellen weiterrechnen, prüfen wir, ob jedem Autobahnabschnitt maximal eine Dauerzählstelle zugeordnet ist. In unserem Verständnis ist ein Autobahnabschnitt u.a. dadurch klassifiziert, dass in diesem keine Auffahrt oder Abfahrt vorhanden ist, daher würden zwei Zählstellen hier nur redudante DTV-Werte liefern. Bevor wir mit dieser Annahme weiterrechnen, kontrollieren wir sie.</p>
 <div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>dzs_2023 <span class="sc">|&gt;</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_drop_geometry</span>() <span class="sc">|&gt;</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(abschnitt_id) <span class="sc">|&gt;</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">n</span>() <span class="sc">&gt;</span> <span class="dv">1</span>) <span class="sc">|&gt;</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(abschnitt_id, DZ_Nr, DTV_Kfz_MobisSo_Q)</span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 3
 # Groups:   abschnitt_id [1]
@@ -296,22 +407,92 @@ UR = \frac{U \cdot 10^6}{DTV \cdot L \cdot 365 \cdot t}
 2        14490 6831              45945</code></pre>
 </div>
 </div>
-<p>Wir sehen, dass unsere Annahme falsch ist und es tatsächlich einen Abschnitt mit zwei Zählstellen gibt und beide auch tatsächlich unterschiedliches Verkehrsaufkommen gibt. Zwischen den Zählstellen scheint es also auch die Möglichkeit zu geben, auf die Autobahn auf- oder von ihr abzufahren. Daher fassen wir die Verkehrsstärken nun auf Abschnittsebene zusammen. Hierzu wird die Geometrie entfernt und wir berechnen den mittlere DTV-Wert von beiden Zählstellen je Abschnitt. Und auch bei diesem Datensatz reduzieren wir die Anzahl der Spalten für mehr Übersichtlichkeit.</p>
+<p>Wir sehen, dass unsere Annahme falsch ist und es tatsächlich einen Abschnitt mit zwei Zählstellen gibt und beide auch tatsächlich unterschiedliches Verkehrsaufkommen gibt. Zwischen den Zählstellen scheint es also auch die Möglichkeit zu geben, auf die Autobahn auf- oder von ihr abzufahren. Daher fassen wir die Verkehrsstärken nun auf Abschnittsebene zusammen. Hierzu wird die Geometrie entfernt und wir berechnen den mittlere DTV-Wert (“mean”) von beiden Zählstellen je Abschnitt. Und auch bei diesem Datensatz reduzieren wir die Anzahl der Spalten für mehr Übersichtlichkeit.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>dzs_abschnitt_2023 <span class="ot">&lt;-</span> dzs_2023 <span class="sc">|&gt;</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_set_geometry</span>(<span class="cn">NULL</span>) <span class="sc">|&gt;</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(abschnitt_id) <span class="sc">|&gt;</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">DTV_2023 =</span> <span class="fu">mean</span>(DTV_Kfz_MobisSo_Q, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups =</span> <span class="st">"drop"</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(abschnitt_id, DTV_2023)</span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
 <section id="verbinden-der-datensätze-des-bundesfernstraßennetzes-mit-den-zählstellen-und-den-unfällen" class="level4" data-number="3.2.1.1">
 <h4 data-number="3.2.1.1" class="anchored" data-anchor-id="verbinden-der-datensätze-des-bundesfernstraßennetzes-mit-den-zählstellen-und-den-unfällen"><span class="header-section-number">3.2.1.1</span> Verbinden der Datensätze des Bundesfernstraßennetzes mit den Zählstellen und den Unfällen</h4>
 <p>Bisher haben wir allen Unfällen den nächstgelegenen Autobahnabschnitt und die Entfernung zu diesem zugewiesen. Nun wollen wir wissen, wie viele Unfälle es pro Abschnitt gibt. Das machen wir mit “group_by()” und “summarise()”. Außerdem benennen wir die Spalte “nearest_autobahn_id” mit “rename()” in “abschnitt_id” um, damit wir die Datensätze gleich sauber verknüpfen können.</p>
-<p>Nun können wir alle drei Datensätze (Bundesfernstraßennetz der Autobahnen, (mittlere) DTV an Dauerzählstellen und Summe von Unfällen je Abschnitt) zu einem Datensatz zusammenfügen. Das machen wir mit “left_join()”.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>unfaelle_abschnitt_2023 <span class="ot">&lt;-</span> unfaelle_bab_2023 <span class="sc">|&gt;</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_set_geometry</span>(<span class="cn">NULL</span>) <span class="sc">|&gt;</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(abschnitt_id) <span class="sc">|&gt;</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">Unfaelle_2023 =</span> <span class="fu">n</span>(),</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups =</span> <span class="st">"drop"</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Nun können wir alle drei Datensätze (Bundesfernstraßennetz der Autobahnen, (mittlere) DTV an Dauerzählstellen und Summe von Unfällen je Abschnitt) zu einem Datensatz zusammenfügen. Das machen wir mit “left_join()”. Zudem lassen wir uns die Länge der Abschnitte von Metern in Kilometer umrechnen.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>bfstn_gesamt <span class="ot">&lt;-</span> bfstn <span class="sc">|&gt;</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">abschnitt_id =</span> <span class="fu">row_number</span>()) <span class="sc">|&gt;</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">laenge_km =</span> <span class="fu">as.numeric</span>(Sk_Laenge_m)<span class="sc">/</span><span class="dv">1000</span>) <span class="sc">|&gt;</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(dzs_abschnitt_2023, <span class="at">by =</span> <span class="st">"abschnitt_id"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(unfaelle_abschnitt_2023, <span class="at">by =</span> <span class="st">"abschnitt_id"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Str_Kennung, laenge_km, DTV_2023, Unfaelle_2023, abschnitt_id)</span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
 </section>
 <section id="unfallraten-berechnen" class="level4" data-number="3.2.1.2">
 <h4 data-number="3.2.1.2" class="anchored" data-anchor-id="unfallraten-berechnen"><span class="header-section-number">3.2.1.2</span> Unfallraten berechnen</h4>
 <p>Als erstes legen wir unseren Zeitraum “t1” als 1 (Jahr) fest.</p>
-<p>Anschließend fügen wir dem Datensatz mit “mutate()” eine weitere Spalte mit dem Namen “unfallrate” hinzu, deren Werte mit der Formel für die Unfallrate berechnet werden. Außerdem filtern wir nur nach allen Zeilen, für die es auch eine Unfallrate gibt (“!is.na”).</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>t1 <span class="ot">=</span> <span class="dv">1</span></span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Anschließend fügen wir dem Datensatz mit “mutate()” eine weitere Spalte mit dem Namen “unfallrate” hinzu, deren Werte mit der Formel für die Unfallrate berechnet werden.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>bfstn_gesamt <span class="ot">&lt;-</span> bfstn_gesamt <span class="sc">|&gt;</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">unfallrate =</span> Unfaelle_2023 <span class="sc">*</span> <span class="dv">10</span><span class="sc">^</span><span class="dv">6</span> <span class="sc">/</span> (DTV_2023 <span class="sc">*</span> laenge_km <span class="sc">*</span> <span class="dv">365</span>  <span class="sc">*</span> t1)) </span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
 </section>
 <section id="unfallraten-auf-der-a38" class="level4" data-number="3.2.1.3">
 <h4 data-number="3.2.1.3" class="anchored" data-anchor-id="unfallraten-auf-der-a38"><span class="header-section-number">3.2.1.3</span> Unfallraten auf der A38</h4>
 <p>Für unsere gewählte Autobahn 38 erstellen wir einen neuen Datensatz. Das erst so spät zu machen, ermöglicht uns, dass wir bei Bedarf recht einfach (z.B. mit Suchen und Ersetzen) unsere Auswahl verändern könnten oder uns auch alle Unfallraten auf allen deutschen Bundesautobahnen darstellen lassen könnten.</p>
-<p>Nun kommen wir zur grafischen Darstellung. Wir wollen im Hintergrund den Verlauf der A38 sehen, daher filtern wir uns aus dem Datensatz der Bundesautobahnen “bab” die Autobahn 38 und legen als Farbe grau und die Breite der Linie 0.4 fest. Für die Barrierefreiheit nutzen wir die Farbskala “scale_color_viridis_b” (to-do)</p>
 <div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>A38_gesamt <span class="ot">&lt;-</span> bfstn_gesamt <span class="sc">|&gt;</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Str_Kennung <span class="sc">==</span> <span class="st">"A38"</span>)</span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Nun kommen wir zur grafischen Darstellung. Wir wollen im Hintergrund den Verlauf der A38 sehen, daher filtern wir uns aus dem Datensatz der Bundesautobahnen “bfstn” die Autobahn 38. Außerdem wollen wir uns drei Städte entlang der A38 für mehr Kontext darstellen. Dafür suchen wir uns die Koordinaten der Städte aus dem Internet. Diese sind allerdings in dem Koordinatenreferenzsystem 4326, daher transformieren (“st_transform”) wir sie in das CRS der anderen Daten (25832). In unserem ggplot stellen wir nun den Verlauf der A38 (“data = A38”) und die Städte (“data = staedte”) dar und beschriften die Städte mit “geom_sf_text()”. Und nun kommen endlich die Daten der Unfallraten. Diese filtern wir, dass nur Abschnitte mit Werten angezeigt werden (“filter(!is.na())”). Das machen wir erst hier und nicht schon eher, um die Zeilen nicht grundsätzlich aus dem Datensatz entfernen wollen, weil wir damit noch weiterrechnen. Für die Barrierefreiheit nutzen wir die Farbskala “scale_color_viridis_b” und beschriften unser Diagramm.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>A38 <span class="ot">&lt;-</span> bfstn <span class="sc">|&gt;</span> <span class="fu">filter</span>(Str_Kennung <span class="sc">==</span> <span class="st">"A38"</span>)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>staedte <span class="ot">&lt;-</span> <span class="fu">st_as_sf</span>(</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  tibble<span class="sc">::</span><span class="fu">tribble</span>(</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span>stadt, <span class="sc">~</span>lat, <span class="sc">~</span>lon,</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Leipzig"</span>, <span class="fl">51.3402</span>, <span class="fl">12.3601</span>,</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Nordhausen"</span>, <span class="fl">51.5018</span>, <span class="fl">10.7957</span>,</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Göttingen"</span>, <span class="fl">51.5455</span>, <span class="fl">9.9055</span>,</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>  ),</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">coords =</span> <span class="fu">c</span>(<span class="st">"lon"</span>, <span class="st">"lat"</span>),</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">crs =</span> <span class="dv">4326</span></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_transform</span>(<span class="dv">25832</span>)</span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span> () <span class="sc">+</span></span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> A38, <span class="at">colour =</span> <span class="st">"grey"</span>, <span class="at">size =</span> <span class="fl">0.4</span>) <span class="sc">+</span></span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> staedte, <span class="at">color =</span> <span class="st">"red"</span>) <span class="sc">+</span></span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf_text</span>(<span class="at">data =</span> staedte, <span class="fu">aes</span>(<span class="at">label=</span>stadt), <span class="at">nudge_y =</span> <span class="dv">5000</span>) <span class="sc">+</span></span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(</span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> A38_gesamt <span class="sc">|&gt;</span> <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(unfallrate)), </span>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="fl">2.5</span>, </span>
+<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">color =</span> unfallrate)</span>
+<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
+<span id="cb15-23"><a href="#cb15-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_viridis_b</span>(<span class="at">direction =</span> <span class="sc">-</span><span class="dv">1</span>, <span class="at">name =</span> <span class="st">"Unfallrate</span><span class="sc">\n</span><span class="st">(Unfälle pro</span><span class="sc">\n</span><span class="st">1 Mio. Kfz-km)"</span>) <span class="sc">+</span></span>
+<span id="cb15-24"><a href="#cb15-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Unfallraten nach Abschnitten der A38 im Jahr 2023"</span>) <span class="sc">+</span></span>
+<span id="cb15-25"><a href="#cb15-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb15-26"><a href="#cb15-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb15-27"><a href="#cb15-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb15-28"><a href="#cb15-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">14</span>, <span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">hjust =</span> <span class="fl">0.5</span>),</span>
+<span id="cb15-29"><a href="#cb15-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb15-30"><a href="#cb15-30" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text  =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb15-31"><a href="#cb15-31" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.ticks =</span> <span class="fu">element_blank</span>()</span>
+<span id="cb15-32"><a href="#cb15-32" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -320,19 +501,46 @@ UR = \frac{U \cdot 10^6}{DTV \cdot L \cdot 365 \cdot t}
 </div>
 </div>
 </div>
-<p>To-Do BEschreibung Wir sehen, dass viele Abschnitte eine Unfallrate von unter 0,08 Unfällen pro 1 Million Kfz-km aufweisen. Der Abschnitt bei Nordhausen zeigt hingegen eine Unfallrate von über 0,16 Unfällen pro 1 Million Kfz-km. Ein Blick in den Datensatz zeigt jedoch, dass dieser Abschnitt nur 585 Meter lang ist. Dadurch fallen einzelne Unfälle dort deutlich stärker ins Gewicht. Bei der Interpretation unserer Ergebnisse müssen wir daher stets technischen Sachverstand einbringen und die Ergebnisse in den jeweiligen Kontext einordnen.</p>
+<p>Wir sehen, dass viele Abschnitte eine Unfallrate von unter 0,12 Unfällen pro 1 Million Kfz-km aufweisen. Der (sehr schmale) Abschnitt bei Nordhausen zeigt hingegen eine Unfallrate von über 0,16 Unfällen pro 1 Million Kfz-km. Ein Blick in den Datensatz zeigt uns, dass dieser Abschnitt nur 585 Meter lang ist. Dadurch fallen einzelne Unfälle dort deutlich stärker ins Gewicht. Bei der Interpretation unserer Ergebnisse müssen wir daher stets unseren technischen Sachverstand einbringen und die Ergebnisse in den jeweiligen Kontext einordnen.</p>
 </section>
 </section>
 <section id="die-unfalldichte-ud" class="level3" data-number="3.2.2">
 <h3 data-number="3.2.2" class="anchored" data-anchor-id="die-unfalldichte-ud"><span class="header-section-number">3.2.2</span> Die Unfalldichte UD</h3>
-<p>“Die [Unfalldichte] ist ein Maß für die (längenbezogene) Häufigkeit, mit der sich Unfälle während eines bestimmten Zeitraums auf einem bestimmten Straßenabschnitt ereignet haben” (ESN, 2003, S. 6). Dementsprechend lautet die Formel:</p>
+<p>“Die [Unfalldichte] ist ein Maß für die (längenbezogene) Häufigkeit, mit der sich Unfälle während eines bestimmten Zeitraums auf einem bestimmten Straßenabschnitt ereignet haben” (FGSV (2003), S. 6). Dementsprechend lautet die Formel:</p>
 <p><span class="math display">\[
 UD = \frac{U}{L \cdot t}
 \]</span></p>
 <p>Da wir schon viel Vorarbeit geleistet haben, können wir zur Berechnung der Unfalldichte unserem Datensatz einfach eine weitere Spalte mit dem Namen “unfalldichte” und der Formel zur Berechnung der Unfalldichte hinzufügen.</p>
-<p>Auch für die Unfalldichte schauen wir uns unsere ausgewählte Autobahn 38 an.</p>
-<p>Grafische Darstellung: TO-DO</p>
 <div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>bfstn_gesamt <span class="ot">&lt;-</span> bfstn_gesamt <span class="sc">|&gt;</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">unfalldichte =</span> Unfaelle_2023 <span class="sc">/</span> (laenge_km <span class="sc">*</span> t1))                             </span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Auch für die Unfalldichte schauen wir uns unsere ausgewählte Autobahn 38 an.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>A38_gesamt <span class="ot">&lt;-</span> bfstn_gesamt <span class="sc">|&gt;</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Str_Kennung <span class="sc">==</span> <span class="st">"A38"</span>)</span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Die grafische Darstellung übernehmen wir von der Unfallrate und tauschen nur die Variablen und die Beschriftungen aus. Jedoch ergänzen wir noch Grenzen bei der Beschriftung, da uns die Darstellung damit besser gefällt.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span> () <span class="sc">+</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> A38, <span class="at">colour =</span> <span class="st">"grey"</span>, <span class="at">size =</span> <span class="fl">0.4</span>) <span class="sc">+</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> staedte, <span class="at">color =</span> <span class="st">"red"</span>) <span class="sc">+</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf_text</span>(<span class="at">data =</span> staedte, <span class="fu">aes</span>(<span class="at">label=</span>stadt), <span class="at">nudge_y =</span> <span class="dv">5000</span>) <span class="sc">+</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_sf</span>(</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> A38_gesamt <span class="sc">|&gt;</span> <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(unfalldichte)), </span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="fl">2.5</span>, </span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">color =</span> unfalldichte)</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_viridis_b</span>(<span class="at">direction =</span> <span class="sc">-</span><span class="dv">1</span>, <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">10</span>),  <span class="at">name =</span> <span class="st">"Unfalldichte</span><span class="sc">\n</span><span class="st">(Unfälle pro</span><span class="sc">\n</span><span class="st">km und Jahr)"</span>) <span class="sc">+</span></span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Unfalldichten nach Abschnitten der A38 im Jahr 2023"</span>) <span class="sc">+</span></span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">14</span>, <span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">hjust =</span> <span class="fl">0.5</span>),</span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text  =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.ticks =</span> <span class="fu">element_blank</span>()</span>
+<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -341,7 +549,7 @@ UD = \frac{U}{L \cdot t}
 </div>
 </div>
 </div>
-<p>TO-DO: Beschreibung Grafik</p>
+<p>Im Gegensatz zur Unfallrate sehen wir deutlich mehr farbige Abschnitte. Das liegt daran, dass die Unfalldichte unabhängig von der DTV ist und wir daher auch Abschnitte ohne Zählstellen darstellen können. Die große Mehrheit der Abschnitte hat eine Unfalldichte von unter 2,5 Unfällen pro Kilometer und Jahr. Wir sehen aber auch hier die Auswirkung von kurzen Abschnitten, diese haben tendenziell höhere Unfalldichten als längere Abschnitte.</p>
 </section>
 <section id="die-unfallkostenrate-ukr" class="level3" data-number="3.2.3">
 <h3 data-number="3.2.3" class="anchored" data-anchor-id="die-unfallkostenrate-ukr"><span class="header-section-number">3.2.3</span> Die Unfallkostenrate UKR</h3>
@@ -360,39 +568,196 @@ UK = U(SP) * WU(SP) + U(LV) * WU(LV)
 <li><strong>U(LV)</strong> : Unfälle mit leichtem Personenschaden</li>
 <li><strong>WU(LV)</strong> : Unfallkostensatz von Unfällen mit leichtem Personenschaden</li>
 </ul>
-<p>Die Unfallkostensätze werden dem Merkblatt zur Örtlichen Unfalluntersuchung in Unfallkommissionen (M Uko) (FGSV, 2012) entnommen.</p>
+<p>Die Unfallkostensätze werden den Empfehlungen für die Sicherheitsanalyse von Straßennetzen (FGSV, 2003) entnommen.</p>
 <section id="schritt-1-unfalldaten" class="level4" data-number="3.2.3.1">
 <h4 data-number="3.2.3.1" class="anchored" data-anchor-id="schritt-1-unfalldaten"><span class="header-section-number">3.2.3.1</span> Schritt 1: Unfalldaten</h4>
-<p>TO-DO Unfalldaten aus drei Jahren: Z- und M-Dimensionen entfernen</p>
-<p>To-DO Nächst gelegene Autobahn und Entfernung zu dieser ergänzen:</p>
-<p>To-DO Unfälle nach Abschnitten zusammenfassen</p>
-<p>Alle Unfalljahre zusammenführen</p>
-<p>Unfallsummen nach Kategorien bilden</p>
-<p>Schwere Unfälle: Kategorie 1 + Kategorie 2 Leichte Unfälle: Kategorie 3</p>
-<p>Ergebnisse zusammenführen</p>
-<p>Unfälle dem Datensatz des Bundesfernstraßennetzes hinzufügen</p>
+<p>Da wir nun mit noch mehr Datensätzen arbeiten und die gleichen Veränderungen vornehmen, nutzen wir nun vermehrt “function”. So müssen wir nur einmal definieren, was wir machen wollen und können dann die function auf die verschiedenen Datensätze anwenden. Als erstes bereiten wir uns die Unfalldaten aus den Jahren 2022 und 2021 analog zu der Aufbereitung am Anfang mit dem Datensatz aus 2023 auf.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>read_one_file <span class="ot">&lt;-</span> <span class="cf">function</span>(file){</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  data <span class="ot">&lt;-</span> <span class="fu">read_csv2</span>(file)</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  sf<span class="sc">::</span><span class="fu">st_as_sf</span>(data, <span class="at">coords =</span> <span class="fu">c</span>(<span class="st">"LINREFX"</span>, <span class="st">"LINREFY"</span>), <span class="at">crs =</span> <span class="dv">25832</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">st_zm</span>()</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>unfaelle_2022 <span class="ot">&lt;-</span> <span class="fu">read_one_file</span>(<span class="st">"data/Unfallorte2022_LinRef.csv"</span>)</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>unfaelle_2021 <span class="ot">&lt;-</span> <span class="fu">read_one_file</span>(<span class="st">"data/Unfallorte2021_LinRef.csv"</span>)</span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Wie auch bei den Unfalldaten aus 2023 fügen wir den Unfalldaten den nächstgelegenen Autobahnabschnitt und die Entfernung zu diesem hinzu und filtern nach allen Unfällen, die maximal 20 Meter von einem Autobahnabschnitt entfernt sind.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>nearest_autobahn <span class="ot">&lt;-</span> <span class="cf">function</span>(data) {</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  data <span class="sc">|&gt;</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>      <span class="at">nearest_autobahn_id =</span> <span class="fu">st_nearest_feature</span>(geometry, bfstn),</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>      <span class="at">nearest_autobahn_distance =</span> <span class="fu">st_distance</span>(geometry, bfstn[nearest_autobahn_id, ], <span class="at">by_element =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>      <span class="at">nearest_autobahn_name =</span> bfstn<span class="sc">$</span>Str_Kennung[nearest_autobahn_id]</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">as.double</span>(nearest_autobahn_distance) <span class="sc">&lt;=</span> <span class="dv">20</span>) <span class="sc">|&gt;</span></span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">abschnitt_id =</span> nearest_autobahn_id) <span class="sc">|&gt;</span></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(UKATEGORIE, nearest_autobahn_name, abschnitt_id)</span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>unfaelle_bab_2022 <span class="ot">&lt;-</span> <span class="fu">nearest_autobahn</span>(unfaelle_2022)</span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>unfaelle_bab_2021 <span class="ot">&lt;-</span> <span class="fu">nearest_autobahn</span>(unfaelle_2021)</span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Ebenfalls wie bei den Unfalldaten aus 2023 fassen wir die Unfalldaten je Abschnitt zusammen. Da wir gleich für die Unfallkosten aber auch die Unfallkategorie berücksichtigen werden, gruppieren wir nicht nur nach Abschnitten, sondern auch nach den Unfallkategorien.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>abschnitte <span class="ot">&lt;-</span> <span class="cf">function</span>(data) {</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  data <span class="sc">|&gt;</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>   <span class="fu">st_set_geometry</span>(<span class="cn">NULL</span>) <span class="sc">|&gt;</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(abschnitt_id, UKATEGORIE) <span class="sc">|&gt;</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise</span>(</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>      <span class="at">Unfaelle =</span> <span class="fu">n</span>(),</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>      <span class="at">.groups =</span> <span class="st">"drop"</span></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>  ) </span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>unfaelle_abschnitt_2023 <span class="ot">&lt;-</span> <span class="fu">abschnitte</span>(unfaelle_bab_2023)</span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>unfaelle_abschnitt_2022 <span class="ot">&lt;-</span> <span class="fu">abschnitte</span>(unfaelle_bab_2022)</span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>unfaelle_abschnitt_2021 <span class="ot">&lt;-</span> <span class="fu">abschnitte</span>(unfaelle_bab_2021)</span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Als nächsten fügen wir alle drei Unfalldatensätze mit “bind_rows()” zu einem großen Unfalldatensatz zusammen.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>unfaelle_alle <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(unfaelle_abschnitt_2023, unfaelle_abschnitt_2022, unfaelle_abschnitt_2021)</span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Nun wollen wir wissen, wie viele schwere und leichte Unfälle es je Abschnitt gibt. Schwere Unfälle sind Unfälle mit Schwerverletzten (Kategorie 2) und Getöteten (Kategorie 1). Leichte Unfälle sind die Unfallkategorie 3. Dazu filtern wir nach der oder den jeweiligen Kategorie, gruppieren nach Abschnitten und summieren die Unfallzahlen.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>unfaelle_sp_3j <span class="ot">&lt;-</span> unfaelle_alle <span class="sc">|&gt;</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(UKATEGORIE <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(abschnitt_id) <span class="sc">|&gt;</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">unfaelle_sp_summe_3j =</span> <span class="fu">sum</span>(Unfaelle, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups =</span> <span class="st">"drop"</span></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>unfaelle_lv_3j <span class="ot">&lt;-</span> unfaelle_alle <span class="sc">|&gt;</span></span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(UKATEGORIE <span class="sc">==</span> <span class="dv">3</span>) <span class="sc">|&gt;</span></span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(abschnitt_id) <span class="sc">|&gt;</span></span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">unfaelle_lv_summe_3j =</span> <span class="fu">sum</span>(Unfaelle, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups =</span> <span class="st">"drop"</span></span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Diese beiden neuen Datensätze fügen wir als Spalten zu einem gemeinsamen Datensatz zusammen. Dabei ergänzen wir noch, dass wenn es keine Unfälle gibt, nicht “NA” in der Zelle steht, sondern 0, da das hier im Sachzusammenhang sinnvoll ist und wir dann später besser damit rechnen können.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>unfaelle_gesamt <span class="ot">&lt;-</span> unfaelle_sp_3j <span class="sc">|&gt;</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">full_join</span>(unfaelle_lv_3j, <span class="at">by =</span> <span class="st">"abschnitt_id"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">unfaelle_sp_summe_3j =</span> <span class="fu">replace_na</span>(unfaelle_sp_summe_3j, <span class="dv">0</span>),</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">unfaelle_lv_summe_3j =</span> <span class="fu">replace_na</span>(unfaelle_lv_summe_3j, <span class="dv">0</span>)</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Die Unfalldaten nach Abschnitten aus den drei beobachteten Jahren fügen wir nun dem großen Datensatz hinzu.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>bfstn_gesamt <span class="ot">&lt;-</span> bfstn_gesamt <span class="sc">|&gt;</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">abschnitt_id =</span> <span class="fu">row_number</span>()) <span class="sc">|&gt;</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(unfaelle_gesamt, <span class="at">by =</span> <span class="st">"abschnitt_id"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Str_Kennung, laenge_km, DTV_2023, Unfaelle_2023, abschnitt_id, laenge_km, unfallrate, unfalldichte, unfaelle_sp_summe_3j, unfaelle_lv_summe_3j)</span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
 </section>
 <section id="schritt-2-dauerzählstellen" class="level4" data-number="3.2.3.2">
 <h4 data-number="3.2.3.2" class="anchored" data-anchor-id="schritt-2-dauerzählstellen"><span class="header-section-number">3.2.3.2</span> Schritt 2: Dauerzählstellen</h4>
-<p>TO-DO. mit function arbeiten DTV-Daten aus den gleichen drei Jahren</p>
-<p>Nur Zählstellen an Autobahnen mit Zähldaten berücksichtigen. Koordinaten der Zählstelle als simple feature anlegen, da nur so weitere sf-Funktionen verwendet werden können Den Zählstellen Autobahnabschnitten des Bundesfernwegenetzes zuordnen</p>
-<p>DTV auf Abschnittsebene zusammenfassen</p>
-<p>Alle DTV Jahre zusammenführen</p>
-<p>Mittelwerte pro Abschnitt aus den drei Jahren ermitteln</p>
-<p>DTV-Daten dem Datensatz des Bundesfernstraßennetzes hinzufügen</p>
+<p>Auch für die Dauerzählstellen nutzen wir “function”, um uns Arbeit zu sparen. Wie für die Dauerzählstellen aus 2023 lesen wir die neuen Datensätze ein und achten auf die richtige Encodierung.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>read_dzs_file <span class="ot">&lt;-</span> <span class="cf">function</span>(file) {</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">read_csv2</span>(file, <span class="at">locale =</span> <span class="fu">locale</span>(<span class="at">encoding =</span> <span class="st">'iso-8859-1'</span>))</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>dzs_2022 <span class="ot">&lt;-</span> <span class="fu">read_dzs_file</span>(<span class="st">"data/Jawe2022.csv"</span>)</span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>dzs_2021 <span class="ot">&lt;-</span> <span class="fu">read_dzs_file</span>(<span class="st">"data/Jawe2021.csv"</span>)</span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Auch im nächsten Schritt gehen wir wie am Anfang vor, filtern nach Zählstellen auf Autobahnen, ignorieren Zählstellen ohne Zähldaten, achten auf das richtige CRS und fügen eine Spalte zum nächstgelegenen Autobahnabschnitt hinzu.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>filter_dzs <span class="ot">&lt;-</span> <span class="cf">function</span>(data) {</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  data <span class="sc">|&gt;</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(Str_Kl <span class="sc">==</span> <span class="st">"A"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">drop_na</span>(DTV_Kfz_MobisSo_Q) <span class="sc">|&gt;</span></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">st_as_sf</span>(<span class="at">coords =</span>  <span class="fu">c</span>(<span class="st">"Koor_UTM32_E"</span>, <span class="st">"Koor_UTM32_N"</span>),  <span class="at">crs =</span> <span class="dv">25832</span>) <span class="sc">|&gt;</span></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">abschnitt_id =</span> <span class="fu">st_nearest_feature</span>(geometry, bfstn))</span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>dzs_2022 <span class="ot">&lt;-</span> <span class="fu">filter_dzs</span>(dzs_2022)</span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>dzs_2021 <span class="ot">&lt;-</span> <span class="fu">filter_dzs</span>(dzs_2021)</span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Nun fassen wir die DTV-Daten auf Abschnittsebene zusammen und bilden Mittelwerte der DTV.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>dzs_abschnitt <span class="ot">&lt;-</span> <span class="cf">function</span>(data){</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  data <span class="sc">|&gt;</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_set_geometry</span>(<span class="cn">NULL</span>) <span class="sc">|&gt;</span></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(abschnitt_id) <span class="sc">|&gt;</span></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">DTV =</span> <span class="fu">mean</span>(DTV_Kfz_MobisSo_Q, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>dzs_abschnitt_2022 <span class="ot">&lt;-</span> <span class="fu">dzs_abschnitt</span>(dzs_2022)</span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>dzs_abschnitt_2021 <span class="ot">&lt;-</span> <span class="fu">dzs_abschnitt</span>(dzs_2021)</span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Als nächsten fügen wir alle drei Datensätze zu einem großen zusammen.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>dzs_alle <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(dzs_abschnitt_2023, dzs_abschnitt_2022, dzs_abschnitt_2021)</span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Im Gegensatz zu den Unfalldaten, die aufsummiert werden, wird methodisch bei der durchschnittlichen täglichen Verkehrsstärke der Mittelwert je Abschnitt gebildet.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>dzs_gesamt <span class="ot">&lt;-</span> dzs_alle <span class="sc">|&gt;</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(abschnitt_id) <span class="sc">|&gt;</span></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">dtv_mittelwert_3j =</span> <span class="fu">round</span>(<span class="fu">mean</span>(DTV, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)),</span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups =</span> <span class="st">"drop"</span></span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Nun können wir die DTV-Daten dem Datensatz des Bundesfernstraßennetzes hinzufügen.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>bfstn_gesamt <span class="ot">&lt;-</span> bfstn_gesamt <span class="sc">|&gt;</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(dzs_gesamt, <span class="at">by =</span> <span class="st">"abschnitt_id"</span>)</span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
 </section>
 <section id="schritt-3-unfallkostensätze-definieren" class="level4" data-number="3.2.3.3">
 <h4 data-number="3.2.3.3" class="anchored" data-anchor-id="schritt-3-unfallkostensätze-definieren"><span class="header-section-number">3.2.3.3</span> Schritt 3: Unfallkostensätze definieren</h4>
+<p>Die Unfallkostensätze werden nach den ESN (FGSV, 2003) definiert. Dabei wird für die schweren Personenunfälle der Mittelwert aus den Bundesländern Sachsen, Sachsen-Anhalt, Thüringen, Niedersachsen gebildet, da die A38 durch diese vier Bundesländer verläuft. Die Länge je Bundesland wird hierbei außer Acht gelassen.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>WU_SP_bab <span class="ot">=</span> <span class="dv">325000</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>WU_LV_bab <span class="ot">=</span> <span class="dv">31000</span></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>t2 <span class="ot">=</span> <span class="dv">3</span></span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
 </section>
 <section id="schritt-4-unfallkostenraten-berechnen" class="level4" data-number="3.2.3.4">
 <h4 data-number="3.2.3.4" class="anchored" data-anchor-id="schritt-4-unfallkostenraten-berechnen"><span class="header-section-number">3.2.3.4</span> Schritt 4: Unfallkostenraten berechnen</h4>
+<p>Wie bei der Unfallrate und -dichte fügen wir nun eine Spalte zur Unfallkostenrate dem großen Datensatz hinzu. Dafür nutzen wir einen Zwischenschritt und erstellen uns erst noch eine Spalte zu den Unfallkosten.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>bfstn_gesamt <span class="ot">&lt;-</span> bfstn_gesamt <span class="sc">|&gt;</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">unfallkosten =</span> unfaelle_sp_summe_3j <span class="sc">*</span> WU_SP_bab <span class="sc">+</span> unfaelle_lv_summe_3j <span class="sc">*</span> WU_LV_bab ,</span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">unfallkostenrate =</span> (<span class="dv">1000</span><span class="sc">*</span>unfallkosten)<span class="sc">/</span>(<span class="dv">365</span><span class="sc">*</span>dtv_mittelwert_3j<span class="sc">*</span>laenge_km<span class="sc">*</span>t2)</span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
 </section>
 <section id="schritt-5-ausgewählte-autobahn" class="level4" data-number="3.2.3.5">
 <h4 data-number="3.2.3.5" class="anchored" data-anchor-id="schritt-5-ausgewählte-autobahn"><span class="header-section-number">3.2.3.5</span> Schritt 5: Ausgewählte Autobahn</h4>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>A38_gesamt <span class="ot">&lt;-</span> bfstn_gesamt <span class="sc">|&gt;</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Str_Kennung <span class="sc">==</span> <span class="st">"A38"</span>)</span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
 </section>
 <section id="schritt-6-grafische-darstellung" class="level4" data-number="3.2.3.6">
 <h4 data-number="3.2.3.6" class="anchored" data-anchor-id="schritt-6-grafische-darstellung"><span class="header-section-number">3.2.3.6</span> Schritt 6: Grafische Darstellung</h4>
 <div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span> () <span class="sc">+</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> A38, <span class="at">colour =</span> <span class="st">"grey"</span>, <span class="at">size =</span> <span class="fl">0.4</span>) <span class="sc">+</span></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> staedte, <span class="at">color =</span> <span class="st">"red"</span>) <span class="sc">+</span></span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf_text</span>(<span class="at">data =</span> staedte, <span class="fu">aes</span>(<span class="at">label=</span>stadt), <span class="at">nudge_y =</span> <span class="dv">5000</span>) <span class="sc">+</span></span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_sf</span>(</span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> A38_gesamt <span class="sc">|&gt;</span> <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(unfallkostenrate)), </span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="fl">2.5</span>, </span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">color =</span> unfallkostenrate)</span>
+<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
+<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_viridis_b</span>(<span class="at">direction =</span> <span class="sc">-</span><span class="dv">1</span>, <span class="at">name =</span> <span class="st">"Unfallkostenrate</span><span class="sc">\n</span><span class="st">(Euro pro</span><span class="sc">\n</span><span class="st">1000 Kfz und km und Jahr)"</span>) <span class="sc">+</span></span>
+<span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Unfallkostenraten nach Abschnitten der A38 in den Jahren 2021 - 2023"</span>) <span class="sc">+</span></span>
+<span id="cb35-12"><a href="#cb35-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb35-13"><a href="#cb35-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb35-14"><a href="#cb35-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb35-15"><a href="#cb35-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>, <span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">hjust =</span> <span class="fl">0.5</span>),</span>
+<span id="cb35-16"><a href="#cb35-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb35-17"><a href="#cb35-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text  =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb35-18"><a href="#cb35-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.ticks =</span> <span class="fu">element_blank</span>()</span>
+<span id="cb35-19"><a href="#cb35-19" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -401,6 +766,7 @@ UK = U(SP) * WU(SP) + U(LV) * WU(LV)
 </div>
 </div>
 </div>
+<p>Wir sehen, dass viele Abschnitte eine Unfallkostenrate von unter 15 Euro pro 1000 Kfz und km und Jahr haben. Auffällig ist ein Abschnitt zwischen Nordhausen und Göttigen. Ein Blick in den Datensatz verrät, dass es hier innerhalb der drei beobachteten Jahre 10 schwere und 4 leichte Unfälle auf etwa 6,5 km Länge und bei etwa 22.000 Kfz pro Tag gab.</p>
 </section>
 </section>
 <section id="unfallkostendichte-ukd" class="level3" data-number="3.2.4">
@@ -412,6 +778,33 @@ UKD = \frac{UK}{1000 \cdot L \cdot t}
 \]</span></p>
 <p>Da die Unfallkosten bereits berechnet sind, ist die Berechnung der Unfallkostendichte nun schneller.</p>
 <div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>bfstn_gesamt <span class="ot">&lt;-</span> bfstn_gesamt <span class="sc">|&gt;</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">unfallkostendichte =</span> unfallkosten<span class="sc">/</span>(<span class="dv">1000</span><span class="sc">*</span>laenge_km<span class="sc">*</span>t2))</span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>A38_gesamt <span class="ot">&lt;-</span> bfstn_gesamt <span class="sc">|&gt;</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Str_Kennung <span class="sc">==</span> <span class="st">"A38"</span>)</span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span> () <span class="sc">+</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> A38, <span class="at">colour =</span> <span class="st">"grey"</span>, <span class="at">size =</span> <span class="fl">0.4</span>) <span class="sc">+</span></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> staedte, <span class="at">color =</span> <span class="st">"red"</span>) <span class="sc">+</span></span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf_text</span>(<span class="at">data =</span> staedte, <span class="fu">aes</span>(<span class="at">label=</span>stadt), <span class="at">nudge_y =</span> <span class="dv">5000</span>) <span class="sc">+</span></span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_sf</span>(</span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> A38_gesamt <span class="sc">|&gt;</span> <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(unfallkostendichte)), </span>
+<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="fl">2.5</span>, </span>
+<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">color =</span> unfallkostendichte)</span>
+<span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
+<span id="cb38-10"><a href="#cb38-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_viridis_b</span>(<span class="at">direction =</span> <span class="sc">-</span><span class="dv">1</span>, <span class="at">name =</span> <span class="st">"Unfallkostendichte</span><span class="sc">\n</span><span class="st">(1000 Euro pro</span><span class="sc">\n</span><span class="st">km und Jahr)"</span>) <span class="sc">+</span></span>
+<span id="cb38-11"><a href="#cb38-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Unfallkostendichten nach Abschnitten der A38 in den Jahren 2021 - 2023"</span>) <span class="sc">+</span></span>
+<span id="cb38-12"><a href="#cb38-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb38-13"><a href="#cb38-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb38-14"><a href="#cb38-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb38-15"><a href="#cb38-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>, <span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">hjust =</span> <span class="fl">0.5</span>),</span>
+<span id="cb38-16"><a href="#cb38-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb38-17"><a href="#cb38-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text  =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb38-18"><a href="#cb38-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.ticks =</span> <span class="fu">element_blank</span>()</span>
+<span id="cb38-19"><a href="#cb38-19" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -431,8 +824,41 @@ SIPO = UKD - gUKD
 <p><span class="math display">\[
 gUKD = \frac{gUKR \cdot DTV \cdot 365}{10^6}
 \]</span></p>
-<p>mit der Grundunfallkostenrate gUKR, die den ESN zu entnehmen ist.</p>
+<p>mit der Grundunfallkostenrate gUKR, die den ESN (FGSV, 2003) zu entnehmen ist.</p>
 <div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>gUKR_bab <span class="ot">=</span> <span class="dv">11</span></span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>bfstn_gesamt <span class="ot">&lt;-</span> bfstn_gesamt <span class="sc">|&gt;</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">gUKD =</span> (gUKR_bab <span class="sc">*</span> dtv_mittelwert_3j <span class="sc">*</span> <span class="dv">365</span>)<span class="sc">/</span><span class="dv">10</span><span class="sc">^</span><span class="dv">6</span>,</span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">sicherheitspotenzial =</span> unfallkostendichte <span class="sc">-</span> gUKD</span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>A38_gesamt  <span class="ot">&lt;-</span> bfstn_gesamt <span class="sc">|&gt;</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Str_Kennung <span class="sc">==</span> <span class="st">"A38"</span>)</span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span> () <span class="sc">+</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> A38, <span class="at">colour =</span> <span class="st">"grey"</span>, <span class="at">size =</span> <span class="fl">0.4</span>) <span class="sc">+</span></span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> staedte, <span class="at">color =</span> <span class="st">"red"</span>) <span class="sc">+</span></span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf_text</span>(<span class="at">data =</span> staedte, <span class="fu">aes</span>(<span class="at">label=</span>stadt), <span class="at">nudge_y =</span> <span class="dv">5000</span>) <span class="sc">+</span></span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_sf</span>(</span>
+<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> A38_gesamt <span class="sc">|&gt;</span> <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(sicherheitspotenzial)), </span>
+<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="fl">2.5</span>, </span>
+<span id="cb42-8"><a href="#cb42-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">color =</span> sicherheitspotenzial)</span>
+<span id="cb42-9"><a href="#cb42-9" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
+<span id="cb42-10"><a href="#cb42-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_viridis_b</span>(<span class="at">direction =</span> <span class="sc">-</span><span class="dv">1</span>, <span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">50</span>, <span class="dv">100</span>), <span class="at">name =</span> <span class="st">"Sicherheitspotenzial</span><span class="sc">\n</span><span class="st">(1000 Euro pro</span><span class="sc">\n</span><span class="st">km und Jahr)"</span>) <span class="sc">+</span></span>
+<span id="cb42-11"><a href="#cb42-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Sicherheitspotenziale nach Abschnitten der A38 in den Jahren 2021 - 2023"</span>) <span class="sc">+</span></span>
+<span id="cb42-12"><a href="#cb42-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb42-13"><a href="#cb42-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb42-14"><a href="#cb42-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb42-15"><a href="#cb42-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>, <span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">hjust =</span> <span class="fl">0.5</span>),</span>
+<span id="cb42-16"><a href="#cb42-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb42-17"><a href="#cb42-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text  =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb42-18"><a href="#cb42-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.ticks =</span> <span class="fu">element_blank</span>()</span>
+<span id="cb42-19"><a href="#cb42-19" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -441,7 +867,7 @@ gUKD = \frac{gUKR \cdot DTV \cdot 365}{10^6}
 </div>
 </div>
 </div>
-<p>To-DO BEschriftung</p>
+<p>Ein Sicherheitspotenziel, dass kleiner gleich 0 ist, bedeutet, dass die Unfallkostendichte geringer als oder gleich der Grundunfallkostendichte ist. Das heißt, dass hier weniger (schwere) Unfälle aufgetreten sind, als aufgrund des Ausbaus zu erwarten wären. Das ist also etwas positives, hier gibt es (zumindest für den beobachteten Zeitraum) wenig Handlungsdruck. Je größer das Sicherheitspotenzial ist, desto mehr Bedarf besteht, die Infrastruktur sicherer zu gestalten. In unserer Grafik ist das vor allem der Abschnitt zwischen Nordhausen und Göttingen, der schon bei der Unfallkostenrate auffällig war.</p>
 
 
 </section>
