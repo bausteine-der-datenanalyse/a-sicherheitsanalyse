@@ -13,10 +13,9 @@ Die durchschnittliche Verkehrsstärke (DTV) auf Autobahnen kann ebenfalls über 
 
 Die Formeln der Kenngrößen für die Sicherheitsbewertung werden den Empfehlungen für die Sicherheitsanalyse von Straßennetzen (ESN) (2003) der Forschungsgesellschaft für Straßen- und Verkehrswesen (FGSV) entnommen.
 
-
-## Aufgabe 1 : Anzahl der Verkehrsunfälle
-
+::: {#exr-anzahl}
 Erstellen Sie eine tabellarische Übersicht der Unfallzahlen nach Unfallkategorie für eine ausgewählte Autobahn und für Gesamtdeutschland in einem frei wählbaren Jahr.
+:::
 
 ## Aufgabe 2 : Unfallkenngrößen auf Autobahnen
 
