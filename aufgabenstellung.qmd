@@ -1,0 +1,26 @@
+# Aufgaben zur Sicherheitsanalyse von Verkehrsnetzen
+
+## Datenquellen
+
+Die statistischen Ämter des Bundes und der Länder erheben und veröffentlichen mit der Straßenverkehrsunfallstatistik die Verkehrsunfälle mit Personenschaden oder Sachschaden in Deutschland. Im [Unfallatlas](https://unfallatlas.statistikportal.de/) werden Unfälle mit Personenschaden geführt. Für die Sicherheitsanalyse von Verkehrsnetzen können diese Daten verwendet und analysiert werden.
+
+Verwenden Sie für das Straßennetz die Daten des Bundesinformationssystems Straße (BISStra) der Bundesanstalt für Straßen- und Verkehrswesen (BASt), Stichwortsuche "Bundesfernstraßennetz".
+
+Die durchschnittliche Verkehrsstärke (DTV) auf Autobahnen kann ebenfalls über die BASt unter dem Stichwort "Dauerzählstellen" bezogen werden. 
+
+Die Formeln der Kenngrößen für die Sicherheitsbewertung werden den Empfehlungen für die Sicherheitsanalyse von Straßennetzen (ESN) (2003) der Forschungsgesellschaft für Straßen- und Verkehrswesen (FGSV) entnommen.
+
+
+## Aufgabe 1 : Anzahl der Verkehrsunfälle
+
+Erstellen Sie eine tabellarische Übersicht der Unfallzahlen nach Unfallkategorie für eine ausgewählte Autobahn und für Gesamtdeutschland in einem frei wählbaren Jahr.
+
+## Aufgabe 2 : Unfallkenngrößen auf Autobahnen
+
+Stellen Sie die folgende Unfallkenngrößen für eine ausgewählte Autobahn in einem frei wählbaren Jahr grafisch dar:
+
+- die Unfallrate UR,
+- die Unfalldichte UD,
+- die Unfallkostenrate UKR,
+- die Unfallkostendichte UKD und
+- das Sicherheitspotential SIPO

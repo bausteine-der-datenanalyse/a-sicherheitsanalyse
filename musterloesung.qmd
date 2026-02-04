@@ -1,9 +1,5 @@
----
-title: "Musterlösung Sicherheitsanalyse"
-format: html
-execute:
-  cache: true
----
+# Musterlösung Sicherheitsanalyse
+
 **Verwendete Pakete laden**
 
 ```{{r}}

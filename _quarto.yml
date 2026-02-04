@@ -1,6 +1,10 @@
 project:
   type: book
-  output-dir: output/book/
+  output-dir: _output/book/
+
+execute:
+  cache: false
+  warning: false
 
 book:
   title: "Anwendungsbaustein Sicherheitsanalyse"
@@ -10,6 +14,7 @@ book:
     - Florian Bagemihl
     - Matthias Baitsch
     - Marc Fehr
+    - Franca Hollmann
     - Maik Poetzsch
     - Sebastian Seipel
   date: today
@@ -22,15 +27,15 @@ book:
     logo: "bilder/logo_bcd_new.svg"
   chapters:
     - index.qmd
-    - aufgabe/aufgaben_sicherheitsanalyse.qmd
+    - aufgabenstellung.qmd
     - musterloesung.qmd
-    - sicherheitsanalyse.qmd
+    - musterloesung-erlaeutert.qmd
 
 format:
   html:
     theme: cosmo
     lang: de
     toc: true
-    toc-depth: 3
+    toc-depth: 4
 
 

@@ -4,9 +4,9 @@
 ::: {layout="[20, 80]" layout-valign="center"}
 ![](https://mirrors.creativecommons.org/presskit/buttons/88x31/png/by.png){fig-alt="Symbol des Lizenzhinweises Creative Commons BY"}
 
-Bausteine Computergestützter Datenanalyse. "Sicherheitsanalyse" von
-Lukas Arnold, Simone Arnold, Florian Bagemihl, Matthias Baitsch, Marc
-Fehr, Maik Poetzsch und Sebastian Seipel ist lizensiert unter [CC BY
+Bausteine Computergestützter Datenanalyse. "Anwendungsbaustein Sicherheitsanalyse" von
+Lukas Arnold, Simone Arnold, Florian Bagemihl, Matthias Baitsch,  Marc
+Fehr, Franca Hollmann, Maik Poetzsch und Sebastian Seipel ist lizensiert unter [CC BY
 4.0](https://creativecommons.org/licenses/by/4.0/deed.de). Das Werk ist
 abrufbar unter
 <https://github.com/bausteine-der-datenanalyse/a-sicherheitsanalyse>.
@@ -17,7 +17,7 @@ gekennzeichnete Inhalte. 2025
 Zitiervorschlag
 
 Arnold, Lukas, Simone Arnold, Florian Bagemihl, Matthias Baitsch, Marc
-Fehr, Maik Poetzsch, und Sebastian Seipel. 2024. „Bausteine
+Fehr, Franca Hollmann, Maik Poetzsch, und Sebastian Seipel. 2025. „Bausteine
 Computergestützter Datenanalyse. "Anwendungsbaustein
 Sicherheitsanalyse“.
 <https://github.com/bausteine-der-datenanalyse/a-sicherheitsanalyse>.
@@ -27,7 +27,7 @@ BibTeX-Vorlage
 ```         
 @misc{BCD-a-Sicherheitsanalyse-2025,
  title={Bausteine Computergestützter Datenanalyse. Anwendungsbaustein Sicherheitsanalyse},
- author={Arnold, Lukas and Arnold, Simone and Bagemihl, Florian and Baitsch, Matthias and Fehr, Marc and Poetzsch, Maik and Seipel, Sebastian},
+ author={Arnold, Lukas and Arnold, Simone and Bagemihl, Florian and Baitsch, Matthias and Fehr, Marc and Hollmann, Franca and Poetzsch, Maik and Seipel, Sebastian},
  year={2025},
  url={https://github.com/bausteine-der-datenanalyse/a-sicherheitsanalyse}} 
 ```
@@ -38,22 +38,27 @@ BibTeX-Vorlage
 ## Voraussetzungen
 
 Zum erfolgreichen Bearbeiten dieses Anwendungsbausteins benötigen Sie
-die Inhalte des Methodenbausteins Grundlagen der Statistik \[Referenz\]
-und des Werkzeugbausteins Datenmanagements \[Referenz\]
+die Inhalte des Methodenbausteins Grundlagen der Statistik \[https://github.com/bausteine-der-datenanalyse/bcd-bausteine-statistik\]
+und des Werkzeugbausteins Datenanalyse in R \[https://github.com/bausteine-der-datenanalyse/bcd-bausteine-r\]. Außerdem sollten Grundbegriffe der verkehrlichen Sicherheitsanalyse wie die Unfallrate, Unfalldichte, Unfallkosten und Sicherheitspotentiale bekannt sein.
 
 ## Lernziele
 
 Ziel dieses Bausteins ist es, typische Inhalte von sicherheitsrelevanten
 Fragestellungen von Verkehrsnetzen in grafischer Form mithilfe der
-Programmiersprache R darzustellen. Dabei lernen Sie wo deutschsprachige
-Unfalldaten gefunden werden können, wie Unfalldaten eingelesen und
+Programmiersprache R darzustellen. Dabei lernen Sie, wo deutschsprachige
+Unfalldaten gefunden werden können, wie Unfalldaten eingelesen, aufbereitet und
 analysiert werden und welche verschiedenen Darstellungsformen sich für
 bestimmte Datentypen eignen.
 
 ## Verwendete Datensätze
 
-[Daten des Straßennetzes des Bundesinformationssystem Straße
-(BISStra)](https://www.bast.de/DE/Verkehrstechnik/Fachthemen/v2-bisstra.html)
+Daten des Straßennetzes des Bundesinformationssystem Straße
+(BISStra) der Bundesanstalt für Straßen- und Verkehrswesen (BASt)
 
-[Unfalldaten des Unfallatlas des Statistischen
-Bundesamts](https://unfallatlas.statistikportal.de/)
+Unfalldaten des Unfallatlas des Statistischen Bundesamts
+
+Verkehrsmengen der Dauerzählstellen der BASt
+
+## Literatur
+
+Forschungsgesellschaft für Straßen- und Verkehrswesen (FGSV) (2003): Empfehlungen für die Sicherheitsanalyse von Straßennetzen (ESN)
