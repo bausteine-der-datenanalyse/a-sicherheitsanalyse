@@ -2,7 +2,7 @@ Package: bcdstatistik
 Title: BCD Statistik
 Version: 0.1
 Authors@R: c(
-
+    person("Matthias", "Baitsch", ,"matthias.baitsch@hs-bochum.de", role = c("aut", "cre"))
   )
 Depends: 
     R
@@ -13,7 +13,7 @@ Imports:
     dplyr,
     ggplot2,
     lubridate,
-    readxl,
+    readxl
 Suggests: 
 Encoding: UTF-8
 License: CC NC ND 3.0
