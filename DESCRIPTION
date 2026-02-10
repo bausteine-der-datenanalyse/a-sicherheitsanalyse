@@ -8,12 +8,7 @@ Depends:
     R
 Imports:
     sf,
-    ggplot2,
-    broom,
-    dplyr,
-    ggplot2,
-    lubridate,
-    readxl
+    tidyverse
 Suggests: 
 Encoding: UTF-8
 License: CC NC ND 3.0
