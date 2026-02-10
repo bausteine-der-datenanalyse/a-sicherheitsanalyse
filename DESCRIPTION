@@ -1,0 +1,20 @@
+Package: bcdstatistik
+Title: BCD Statistik
+Version: 0.1
+Authors@R: c(
+
+  )
+Depends: 
+    R
+Imports:
+    sf,
+    ggplot2,
+    broom,
+    dplyr,
+    ggplot2,
+    lubridate,
+    readxl,
+Suggests: 
+Encoding: UTF-8
+License: CC NC ND 3.0
+
