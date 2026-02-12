@@ -4,9 +4,11 @@
 library(tidyverse)
 library(kableExtra)
 library(sf)
+library(fs)
+library(curl)
 ```
 
-## Aufgabe 1 : Anzahl der Verkehrsunfälle
+## Übungsaufgabe 1.1 : Anzahl der Verkehrsunfälle
 
 Als frei wählbare Jahr wird 2023 gewählt und als frei wählbare Autobahn die A38.
 
@@ -18,36 +20,42 @@ d_unfaelle_2023 = read_csv2("daten/Unfallorte2023_LinRef.csv") |>
   st_zm()
 ```
 
-Als nächstes wird das Straßennetz der Bundesfernstraßen als Datensatz ins Projekt geladen. Diese Daten bekommen wir von der Bundesanstalt für Straßen- und Verkehrswesen (BASt). Das Bundesfernstraßennetz beinhaltet Daten zu Bundesautobahnen und Bundesstraßen. Da für uns nur die Autobahnen relevant sind, filtern wir nur diese heraus. Wir wählen als Achse die Bestandsachse, da dies die mittlere Achse der Straße ist und wir keine Unterscheidung der Fahrtrichtung vornehmen müssen. Wir ergänzen eine Spalte ("mutate") mit der Zeilennummer (brauchen wir gleich für die Unfälle). Auch hier entfernen wir potentielle Daten der z- oder m-Dimension.
+Als nächstes wird das Straßennetz der Bundesfernstraßen als Datensatz ins Projekt geladen. Diese Daten bekommen wir von der Bundesanstalt für Straßen- und Verkehrswesen (BASt). Das Bundesfernstraßennetz beinhaltet Daten zu Bundesautobahnen und Bundesstraßen. Aufgrund der Größe des Datensatzes kann dieser nicht auf Github zur Verfügung gestellt werden, daher fügen wir eine Funktion ein, die prüft, ob der Datensatz bereits im "daten"-Ordner liegt und falls nein, er direkt von der Webseite der BASt heruntergeladen, entpackt und an der richtigen Stelle gespeichert wird.
+Da für uns nur die Autobahnen relevant sind, filtern wir nur diese heraus. Wir wählen als Achse die Bestandsachse, da dies die mittlere Achse der Straße ist und wir keine Unterscheidung der Fahrtrichtung vornehmen müssen. Wir ergänzen eine Spalte ("mutate") mit der Zeilennummer (brauchen wir gleich für die Unfälle). Auch hier entfernen wir potentielle Daten der z- oder m-Dimension.
 
 ```{r}
+if (!file_exists("daten/BFStr_Netz_v2025q3.gpkg")) {
+  curl_download("https://www.bast.de/SharedDocs/Daten-TB/Daten-BISStra.zip?__blob=publicationFile&v=5", destfile = "daten/Daten-BISStra.zip", quiet = FALSE)
+  unzip("daten/Daten-BISStra.zip", exdir = "daten/")
+}
+
 d_bfstn <- read_sf("daten/BFStr_Netz_v2025q3.gpkg") |>
   filter(Str_Klasse_kurz == "A" & Sk_Achse == "Bestandsachse") |>
   mutate(rownumber = row_number()) |>
   st_zm()
 ```
 
-Den Unfalldaten soll nun aufgrund ihrer Lage in Deutschland der nächstgelegene Autobahnabschnitt und die Entfernung zu diesem hinzugefügt werden. "st_nearest_feature" gibt dabei die Zeilennummer des nächstgelegenen Autobahnabschnitts im Datensatz "d_bfstn" wieder. "st_dinstance" berechnet die Entfernung vom Unfallpunkt zum nächstgelegenen Autobahnabschnitt, dies kann unter Umständen länger dauern. Außerdem suchen wir mit "d_bfstn$Str_Kennung[abschnitt_id]" aus dem Datensatz "d_bfstn" und der Spalte "Str_Kennung" genau den Eintrag, dessen Zeile durch "abschnitt_id" angegeben wird. Damit bekommen wir statt einer Nummer eines Autobahnabschnittes den Namen der Autobahn (z.B. A1). Zudem wollen wir nur Unfälle, die auf Autobahnen passiert sind, berücksichtigen. Dafür filtern wir nach Unfällen, die in einem 20 m Umkreis zur Bestandsachse der Autobahnen sind. Die 20 m wählen wir, um fast alle Unfälle auf den Fahrbahnen, auch bei 6- oder 8-spurigen Autobahnen, einzuschließen und fast alle Unfälle daneben auszuschließen. Es gibt uns aber keine Garantie, dass alle Unfälle, die wir nun filtern, tatsächlich auf Autobahnen liegen. Den Unterschied des Filters sehen wir im Environment: Der Unfalldatensatz aus 2023 beinhaltet 269.048 Unfälle insgesamt, der Unfalldatensatz für Autobahnen nur noch 22.114. Für mehr Übersichtlichkeit vereinfachen wir unseren Datensatz und lassen uns mit "select" nur bestimmte Spalten anzeigen.
+Den Unfalldaten soll nun aufgrund ihrer Lage in Deutschland der nächstgelegene Autobahnabschnitt und die Entfernung zu diesem hinzugefügt werden. "st_nearest_feature" gibt dabei die Zeilennummer des nächstgelegenen Autobahnabschnitts im Datensatz "d_bfstn" wieder. "st_distance" berechnet die Entfernung vom Unfallpunkt zum nächstgelegenen Autobahnabschnitt, dies kann unter Umständen länger dauern. Außerdem suchen wir mit "d_bfstn$Str_Kennung[abschnitt_id]" aus dem Datensatz "d_bfstn" und der Spalte "Str_Kennung" genau den Eintrag, dessen Zeile durch "abschnitt_id" angegeben wird. Damit bekommen wir statt einer Nummer eines Autobahnabschnittes den Namen der Autobahn (z.B. A1). Zudem wollen wir nur Unfälle, die auf Autobahnen passiert sind, berücksichtigen. Dafür filtern wir nach Unfällen, die in einem 20 m Umkreis zur Bestandsachse der Autobahnen sind. Die 20 m wählen wir, um fast alle Unfälle auf den Fahrbahnen, auch bei 6- oder 8-spurigen Autobahnen, einzuschließen und fast alle Unfälle daneben auszuschließen. Es gibt uns aber keine Garantie, dass alle Unfälle, die wir nun filtern, tatsächlich auf Autobahnen liegen. Den Unterschied des Filters sehen wir im Environment: Der Unfalldatensatz aus 2023 beinhaltet 269.048 Unfälle insgesamt, der Unfalldatensatz für Autobahnen nur noch 22.114. Für mehr Übersichtlichkeit vereinfachen wir unseren Datensatz und lassen uns mit "select" nur bestimmte Spalten anzeigen.
 
 ```{r}
 d_unfaelle_bab_2023 = d_unfaelle_2023 |>
 	mutate(
 	  abschnitt_id = st_nearest_feature(geometry, d_bfstn),
-	  nearest_autobahn_distance = st_distance(geometry, d_bfstn[abschnitt_id, ], by_element = TRUE),
-	  nearest_autobahn_name = d_bfstn$Str_Kennung[abschnitt_id]
+	  distanz = st_distance(geometry, d_bfstn[abschnitt_id, ], by_element = TRUE),
+	  name = d_bfstn$Str_Kennung[abschnitt_id]
 	) |>
-  filter(as.double(nearest_autobahn_distance) <= 20) |>
-  select(UKATEGORIE, nearest_autobahn_name, abschnitt_id)
+  filter(as.double(distanz) <= 20) |>
+  select(UKATEGORIE, name, abschnitt_id)
 ```
 
-Nun folgt die tabellarische Darstellung. Wir nutzen "function", da wir sowohl für alle Unfälle auf deutschen Autobahnen als auch auf der A38 folgende Schritte durchführen wollen: Mit "st_set_geometry(NULL)" entfernen wir die Geometriespalte, da für die Auswertung in Tabellenform nur die Attributdaten benötigt werden. Anschließend gruppieren wir die Unfalldaten nach ihrer Kategorie (1, 2 oder 3) und berechnen mit "summarise" die Anzahl der Unfälle je Unfallkategorie. Um eine weitere Zeile mit den Summen hinzufügen zu können, muss die Spalte zur Unfallkategorie in einen Zeichenvektor umgewandelt werden ("mutate(UKATEGORIE = as.character(UKATEGORIE))"). Die neue Zeile hängen wir mit "bind_rows()" an. Diese letzte Zeile der Spalte UKATEGORIE („Summe“) enthält nun die Gesamtanzahl aller Unfälle über alle Kategorien hinweg und dient als übersichtliche Gesamtsumme in der Ergebnistabelle. Nun fügen wir die beiden einzelnen Tabellen noch zu einer Tabelle zusammen mit "left_join()" und benennen die Zeilennamen um. Mit "kable()" stellen wir die Tabelle dar und können ihr noch eine Überschrift hinzufügen.
+todo: Nun folgt die tabellarische Darstellung. Mit "st_drop_geometry()" entfernen wir die Geometriespalte, da für die Auswertung in Tabellenform nur die Attributdaten benötigt werden. Anschließend gruppieren wir die Unfalldaten nach ihrer Kategorie (1, 2 oder 3) und berechnen mit "summarise" die Anzahl der Unfälle je Unfallkategorie, einmal für die Autobahn 38 und einmal für alle Autobahnen. Um eine weitere Zeile mit den Summen hinzufügen zu können, muss die Spalte zur Unfallkategorie in einen Zeichenvektor umgewandelt werden ("mutate(UKATEGORIE = as.character(UKATEGORIE))"). Die neue Zeile hängen wir mit "bind_rows()" an. Diese letzte Zeile der Spalte UKATEGORIE („Summe“) enthält nun die Gesamtanzahl aller Unfälle über alle Kategorien hinweg und dient als übersichtliche Gesamtsumme in der Ergebnistabelle. Nun benennen wir noch die Zeilennamen um. Mit "kable()" stellen wir die Tabelle dar und können ihr noch eine Überschrift hinzufügen.
 
 ```{r}
 d_zaehle_unfaelle <- d_unfaelle_bab_2023 |>
   st_drop_geometry() |>
   group_by(UKATEGORIE) |>
   summarise(
-    A38 = sum(nearest_autobahn_name == "A38"),
+    A38 = sum(name == "A38"),
     Autobahnen = n(),
     .groups = "drop"
   ) |>
@@ -72,7 +80,7 @@ kable(
 )
 ```
 
-## Aufgabe 2 : Unfallkenngrößen auf Autobahnen
+## Übungsaufgabe 1.2 : Unfallkenngrößen auf Autobahnen
 
 ### Die Unfallrate UR
 
@@ -101,7 +109,7 @@ d_dzs_2023 <- read_csv2("daten/Jawe2023.csv", locale = locale(encoding = 'iso-88
   mutate(abschnitt_id = st_nearest_feature(geometry, d_bfstn))
 ```
 
-Bevor wir mit den Daten der Dauerzählstellen weiterrechnen, prüfen wir, ob jedem Autobahnabschnitt maximal eine Dauerzählstelle zugeordnet ist. In unserem Verständnis ist ein Autobahnabschnitt u.a. dadurch klassifiziert, dass in diesem keine Auffahrt oder Abfahrt vorhanden ist, daher würden zwei Zählstellen hier nur redudante DTV-Werte liefern. Bevor wir mit dieser Annahme weiterrechnen, kontrollieren wir sie.
+Bevor wir mit den Daten der Dauerzählstellen weiterrechnen, prüfen wir, ob jedem Autobahnabschnitt maximal eine Dauerzählstelle zugeordnet ist. In unserem Verständnis ist ein Autobahnabschnitt u.a. dadurch klassifiziert, dass in diesem keine Auffahrt oder Abfahrt vorhanden ist, daher würden zwei Zählstellen hier nur redundante DTV-Werte liefern. Bevor wir mit dieser Annahme weiterrechnen, kontrollieren wir sie.
 
 ```{r}
 d_dzs_2023 |>
@@ -306,11 +314,11 @@ Wie auch bei den Unfalldaten aus 2023 fügen wir den Unfalldaten den nächstgele
 d_unfaelle_bab_alle <- d_unfaelle_alle |>
   mutate(
     abschnitt_id = st_nearest_feature(geometry, d_bfstn),
-	  nearest_autobahn_distance = st_distance(geometry, d_bfstn[abschnitt_id, ], by_element = TRUE),
-	  nearest_autobahn_name = d_bfstn$Str_Kennung[abschnitt_id]
+	  distanz = st_distance(geometry, d_bfstn[abschnitt_id, ], by_element = TRUE),
+	  name = d_bfstn$Str_Kennung[abschnitt_id]
 	) |>
-  filter(as.double(nearest_autobahn_distance) <= 20) |>
-  select(UKATEGORIE, nearest_autobahn_name, abschnitt_id, jahr)
+  filter(as.double(distanz) <= 20) |>
+  select(UKATEGORIE, name, abschnitt_id, jahr)
 ```
 
 Ebenfalls wie bei den Unfalldaten aus 2023 fassen wir die Unfalldaten je Abschnitt zusammen. Da wir gleich für die Unfallkosten aber auch die Unfallkategorie berücksichtigen werden, gruppieren wir nicht nur nach Abschnitten, sondern auch nach den Unfallkategorien.
@@ -534,6 +542,8 @@ mit der Grundunfallkostenrate gUKR, die den ESN [@ESN2003] zu entnehmen ist.
 gUKR_bab = 11
 ```
 
+Wir fügen wie bei den vorherigen Kenngrößen neue Spalten mit den Berechnungen hinzu.
+
 ```{r}
 d_bfstn_gesamt <- d_bfstn_gesamt |>
   mutate(
@@ -541,6 +551,8 @@ d_bfstn_gesamt <- d_bfstn_gesamt |>
     sicherheitspotenzial = unfallkostendichte - gUKD
 )
 ```
+
+Und filtern nach unserer Beispielautobahn.
 
 ```{r}
 d_A38_gesamt  <- d_bfstn_gesamt |>
@@ -569,4 +581,4 @@ ggplot () +
   )
 ```
 
-Ein Sicherheitspotenziel, dass kleiner gleich 0 ist, bedeutet, dass die Unfallkostendichte geringer als oder gleich der Grundunfallkostendichte ist. Das heißt, dass hier weniger (schwere) Unfälle aufgetreten sind, als aufgrund des Ausbaus zu erwarten wären. Das ist also etwas positives, hier gibt es (zumindest für den beobachteten Zeitraum) wenig Handlungsdruck. Je größer das Sicherheitspotenzial ist, desto mehr Bedarf besteht, die Infrastruktur sicherer zu gestalten. In unserer Grafik ist das vor allem der Abschnitt zwischen Nordhausen und Göttingen (SIPO zwischen 50 und 100), der schon bei der Unfallkostenrate auffällig war, sowie drei Abschnitte zwischen Nordhausen und Leipzig die ein Sicherheitspotential zwischen 0 und 50 haben.
+Ein Sicherheitspotenzial, dass kleiner gleich 0 ist, bedeutet, dass die Unfallkostendichte geringer als oder gleich der Grundunfallkostendichte ist. Das heißt, dass hier weniger (schwere) Unfälle aufgetreten sind, als aufgrund des Ausbaus zu erwarten wären. Das ist also etwas positives, hier gibt es (zumindest für den beobachteten Zeitraum) wenig Handlungsdruck. Je größer das Sicherheitspotenzial ist, desto mehr Bedarf besteht, die Infrastruktur sicherer zu gestalten. In unserer Grafik ist das vor allem der Abschnitt zwischen Nordhausen und Göttingen (SIPO zwischen 50 und 100), der schon bei der Unfallkostenrate auffällig war, sowie drei Abschnitte zwischen Nordhausen und Leipzig die ein Sicherheitspotential zwischen 0 und 50 haben.

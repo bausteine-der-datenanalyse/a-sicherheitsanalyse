@@ -3,231 +3,462 @@
 **Verwendete Pakete laden**
 
 ```{{r}}
-#| include: false
-library(ggplot2)
 library(tidyverse)
-library(lubridate)
-library(readxl)
 library(kableExtra)
 library(sf)
-library(osmdata)
-library(giscoR)
-library(leaflet)
-library(shiny)
+library(fs)
+library(curl)
 ```
+
+## Übungsaufgabe 1.1 : Anzahl der Verkehrsunfälle
 
 **Daten einlesen und aufbereiten**
 
-
-Deutschlandkarte:
-
 ```{{r}}
-d_de <- gisco_get_nuts(country = "Germany", nuts_level = 0, resolution = 03)
-```
-
-Unfalldaten:
-
-```{{r}}
-#| warning: false
-
-unfall_csv = read_csv2("data/Unfallorte2022_LinRef.csv") 
-unfaelle <- st_as_sf(unfall_csv, coords = c("LINREFX", "LINREFY"), 
-                  crs = 25832)
-```
-
-Streckenabschnitte:
-
-```{{r}}
-strecke <- read_sf("data/geo/BFStr_Netz_SK.geojson")
-```
-
-Streckenabschnitte A43:
-
-```{{r}}
-a43 <- strecke |>
-  filter(Str_Kennung == "A43" & Sk_Achse == "Hauptachse") |>
-  mutate(rownumber = row_number())
-```
-
-Streckenabschnitte Deutschland:
-
-```{{r}}
-strecke_de <- strecke |>
-  filter(Str_Klasse_kurz == "A" & Sk_Achse == "Hauptachse") |>
-  mutate(rownumber = row_number())
-```
-
-## Aufgabe 1 : Unfälle zählen
-
-Unfälle filtern:
-
-```{{r}}
-unfaelle_43 = unfaelle %>%
-	# find out which autobahn is closest by
-	mutate(nearest_autobahn_id = st_nearest_feature(st_zm(.), a43)) %>% 
-	# calculate distance to closest autobahn
-	mutate(nearest_autobahn_distance = st_distance(st_zm(.), a43[nearest_autobahn_id, ], by_element = TRUE))
-```
-
-Alles nicht in der Nähe von A43 raus:
-
-```{{r}}
-unfaelle_autobahn = unfaelle_43 |> 
-	filter(as.double(nearest_autobahn_distance) <= 15) |>
+d_unfaelle_2023 = read_csv2("daten/Unfallorte2023_LinRef.csv") |>
+  st_as_sf(coords = c("LINREFX", "LINREFY"), crs = 25832) |>
   st_zm()
 ```
 
-Unfälle zählen:
-
 ```{{r}}
-autobahnen_accident_count = unfaelle_autobahn %>% 
-	as_tibble() %>% 
-	select(-geometry) %>%
-	count(nearest_autobahn_id, UKATEGORIE) %>% 
-  spread(UKATEGORIE, n) %>%
-  rename(Anzahl_UK2 = `2`, Anzahl_UK3 = `3`) %>%
-  replace(is.na(.), 0) %>%
-  mutate(Anzahl_U_G = Anzahl_UK2 + Anzahl_UK3)
-# Hier gehören eigentlich noch Unfaelle nach Kategorie 1 rein
-```
+if (!file_exists("daten/BFStr_Netz_v2025q3.gpkg")) {
+  curl_download("https://www.bast.de/SharedDocs/Daten-TB/Daten-BISStra.zip?__blob=publicationFile&v=5", destfile = "daten/Daten-BISStra.zip", quiet = FALSE)
+  unzip("daten/Daten-BISStra.zip", exdir = "daten/")
+}
 
-Verbinden mit Daten der A43:
-
-```{{r}}
-a43 = a43 |> 
-	left_join(autobahnen_accident_count, by = c("rownumber" = "nearest_autobahn_id"))
-
-a43 <- replace(a43, is.na(a43), 0)
-```
-
-Anzahl der Unfälle in `ggplot` plotten:
-
-```{{r}}
-ggplot () +
-  geom_sf(data = a43, size = 2, mapping = aes(color = Anzahl_U_G)) +
-  scale_color_viridis_b(direction = -1, breaks = seq(2,14,2)) +
-  labs(title = "Anzahl der Verkehrsunfälle nach Abschnitten der A43 im Jahr 2022",
-       color = "Anzahl Verkehrsunfälle") +
- theme(plot.title = element_text(size=10))
-```
-
-## Aufgabe 2
-
-### Unfalldichte
-
-#### A43
-
-Unfälle filtern:
-
-```{{r}}
-unfaelle_43 = unfaelle %>%
-	# Welche Autobahn am Nächsten
-	mutate(nearest_autobahn_id = st_nearest_feature(st_zm(.), a43)) %>% 
-	# Distanz zur A43
-	mutate(nearest_autobahn_distance = st_distance(st_zm(.), a43[nearest_autobahn_id, ], by_element = TRUE))
-```
-
-Alles nicht in der Nähe von A43 raus:
-
-```{{r}}
-unfaelle_autobahn = unfaelle_43 |> 
-	filter(as.double(nearest_autobahn_distance) <= 15) |>
+d_bfstn <- read_sf("daten/BFStr_Netz_v2025q3.gpkg") |>
+  filter(Str_Klasse_kurz == "A" & Sk_Achse == "Bestandsachse") |>
+  mutate(rownumber = row_number()) |>
   st_zm()
 ```
 
-Unfälle zählen:
-
 ```{{r}}
-autobahnen_accident_count = unfaelle_autobahn %>% 
-	as_tibble() %>% 
-	select(-geometry) %>%
-	count(nearest_autobahn_id, UKATEGORIE) %>% 
-  spread(UKATEGORIE, n) %>%
-  rename(Anzahl_UK2 = `2`, Anzahl_UK3 = `3`) %>%
-  replace(is.na(.), 0) %>%
-  mutate(Anzahl_U_G = Anzahl_UK2 + Anzahl_UK3)
-# Hier gehören eigentlich noch Unfaelle nach Kategorie 1 rein, existieren aber in diesem Zeitraum nicht.
+d_unfaelle_bab_2023 = d_unfaelle_2023 |>
+	mutate(
+	  abschnitt_id = st_nearest_feature(geometry, d_bfstn),
+	  distanz = st_distance(geometry, d_bfstn[abschnitt_id, ], by_element = TRUE),
+	  name = d_bfstn$Str_Kennung[abschnitt_id]
+	) |>
+  filter(as.double(distanz) <= 20) |>
+  select(UKATEGORIE, name, abschnitt_id)
 ```
 
-Verbinden mit Daten der A43:
+**Tabellarische Darstellung**
 
 ```{{r}}
-a43 = a43 |> 
-	left_join(autobahnen_accident_count, by = c("rownumber" = "nearest_autobahn_id"))
+d_zaehle_unfaelle <- d_unfaelle_bab_2023 |>
+  st_drop_geometry() |>
+  group_by(UKATEGORIE) |>
+  summarise(
+    A38 = sum(name == "A38"),
+    Autobahnen = n(),
+    .groups = "drop"
+  ) |>
+  mutate(UKATEGORIE = as.character(UKATEGORIE))
+
+tabelle_unfaelle <- d_zaehle_unfaelle |>
+  bind_rows(summarise(d_zaehle_unfaelle, UKATEGORIE = "Summe", across(c(A38, Autobahnen), sum))) |>
+  rename(Unfallkategorie = UKATEGORIE) |>
+  mutate(
+    Unfallkategorie = case_when(
+      Unfallkategorie == "1" ~ "Unfall mit Getöteten",
+      Unfallkategorie == "2" ~ "Unfall mit Schwerverletzten",
+      Unfallkategorie == "3" ~ "Unfall mit Leichtverletzten",
+      TRUE ~ Unfallkategorie
+    )
+  )
+
+
+kable(
+  tabelle_unfaelle,
+  caption = "Anzahl der Verkehrsunfälle nach Unfallkategorie (A38 und alle deutschen Autobahnen) im Jahr 2023"
+)
 ```
 
-Plotten:
+## Übungsaufgabe 1.2 : Unfallkenngrößen auf Autobahnen
+
+### Die Unfallrate UR
+
+**Dauerzählstellendaten einlesen und aufbereiten**
+
+```{{r}}
+d_dzs_2023 <- read_csv2("daten/Jawe2023.csv", locale = locale(encoding = 'iso-8859-1')) |>
+  filter(Str_Kl == "A") |>
+  drop_na(DTV_Kfz_MobisSo_Q) |>
+  st_as_sf(coords =  c("Koor_UTM32_E", "Koor_UTM32_N"),  crs = 25832) |>
+  st_zm() |>
+  mutate(abschnitt_id = st_nearest_feature(geometry, d_bfstn))
+```
+
+```{{r}}
+d_dzs_2023 |>
+  st_drop_geometry() |>
+  group_by(abschnitt_id) |>
+  filter(n() > 1) |>
+  select(abschnitt_id, DZ_Nr, DTV_Kfz_MobisSo_Q)
+```
+
+```{{r}}
+d_dzs_abschnitt_2023 <- d_dzs_2023 |>
+  st_set_geometry(NULL) |>
+  group_by(abschnitt_id) |>
+  summarise(
+    DTV_2023 = mean(DTV_Kfz_MobisSo_Q, na.rm = TRUE),
+    .groups = "drop"
+  ) |>
+  select(abschnitt_id, DTV_2023)
+```
+
+```{{r}}
+d_unfaelle_abschnitt_2023 <- d_unfaelle_bab_2023 |>
+  st_set_geometry(NULL) |>
+  group_by(abschnitt_id) |>
+  summarise(
+    d_unfaelle_2023 = n(),
+    .groups = "drop"
+  )
+```
+
+```{{r}}
+d_bfstn_gesamt <- d_bfstn |>
+  mutate(abschnitt_id = row_number()) |>
+  mutate(laenge_km = as.numeric(Sk_Laenge_m)/1000) |>
+  left_join(d_dzs_abschnitt_2023, by = "abschnitt_id") |>
+  left_join(d_unfaelle_abschnitt_2023, by = "abschnitt_id") |>
+  select(Str_Kennung, laenge_km, DTV_2023, d_unfaelle_2023, abschnitt_id)
+```
+
+**Unfallraten berechnen**
+
+```{{r}}
+t1 = 1
+```
+
+```{{r}}
+d_bfstn_gesamt <- d_bfstn_gesamt |>
+  mutate(unfallrate = d_unfaelle_2023 * 10^6 / (DTV_2023 * laenge_km * 365  * t1)) 
+```
+
+```{{r}}
+d_A38_gesamt <- d_bfstn_gesamt |>
+  filter(Str_Kennung == "A38")
+```
+
+**Graphische Darstellung**
+
+```{{r}}
+d_A38 <- d_bfstn |> filter(Str_Kennung == "A38")
+d_staedte <- st_as_sf(
+  tibble::tribble(
+  ~stadt, ~lat, ~lon,
+  "Leipzig", 51.3402, 12.3601,
+  "Nordhausen", 51.5018, 10.7957,
+  "Göttingen", 51.5455, 9.9055,
+  ),
+  coords = c("lon", "lat"),
+  crs = 4326
+) |>
+  st_transform(25832)
+
+ggplot () +
+  geom_sf(data = d_A38, colour = "grey", size = 0.4) +
+  geom_sf(data = d_staedte, color = "red") +
+  geom_sf_text(data = d_staedte, aes(label = stadt), nudge_y = 5000) +
+  geom_sf(
+    data = d_A38_gesamt |> filter(!is.na(unfallrate)), 
+    size = 2.5, 
+    mapping = aes(color = unfallrate)
+    ) +
+  scale_color_viridis_b(direction = -1, name = "Unfallrate\n(Unfälle pro\n1 Mio. Kfz-km)") +
+  labs(title = "Unfallraten nach Abschnitten der A38 im Jahr 2023") +
+  theme_minimal() +
+  theme(
+    panel.grid = element_blank(),
+    plot.title = element_text(size = 14, face = "bold", hjust = 0.5),
+    axis.title = element_blank(),
+    axis.text  = element_blank(),
+    axis.ticks = element_blank()
+  )
+```
+
+
+### Die Unfalldichte UD
+
+**Unfalldichte berechnen**
+
+```{{r}}
+d_bfstn_gesamt <- d_bfstn_gesamt |>
+  mutate(unfalldichte = d_unfaelle_2023 / (laenge_km * t1))                             
+```
+
+```{{r}}
+d_A38_gesamt <- d_bfstn_gesamt |>
+  filter(Str_Kennung == "A38")
+```
+
+**Graphische Darstellung**
 
 ```{{r}}
 ggplot () +
-  geom_sf(data = a43, size = 2, mapping = aes(color = Anzahl_U_G)) +
-  scale_color_distiller(palette = 8 , direction = 1, breaks = seq(2,14,2)) +
-  labs(title = "Anzahl der Verkehrsunfälle nach Abschnitten der A43 im Jahr 2022",
-       color = "Anzahl Verkehrsunfälle") +
- theme(plot.title = element_text(size=10))
+  geom_sf(data = d_A38, colour = "grey", size = 0.4) +
+  geom_sf(data = d_staedte, color = "red") +
+  geom_sf_text(data = d_staedte, aes(label=stadt), nudge_y = 5000) +
+    geom_sf(
+    data = d_A38_gesamt |> filter(!is.na(unfalldichte)), 
+    size = 2.5, 
+    mapping = aes(color = unfalldichte)
+    ) +
+  scale_color_viridis_b(direction = -1, limits = c(0, 10),  name = "Unfalldichte\n(Unfälle pro\nkm und Jahr)") +
+  labs(title = "Unfalldichten nach Abschnitten der A38 im Jahr 2023") +
+  theme_minimal() +
+  theme(
+    panel.grid = element_blank(),
+    plot.title = element_text(size = 14, face = "bold", hjust = 0.5),
+    axis.title = element_blank(),
+    axis.text  = element_blank(),
+    axis.ticks = element_blank()
+  )
 ```
 
-#### Deutschland
+### Die Unfallkostenrate UKR
 
-Unfälle filtern:
-
-```{{r}}
-unfaelle_de = unfaelle %>%
-	# Welche Autobahn ist am Nächsten
-	mutate(nearest_autobahn_id = st_nearest_feature(st_zm(.), strecke_de)) %>% 
-	# Distanz zur nächsten Autobahn berechnen
-	mutate(nearest_autobahn_distance = st_distance(st_zm(.), strecke_de[nearest_autobahn_id, ], by_element = TRUE))
-```
-
-Alles nicht in der Nähe von BAB raus:
+**Unfalldaten einlesen und aufbereiten**
 
 ```{{r}}
-unfaelle_de_autobahn = unfaelle_de |> 
-	filter(as.double(nearest_autobahn_distance) <= 15) |>
+d_unfaelle_alle <- bind_rows(
+  read.csv2("daten/Unfallorte2023_LinRef.csv") |> mutate(jahr = 2023),
+  read.csv2("daten/Unfallorte2022_LinRef.csv") |> mutate(jahr = 2022),
+  read.csv2("daten/Unfallorte2021_LinRef.csv") |> mutate(jahr = 2021),
+  ) |>
+  st_as_sf(coords = c("LINREFX", "LINREFY"), crs = 25832) |>
   st_zm()
 ```
 
-Unfälle zählen:
-
 ```{{r}}
-de_unfall_anzahl = unfaelle_de_autobahn %>% 
-	as_tibble() %>% 
-	select(-geometry) %>%
-	count(nearest_autobahn_id, UKATEGORIE) %>% 
-  spread(UKATEGORIE, n) %>%
-  rename(Anzahl_UK1 = `1`,Anzahl_UK2 = `2`, Anzahl_UK3 = `3`) %>%
-  replace(is.na(.), 0) %>%
-  mutate(Anzahl_U_G = Anzahl_UK1 + Anzahl_UK2 + Anzahl_UK3)
+d_unfaelle_bab_alle <- d_unfaelle_alle |>
+  mutate(
+    abschnitt_id = st_nearest_feature(geometry, d_bfstn),
+	  distanz = st_distance(geometry, d_bfstn[abschnitt_id, ], by_element = TRUE),
+	  name = d_bfstn$Str_Kennung[abschnitt_id]
+	) |>
+  filter(as.double(distanz) <= 20) |>
+  select(UKATEGORIE, name, abschnitt_id, jahr)
 ```
 
-Verbinden mit Daten:
-
 ```{{r}}
-strecke_de = strecke_de |> 
-	left_join(de_unfall_anzahl, by = c("rownumber" = "nearest_autobahn_id"))
-
-strecke_de = strecke_de |>
-  mutate(UD = (Anzahl_U_G)/(Sk_Laenge_km))
+d_unfaelle_abschnitt_alle <- d_unfaelle_bab_alle |>
+  st_set_geometry(NULL) |>
+    group_by(abschnitt_id, UKATEGORIE) |>
+    summarise(
+      Unfaelle = n(),
+      .groups = "drop"
+  ) 
 ```
 
-Plotten:
+**Unfallschwere bestimmen**
+
+```{{r}}
+d_unfaelle_sp_3j <- d_unfaelle_abschnitt_alle |>
+  filter(UKATEGORIE %in% c(1, 2)) |>
+  group_by(abschnitt_id) |>
+  summarise(
+    unfaelle_sp_summe_3j = sum(Unfaelle, na.rm = TRUE),
+    .groups = "drop"
+  )
+
+d_unfaelle_lv_3j <- d_unfaelle_abschnitt_alle |>
+  filter(UKATEGORIE == 3) |>
+  group_by(abschnitt_id) |>
+  summarise(
+    unfaelle_lv_summe_3j = sum(Unfaelle, na.rm = TRUE),
+    .groups = "drop"
+  )
+```
+
+```{{r}}
+d_unfaelle_gesamt <- d_unfaelle_sp_3j |>
+  full_join(d_unfaelle_lv_3j, by = "abschnitt_id") |>
+  mutate(
+    unfaelle_sp_summe_3j = replace_na(unfaelle_sp_summe_3j, 0),
+    unfaelle_lv_summe_3j = replace_na(unfaelle_lv_summe_3j, 0)
+  )
+```
+
+```{{r}}
+d_bfstn_gesamt <- d_bfstn_gesamt |>
+  mutate(abschnitt_id = row_number()) |>
+  left_join(d_unfaelle_gesamt, by = "abschnitt_id") |>
+  select(Str_Kennung, laenge_km, DTV_2023, d_unfaelle_2023, abschnitt_id, laenge_km, unfallrate, unfalldichte, unfaelle_sp_summe_3j, unfaelle_lv_summe_3j)
+```
+
+**Dauerzählstellendaten einlesen und aufbereiten**
+
+```{{r}}
+d_dzs_alle <- bind_rows(
+  read_csv2("daten/Jawe2023.csv", locale = locale(encoding = 'iso-8859-1')) |> mutate(jahr = 2023),
+  read_csv2("daten/Jawe2022.csv", locale = locale(encoding = 'iso-8859-1')) |> mutate(jahr = 2022),
+  read_csv2("daten/Jawe2021.csv", locale = locale(encoding = 'iso-8859-1')) |> mutate(jahr = 2021),
+  ) |>
+  st_as_sf(coords =  c("Koor_UTM32_E", "Koor_UTM32_N"),  crs = 25832) |>
+  st_zm()
+```
+
+```{{r}}
+d_dzs_bab_alle <- d_dzs_alle|>
+  filter(Str_Kl == "A") |>
+  drop_na(DTV_Kfz_MobisSo_Q) |>
+  mutate(abschnitt_id = st_nearest_feature(geometry, d_bfstn))
+```
+
+```{{r}}
+d_dzs_abschnitt_alle <- d_dzs_bab_alle |>
+  st_set_geometry(NULL) |>
+  group_by(abschnitt_id) |>
+  summarise(DTV = mean(DTV_Kfz_MobisSo_Q, na.rm = TRUE))
+```
+
+```{{r}}
+d_dzs_gesamt <- d_dzs_abschnitt_alle |>
+  group_by(abschnitt_id) |>
+  summarise(
+    dtv_mittelwert_3j = round(mean(DTV, na.rm = TRUE)),
+    .groups = "drop"
+  )
+```
+
+```{{r}}
+d_bfstn_gesamt <- d_bfstn_gesamt |>
+  left_join(d_dzs_gesamt, by = "abschnitt_id")
+```
+
+**Unfallkostensätze definieren**
+
+```{{r}}
+WU_SP_bab = 325000
+WU_LV_bab = 31000
+t2 = 3
+```
+
+**Unfallkostenraten berechnen**
+
+```{{r}}
+d_bfstn_gesamt <- d_bfstn_gesamt |>
+  mutate(
+    unfallkosten = unfaelle_sp_summe_3j * WU_SP_bab + unfaelle_lv_summe_3j * WU_LV_bab ,
+    unfallkostenrate = (1000*unfallkosten)/(365*dtv_mittelwert_3j*laenge_km*t2)
+  )
+```
+
+```{{r}}
+d_A38_gesamt <- d_bfstn_gesamt |>
+  filter(Str_Kennung == "A38")
+```
+
+**Graphische Darstellung**
 
 ```{{r}}
 ggplot () +
-  geom_sf(data = d_de, fill = NA, size = 0.5) +
-  geom_sf(data = strecke_de, size = 2, mapping = aes(color = Anzahl_U_G)) +
-  scale_color_distiller(palette = 8 , direction = 1) +
-  labs(title = "Anzahl der Verkehrsunfälle nach Abschnitten der BAB im Jahr 2022",
-       color = "Anzahl Verkehrsunfälle") +
- theme(plot.title = element_text(size=10))
+  geom_sf(data = d_A38, colour = "grey", size = 0.4) +
+  geom_sf(data = d_staedte, color = "red") +
+  geom_sf_text(data = d_staedte, aes(label=stadt), nudge_y = 5000) +
+    geom_sf(
+    data = d_A38_gesamt |> filter(!is.na(unfallkostenrate)), 
+    size = 2.5, 
+    mapping = aes(color = unfallkostenrate)
+    ) +
+  scale_color_viridis_b(direction = -1, name = "Unfallkostenrate\n(Euro pro\n1000 Kfz und km und Jahr)") +
+  labs(title = "Unfallkostenraten nach Abschnitten der A38 in den Jahren 2021 - 2023") +
+  theme_minimal() +
+  theme(
+    panel.grid = element_blank(),
+    plot.title = element_text(size = 10, face = "bold", hjust = 0.5),
+    axis.title = element_blank(),
+    axis.text  = element_blank(),
+    axis.ticks = element_blank()
+  )
 ```
 
-### Unfallrate
+### Unfallkostendichte UKD
 
-#### A43
+**Unfallkostendichte berechnen**
 
-### Deutschland
+```{{r}}
+d_bfstn_gesamt <- d_bfstn_gesamt |>
+  mutate(unfallkostendichte = unfallkosten/(1000*laenge_km*t2))
+```
 
+```{{r}}
+d_A38_gesamt <- d_bfstn_gesamt |>
+  filter(Str_Kennung == "A38")
+```
 
+**Graphische Darstellung**
 
+```{{r}}
+ggplot () +
+  geom_sf(data = d_A38, colour = "grey", size = 0.4) +
+  geom_sf(data = d_staedte, color = "red") +
+  geom_sf_text(data = d_staedte, aes(label=stadt), nudge_y = 5000) +
+    geom_sf(
+    data = d_A38_gesamt |> filter(!is.na(unfallkostendichte)), 
+    size = 2.5, 
+    mapping = aes(color = unfallkostendichte)
+    ) +
+  scale_color_viridis_b(direction = -1, name = "Unfallkostendichte\n(1000 Euro pro\nkm und Jahr)") +
+  labs(title = "Unfallkostendichten nach Abschnitten der A38 in den Jahren 2021 - 2023") +
+  theme_minimal() +
+  theme(
+    panel.grid = element_blank(),
+    plot.title = element_text(size = 10, face = "bold", hjust = 0.5),
+    axis.title = element_blank(),
+    axis.text  = element_blank(),
+    axis.ticks = element_blank()
+  )
+```
 
+### Sicherheitspotenzial SIPO
+
+**Grundunfallkostenrate bestimmen**
+
+```{{r}}
+gUKR_bab = 11
+```
+
+**Sicherheitspotenzial berechnen**
+
+```{{r}}
+d_bfstn_gesamt <- d_bfstn_gesamt |>
+  mutate(
+    gUKD = (gUKR_bab * dtv_mittelwert_3j * 365)/10^6,
+    sicherheitspotenzial = unfallkostendichte - gUKD
+)
+```
+
+```{{r}}
+d_A38_gesamt  <- d_bfstn_gesamt |>
+  filter(Str_Kennung == "A38")
+```
+
+**Graphische Darstellung**
+
+```{{r}}
+ggplot () +
+  geom_sf(data = d_A38, colour = "grey", size = 0.4) +
+  geom_sf(data = d_staedte, color = "red") +
+  geom_sf_text(data = d_staedte, aes(label=stadt), nudge_y = 5000) +
+    geom_sf(
+    data = d_A38_gesamt |> filter(!is.na(sicherheitspotenzial)), 
+    size = 2.5, 
+    mapping = aes(color = sicherheitspotenzial)
+    ) +
+  scale_color_viridis_b(direction = -1, breaks = c(0, 50, 100), name = "Sicherheitspotenzial\n(1000 Euro pro\nkm und Jahr)") +
+  labs(title = "Sicherheitspotenziale nach Abschnitten der A38 in den Jahren 2021 - 2023") +
+  theme_minimal() +
+  theme(
+    panel.grid = element_blank(),
+    plot.title = element_text(size = 10, face = "bold", hjust = 0.5),
+    axis.title = element_blank(),
+    axis.text  = element_blank(),
+    axis.ticks = element_blank()
+  )
+```

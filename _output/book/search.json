@@ -128,5 +128,45 @@
     "crumbs": [
       "<span class='chapter-number'>3</span>  <span class='chapter-title'>Musterlösung mit Erläuterungen</span>"
     ]
+  },
+  {
+    "objectID": "aufgabenstellung.html",
+    "href": "aufgabenstellung.html",
+    "title": "1  Aufgaben zur Sicherheitsanalyse von Verkehrsnetzen",
+    "section": "",
+    "text": "1.1 Datenquellen\nDie statistischen Ämter des Bundes und der Länder erheben und veröffentlichen mit der Straßenverkehrsunfallstatistik die Verkehrsunfälle mit Personenschaden oder Sachschaden in Deutschland. Im Unfallatlas werden Unfälle mit Personenschaden geführt. Für die Sicherheitsanalyse von Verkehrsnetzen können diese Daten verwendet und analysiert werden.\nVerwenden Sie für das Straßennetz die Daten des Bundesinformationssystems Straße (BISStra) der Bundesanstalt für Straßen- und Verkehrswesen (BASt), Stichwortsuche “Bundesfernstraßennetz”.\nDie durchschnittliche Verkehrsstärke (DTV) auf Autobahnen kann ebenfalls über die BASt unter dem Stichwort “Dauerzählstellen” bezogen werden.\nDie Formeln der Kenngrößen für die Sicherheitsbewertung werden den Empfehlungen für die Sicherheitsanalyse von Straßennetzen (ESN) (2003) der Forschungsgesellschaft für Straßen- und Verkehrswesen (FGSV) entnommen.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Aufgaben zur Sicherheitsanalyse von Verkehrsnetzen</span>"
+    ]
+  },
+  {
+    "objectID": "aufgabenstellung.html#aufgabe-1-anzahl-der-verkehrsunfälle",
+    "href": "aufgabenstellung.html#aufgabe-1-anzahl-der-verkehrsunfälle",
+    "title": "1  Aufgaben zur Sicherheitsanalyse von Verkehrsnetzen",
+    "section": "1.2 Aufgabe 1 : Anzahl der Verkehrsunfälle",
+    "text": "1.2 Aufgabe 1 : Anzahl der Verkehrsunfälle\nErstellen Sie eine tabellarische Übersicht der Unfallzahlen nach Unfallkategorie für eine ausgewählte Autobahn und für Gesamtdeutschland in einem frei wählbaren Jahr.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Aufgaben zur Sicherheitsanalyse von Verkehrsnetzen</span>"
+    ]
+  },
+  {
+    "objectID": "aufgabenstellung.html#aufgabe-2-unfallkenngrößen-auf-autobahnen",
+    "href": "aufgabenstellung.html#aufgabe-2-unfallkenngrößen-auf-autobahnen",
+    "title": "1  Aufgaben zur Sicherheitsanalyse von Verkehrsnetzen",
+    "section": "1.3 Aufgabe 2 : Unfallkenngrößen auf Autobahnen",
+    "text": "1.3 Aufgabe 2 : Unfallkenngrößen auf Autobahnen\nStellen Sie die folgende Unfallkenngrößen für eine ausgewählte Autobahn in einem frei wählbaren Jahr grafisch dar:\n\ndie Unfallrate UR,\ndie Unfalldichte UD,\ndie Unfallkostenrate UKR,\ndie Unfallkostendichte UKD und\ndas Sicherheitspotential SIPO",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Aufgaben zur Sicherheitsanalyse von Verkehrsnetzen</span>"
+    ]
+  },
+  {
+    "objectID": "aufgabenstellung.html#datenquellen",
+    "href": "aufgabenstellung.html#datenquellen",
+    "title": "1  Aufgaben zur Sicherheitsanalyse von Verkehrsnetzen",
+    "section": "",
+    "text": "Übungsaufgabe 1.1 Anzahl der Verkehrsunfälle\nErstellen Sie eine tabellarische Übersicht der Unfallzahlen nach Unfallkategorie für eine ausgewählte Autobahn und für Gesamtdeutschland in einem frei wählbaren Jahr.\n\n\nÜbungsaufgabe 1.2 Unfallkenngrößen auf Autobahnen\nStellen Sie die folgende Unfallkenngrößen für eine ausgewählte Autobahn in einem frei wählbaren Jahr grafisch dar:\n\ndie Unfallrate UR,\ndie Unfalldichte UD,\ndie Unfallkostenrate UKR,\ndie Unfallkostendichte UKD und\ndas Sicherheitspotential SIPO",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Aufgaben zur Sicherheitsanalyse von Verkehrsnetzen</span>"
+    ]
   }
 ]

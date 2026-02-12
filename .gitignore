@@ -11,3 +11,12 @@ csv/
 
 /.quarto/
 /sicherheitsanalyse_files
+
+**/*.quarto_ipynb
+
+.RDataTmp1
+.RDataTmp2
+.RDataRmp3
+daten\BFStr_Netz_v2025q3.gpkg
+daten\BFStr_Netz_v2025q3.pdf
+daten\Daten-BISStra.zip
