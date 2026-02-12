@@ -65,8 +65,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./sicherheitsanalyse.html" rel="next">
-<link href="./aufgabe/aufgaben_sicherheitsanalyse.html" rel="prev">
+<link href="./musterloesung-erlaeutert.html" rel="next">
+<link href="./aufgabenstellung.html" rel="prev">
 <link href="./bilder/favicon_bcd_new.svg" rel="icon" type="image/svg+xml">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
@@ -159,7 +159,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./aufgabe/aufgaben_sicherheitsanalyse.html" class="sidebar-item-text sidebar-link">
+  <a href="./aufgabenstellung.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Aufgaben zur Sicherheitsanalyse von Verkehrsnetzen</span></span></a>
   </div>
 </li>
@@ -171,7 +171,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./sicherheitsanalyse.html" class="sidebar-item-text sidebar-link">
+  <a href="./musterloesung-erlaeutert.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Musterlösung mit Erläuterungen</span></span></a>
   </div>
 </li>
@@ -185,19 +185,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Inhaltsverzeichnis</h2>
    
   <ul>
-  <li><a href="#aufgabe-1-unfälle-zählen" id="toc-aufgabe-1-unfälle-zählen" class="nav-link active" data-scroll-target="#aufgabe-1-unfälle-zählen"><span class="header-section-number">2.1</span> Aufgabe 1 : Unfälle zählen</a></li>
-  <li><a href="#aufgabe-2" id="toc-aufgabe-2" class="nav-link" data-scroll-target="#aufgabe-2"><span class="header-section-number">2.2</span> Aufgabe 2</a>
+  <li><a href="#übungsaufgabe-1.1-anzahl-der-verkehrsunfälle" id="toc-übungsaufgabe-1.1-anzahl-der-verkehrsunfälle" class="nav-link active" data-scroll-target="#übungsaufgabe-1.1-anzahl-der-verkehrsunfälle"><span class="header-section-number">2.1</span> Übungsaufgabe 1.1 : Anzahl der Verkehrsunfälle</a></li>
+  <li><a href="#übungsaufgabe-1.2-unfallkenngrößen-auf-autobahnen" id="toc-übungsaufgabe-1.2-unfallkenngrößen-auf-autobahnen" class="nav-link" data-scroll-target="#übungsaufgabe-1.2-unfallkenngrößen-auf-autobahnen"><span class="header-section-number">2.2</span> Übungsaufgabe 1.2 : Unfallkenngrößen auf Autobahnen</a>
   <ul>
-  <li><a href="#unfalldichte" id="toc-unfalldichte" class="nav-link" data-scroll-target="#unfalldichte"><span class="header-section-number">2.2.1</span> Unfalldichte</a>
-  <ul class="collapse">
-  <li><a href="#a43" id="toc-a43" class="nav-link" data-scroll-target="#a43"><span class="header-section-number">2.2.1.1</span> A43</a></li>
-  <li><a href="#deutschland" id="toc-deutschland" class="nav-link" data-scroll-target="#deutschland"><span class="header-section-number">2.2.1.2</span> Deutschland</a></li>
-  </ul></li>
-  <li><a href="#unfallrate" id="toc-unfallrate" class="nav-link" data-scroll-target="#unfallrate"><span class="header-section-number">2.2.2</span> Unfallrate</a>
-  <ul class="collapse">
-  <li><a href="#a43-1" id="toc-a43-1" class="nav-link" data-scroll-target="#a43-1"><span class="header-section-number">2.2.2.1</span> A43</a></li>
-  </ul></li>
-  <li><a href="#deutschland-1" id="toc-deutschland-1" class="nav-link" data-scroll-target="#deutschland-1"><span class="header-section-number">2.2.3</span> Deutschland</a></li>
+  <li><a href="#die-unfallrate-ur" id="toc-die-unfallrate-ur" class="nav-link" data-scroll-target="#die-unfallrate-ur"><span class="header-section-number">2.2.1</span> Die Unfallrate UR</a></li>
+  <li><a href="#die-unfalldichte-ud" id="toc-die-unfalldichte-ud" class="nav-link" data-scroll-target="#die-unfalldichte-ud"><span class="header-section-number">2.2.2</span> Die Unfalldichte UD</a></li>
+  <li><a href="#die-unfallkostenrate-ukr" id="toc-die-unfallkostenrate-ukr" class="nav-link" data-scroll-target="#die-unfallkostenrate-ukr"><span class="header-section-number">2.2.3</span> Die Unfallkostenrate UKR</a></li>
+  <li><a href="#unfallkostendichte-ukd" id="toc-unfallkostendichte-ukd" class="nav-link" data-scroll-target="#unfallkostendichte-ukd"><span class="header-section-number">2.2.4</span> Unfallkostendichte UKD</a></li>
+  <li><a href="#sicherheitspotenzial-sipo" id="toc-sicherheitspotenzial-sipo" class="nav-link" data-scroll-target="#sicherheitspotenzial-sipo"><span class="header-section-number">2.2.5</span> Sicherheitspotenzial SIPO</a></li>
   </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/bausteine-der-datenanalyse/a-sicherheitsanalyse/blob/main/musterloesung.qmd" class="toc-action"><i class="bi bi-github"></i>Quellcode anzeigen</a></li></ul></div></nav>
@@ -226,194 +221,413 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <p><strong>Verwendete Pakete laden</strong></p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| include: false</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(kableExtra)</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(osmdata)</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(giscoR)</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(leaflet)</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(shiny)</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(kableExtra)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(fs)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(curl)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="übungsaufgabe-1.1-anzahl-der-verkehrsunfälle" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="übungsaufgabe-1.1-anzahl-der-verkehrsunfälle"><span class="header-section-number">2.1</span> Übungsaufgabe 1.1 : Anzahl der Verkehrsunfälle</h2>
 <p><strong>Daten einlesen und aufbereiten</strong></p>
-<p>Deutschlandkarte:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>d_de <span class="ot">&lt;-</span> <span class="fu">gisco_get_nuts</span>(<span class="at">country =</span> <span class="st">"Germany"</span>, <span class="at">nuts_level =</span> <span class="dv">0</span>, <span class="at">resolution =</span> <span class="dv">03</span>)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Unfalldaten:</p>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>d_unfaelle_2023 <span class="ot">=</span> <span class="fu">read_csv2</span>(<span class="st">"daten/Unfallorte2023_LinRef.csv"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_as_sf</span>(<span class="at">coords =</span> <span class="fu">c</span>(<span class="st">"LINREFX"</span>, <span class="st">"LINREFY"</span>), <span class="at">crs =</span> <span class="dv">25832</span>) <span class="sc">|&gt;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_zm</span>()</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>unfall_csv <span class="ot">=</span> <span class="fu">read_csv2</span>(<span class="st">"data/Unfallorte2022_LinRef.csv"</span>) </span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>unfaelle <span class="ot">&lt;-</span> <span class="fu">st_as_sf</span>(unfall_csv, <span class="at">coords =</span> <span class="fu">c</span>(<span class="st">"LINREFX"</span>, <span class="st">"LINREFY"</span>), </span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>                  <span class="at">crs =</span> <span class="dv">25832</span>)</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Streckenabschnitte:</p>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">file_exists</span>(<span class="st">"daten/BFStr_Netz_v2025q3.gpkg"</span>)) {</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">curl_download</span>(<span class="st">"https://www.bast.de/SharedDocs/Daten-TB/Daten-BISStra.zip?__blob=publicationFile&amp;v=5"</span>, <span class="at">destfile =</span> <span class="st">"daten/Daten-BISStra.zip"</span>, <span class="at">quiet =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unzip</span>(<span class="st">"daten/Daten-BISStra.zip"</span>, <span class="at">exdir =</span> <span class="st">"daten/"</span>)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>d_bfstn <span class="ot">&lt;-</span> <span class="fu">read_sf</span>(<span class="st">"daten/BFStr_Netz_v2025q3.gpkg"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Str_Klasse_kurz <span class="sc">==</span> <span class="st">"A"</span> <span class="sc">&amp;</span> Sk_Achse <span class="sc">==</span> <span class="st">"Bestandsachse"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">rownumber =</span> <span class="fu">row_number</span>()) <span class="sc">|&gt;</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_zm</span>()</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>strecke <span class="ot">&lt;-</span> <span class="fu">read_sf</span>(<span class="st">"data/geo/BFStr_Netz_SK.geojson"</span>)</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Streckenabschnitte A43:</p>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>d_unfaelle_bab_2023 <span class="ot">=</span> d_unfaelle_2023 <span class="sc">|&gt;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>      <span class="at">abschnitt_id =</span> <span class="fu">st_nearest_feature</span>(geometry, d_bfstn),</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>      <span class="at">distanz =</span> <span class="fu">st_distance</span>(geometry, d_bfstn[abschnitt_id, ], <span class="at">by_element =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>      <span class="at">name =</span> d_bfstn<span class="sc">$</span>Str_Kennung[abschnitt_id]</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">as.double</span>(distanz) <span class="sc">&lt;=</span> <span class="dv">20</span>) <span class="sc">|&gt;</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(UKATEGORIE, name, abschnitt_id)</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Tabellarische Darstellung</strong></p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>a43 <span class="ot">&lt;-</span> strecke <span class="sc">|&gt;</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Str_Kennung <span class="sc">==</span> <span class="st">"A43"</span> <span class="sc">&amp;</span> Sk_Achse <span class="sc">==</span> <span class="st">"Hauptachse"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">rownumber =</span> <span class="fu">row_number</span>())</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Streckenabschnitte Deutschland:</p>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>d_zaehle_unfaelle <span class="ot">&lt;-</span> d_unfaelle_bab_2023 <span class="sc">|&gt;</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_drop_geometry</span>() <span class="sc">|&gt;</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(UKATEGORIE) <span class="sc">|&gt;</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">A38 =</span> <span class="fu">sum</span>(name <span class="sc">==</span> <span class="st">"A38"</span>),</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">Autobahnen =</span> <span class="fu">n</span>(),</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups =</span> <span class="st">"drop"</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">UKATEGORIE =</span> <span class="fu">as.character</span>(UKATEGORIE))</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>tabelle_unfaelle <span class="ot">&lt;-</span> d_zaehle_unfaelle <span class="sc">|&gt;</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>(<span class="fu">summarise</span>(d_zaehle_unfaelle, <span class="at">UKATEGORIE =</span> <span class="st">"Summe"</span>, <span class="fu">across</span>(<span class="fu">c</span>(A38, Autobahnen), sum))) <span class="sc">|&gt;</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">Unfallkategorie =</span> UKATEGORIE) <span class="sc">|&gt;</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">Unfallkategorie =</span> <span class="fu">case_when</span>(</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>      Unfallkategorie <span class="sc">==</span> <span class="st">"1"</span> <span class="sc">~</span> <span class="st">"Unfall mit Getöteten"</span>,</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>      Unfallkategorie <span class="sc">==</span> <span class="st">"2"</span> <span class="sc">~</span> <span class="st">"Unfall mit Schwerverletzten"</span>,</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>      Unfallkategorie <span class="sc">==</span> <span class="st">"3"</span> <span class="sc">~</span> <span class="st">"Unfall mit Leichtverletzten"</span>,</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>      <span class="cn">TRUE</span> <span class="sc">~</span> Unfallkategorie</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(</span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>  tabelle_unfaelle,</span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>  <span class="at">caption =</span> <span class="st">"Anzahl der Verkehrsunfälle nach Unfallkategorie (A38 und alle deutschen Autobahnen) im Jahr 2023"</span></span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="übungsaufgabe-1.2-unfallkenngrößen-auf-autobahnen" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="übungsaufgabe-1.2-unfallkenngrößen-auf-autobahnen"><span class="header-section-number">2.2</span> Übungsaufgabe 1.2 : Unfallkenngrößen auf Autobahnen</h2>
+<section id="die-unfallrate-ur" class="level3" data-number="2.2.1">
+<h3 data-number="2.2.1" class="anchored" data-anchor-id="die-unfallrate-ur"><span class="header-section-number">2.2.1</span> Die Unfallrate UR</h3>
+<p><strong>Dauerzählstellendaten einlesen und aufbereiten</strong></p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>strecke_de <span class="ot">&lt;-</span> strecke <span class="sc">|&gt;</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Str_Klasse_kurz <span class="sc">==</span> <span class="st">"A"</span> <span class="sc">&amp;</span> Sk_Achse <span class="sc">==</span> <span class="st">"Hauptachse"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">rownumber =</span> <span class="fu">row_number</span>())</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
-<section id="aufgabe-1-unfälle-zählen" class="level2" data-number="2.1">
-<h2 data-number="2.1" class="anchored" data-anchor-id="aufgabe-1-unfälle-zählen"><span class="header-section-number">2.1</span> Aufgabe 1 : Unfälle zählen</h2>
-<p>Unfälle filtern:</p>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>d_dzs_2023 <span class="ot">&lt;-</span> <span class="fu">read_csv2</span>(<span class="st">"daten/Jawe2023.csv"</span>, <span class="at">locale =</span> <span class="fu">locale</span>(<span class="at">encoding =</span> <span class="st">'iso-8859-1'</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Str_Kl <span class="sc">==</span> <span class="st">"A"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>(DTV_Kfz_MobisSo_Q) <span class="sc">|&gt;</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_as_sf</span>(<span class="at">coords =</span>  <span class="fu">c</span>(<span class="st">"Koor_UTM32_E"</span>, <span class="st">"Koor_UTM32_N"</span>),  <span class="at">crs =</span> <span class="dv">25832</span>) <span class="sc">|&gt;</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_zm</span>() <span class="sc">|&gt;</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">abschnitt_id =</span> <span class="fu">st_nearest_feature</span>(geometry, d_bfstn))</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>unfaelle_43 <span class="ot">=</span> unfaelle <span class="sc">%&gt;%</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># find out which autobahn is closest by</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">nearest_autobahn_id =</span> <span class="fu">st_nearest_feature</span>(<span class="fu">st_zm</span>(.), a43)) <span class="sc">%&gt;%</span> </span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># calculate distance to closest autobahn</span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">nearest_autobahn_distance =</span> <span class="fu">st_distance</span>(<span class="fu">st_zm</span>(.), a43[nearest_autobahn_id, ], <span class="at">by_element =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>d_dzs_2023 <span class="sc">|&gt;</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_drop_geometry</span>() <span class="sc">|&gt;</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(abschnitt_id) <span class="sc">|&gt;</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">n</span>() <span class="sc">&gt;</span> <span class="dv">1</span>) <span class="sc">|&gt;</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(abschnitt_id, DZ_Nr, DTV_Kfz_MobisSo_Q)</span>
 <span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Alles nicht in der Nähe von A43 raus:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>unfaelle_autobahn <span class="ot">=</span> unfaelle_43 <span class="sc">|&gt;</span> </span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="fu">as.double</span>(nearest_autobahn_distance) <span class="sc">&lt;=</span> <span class="dv">15</span>) <span class="sc">|&gt;</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_zm</span>()</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Unfälle zählen:</p>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>d_dzs_abschnitt_2023 <span class="ot">&lt;-</span> d_dzs_2023 <span class="sc">|&gt;</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_set_geometry</span>(<span class="cn">NULL</span>) <span class="sc">|&gt;</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(abschnitt_id) <span class="sc">|&gt;</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">DTV_2023 =</span> <span class="fu">mean</span>(DTV_Kfz_MobisSo_Q, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups =</span> <span class="st">"drop"</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(abschnitt_id, DTV_2023)</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>autobahnen_accident_count <span class="ot">=</span> unfaelle_autobahn <span class="sc">%&gt;%</span> </span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">as_tibble</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(<span class="sc">-</span>geometry) <span class="sc">%&gt;%</span></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">count</span>(nearest_autobahn_id, UKATEGORIE) <span class="sc">%&gt;%</span> </span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">spread</span>(UKATEGORIE, n) <span class="sc">%&gt;%</span></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">Anzahl_UK2 =</span> <span class="st">`</span><span class="at">2</span><span class="st">`</span>, <span class="at">Anzahl_UK3 =</span> <span class="st">`</span><span class="at">3</span><span class="st">`</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">replace</span>(<span class="fu">is.na</span>(.), <span class="dv">0</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Anzahl_U_G =</span> Anzahl_UK2 <span class="sc">+</span> Anzahl_UK3)</span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Hier gehören eigentlich noch Unfaelle nach Kategorie 1 rein</span></span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Verbinden mit Daten der A43:</p>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>d_unfaelle_abschnitt_2023 <span class="ot">&lt;-</span> d_unfaelle_bab_2023 <span class="sc">|&gt;</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_set_geometry</span>(<span class="cn">NULL</span>) <span class="sc">|&gt;</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(abschnitt_id) <span class="sc">|&gt;</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">d_unfaelle_2023 =</span> <span class="fu">n</span>(),</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups =</span> <span class="st">"drop"</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>a43 <span class="ot">=</span> a43 <span class="sc">|&gt;</span> </span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">left_join</span>(autobahnen_accident_count, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"rownumber"</span> <span class="ot">=</span> <span class="st">"nearest_autobahn_id"</span>))</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>a43 <span class="ot">&lt;-</span> <span class="fu">replace</span>(a43, <span class="fu">is.na</span>(a43), <span class="dv">0</span>)</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Anzahl der Unfälle in <code>ggplot</code> plotten:</p>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>d_bfstn_gesamt <span class="ot">&lt;-</span> d_bfstn <span class="sc">|&gt;</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">abschnitt_id =</span> <span class="fu">row_number</span>()) <span class="sc">|&gt;</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">laenge_km =</span> <span class="fu">as.numeric</span>(Sk_Laenge_m)<span class="sc">/</span><span class="dv">1000</span>) <span class="sc">|&gt;</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(d_dzs_abschnitt_2023, <span class="at">by =</span> <span class="st">"abschnitt_id"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(d_unfaelle_abschnitt_2023, <span class="at">by =</span> <span class="st">"abschnitt_id"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Str_Kennung, laenge_km, DTV_2023, d_unfaelle_2023, abschnitt_id)</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Unfallraten berechnen</strong></p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span> () <span class="sc">+</span></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> a43, <span class="at">size =</span> <span class="dv">2</span>, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">color =</span> Anzahl_U_G)) <span class="sc">+</span></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_viridis_b</span>(<span class="at">direction =</span> <span class="sc">-</span><span class="dv">1</span>, <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">2</span>,<span class="dv">14</span>,<span class="dv">2</span>)) <span class="sc">+</span></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Anzahl der Verkehrsunfälle nach Abschnitten der A43 im Jahr 2022"</span>,</span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">color =</span> <span class="st">"Anzahl Verkehrsunfälle"</span>) <span class="sc">+</span></span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a> <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">10</span>))</span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-<section id="aufgabe-2" class="level2" data-number="2.2">
-<h2 data-number="2.2" class="anchored" data-anchor-id="aufgabe-2"><span class="header-section-number">2.2</span> Aufgabe 2</h2>
-<section id="unfalldichte" class="level3" data-number="2.2.1">
-<h3 data-number="2.2.1" class="anchored" data-anchor-id="unfalldichte"><span class="header-section-number">2.2.1</span> Unfalldichte</h3>
-<section id="a43" class="level4" data-number="2.2.1.1">
-<h4 data-number="2.2.1.1" class="anchored" data-anchor-id="a43"><span class="header-section-number">2.2.1.1</span> A43</h4>
-<p>Unfälle filtern:</p>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>t1 <span class="ot">=</span> <span class="dv">1</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>unfaelle_43 <span class="ot">=</span> unfaelle <span class="sc">%&gt;%</span></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Welche Autobahn am Nächsten</span></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">nearest_autobahn_id =</span> <span class="fu">st_nearest_feature</span>(<span class="fu">st_zm</span>(.), a43)) <span class="sc">%&gt;%</span> </span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Distanz zur A43</span></span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">nearest_autobahn_distance =</span> <span class="fu">st_distance</span>(<span class="fu">st_zm</span>(.), a43[nearest_autobahn_id, ], <span class="at">by_element =</span> <span class="cn">TRUE</span>))</span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Alles nicht in der Nähe von A43 raus:</p>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>d_bfstn_gesamt <span class="ot">&lt;-</span> d_bfstn_gesamt <span class="sc">|&gt;</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">unfallrate =</span> d_unfaelle_2023 <span class="sc">*</span> <span class="dv">10</span><span class="sc">^</span><span class="dv">6</span> <span class="sc">/</span> (DTV_2023 <span class="sc">*</span> laenge_km <span class="sc">*</span> <span class="dv">365</span>  <span class="sc">*</span> t1)) </span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>unfaelle_autobahn <span class="ot">=</span> unfaelle_43 <span class="sc">|&gt;</span> </span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="fu">as.double</span>(nearest_autobahn_distance) <span class="sc">&lt;=</span> <span class="dv">15</span>) <span class="sc">|&gt;</span></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_zm</span>()</span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Unfälle zählen:</p>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>d_A38_gesamt <span class="ot">&lt;-</span> d_bfstn_gesamt <span class="sc">|&gt;</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Str_Kennung <span class="sc">==</span> <span class="st">"A38"</span>)</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Graphische Darstellung</strong></p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>autobahnen_accident_count <span class="ot">=</span> unfaelle_autobahn <span class="sc">%&gt;%</span> </span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">as_tibble</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(<span class="sc">-</span>geometry) <span class="sc">%&gt;%</span></span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">count</span>(nearest_autobahn_id, UKATEGORIE) <span class="sc">%&gt;%</span> </span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">spread</span>(UKATEGORIE, n) <span class="sc">%&gt;%</span></span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">Anzahl_UK2 =</span> <span class="st">`</span><span class="at">2</span><span class="st">`</span>, <span class="at">Anzahl_UK3 =</span> <span class="st">`</span><span class="at">3</span><span class="st">`</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">replace</span>(<span class="fu">is.na</span>(.), <span class="dv">0</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Anzahl_U_G =</span> Anzahl_UK2 <span class="sc">+</span> Anzahl_UK3)</span>
-<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Hier gehören eigentlich noch Unfaelle nach Kategorie 1 rein, existieren aber in diesem Zeitraum nicht.</span></span>
-<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Verbinden mit Daten der A43:</p>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>d_A38 <span class="ot">&lt;-</span> d_bfstn <span class="sc">|&gt;</span> <span class="fu">filter</span>(Str_Kennung <span class="sc">==</span> <span class="st">"A38"</span>)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>d_staedte <span class="ot">&lt;-</span> <span class="fu">st_as_sf</span>(</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  tibble<span class="sc">::</span><span class="fu">tribble</span>(</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span>stadt, <span class="sc">~</span>lat, <span class="sc">~</span>lon,</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Leipzig"</span>, <span class="fl">51.3402</span>, <span class="fl">12.3601</span>,</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Nordhausen"</span>, <span class="fl">51.5018</span>, <span class="fl">10.7957</span>,</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Göttingen"</span>, <span class="fl">51.5455</span>, <span class="fl">9.9055</span>,</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>  ),</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">coords =</span> <span class="fu">c</span>(<span class="st">"lon"</span>, <span class="st">"lat"</span>),</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">crs =</span> <span class="dv">4326</span></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_transform</span>(<span class="dv">25832</span>)</span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span> () <span class="sc">+</span></span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> d_A38, <span class="at">colour =</span> <span class="st">"grey"</span>, <span class="at">size =</span> <span class="fl">0.4</span>) <span class="sc">+</span></span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> d_staedte, <span class="at">color =</span> <span class="st">"red"</span>) <span class="sc">+</span></span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf_text</span>(<span class="at">data =</span> d_staedte, <span class="fu">aes</span>(<span class="at">label =</span> stadt), <span class="at">nudge_y =</span> <span class="dv">5000</span>) <span class="sc">+</span></span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(</span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> d_A38_gesamt <span class="sc">|&gt;</span> <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(unfallrate)), </span>
+<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="fl">2.5</span>, </span>
+<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">color =</span> unfallrate)</span>
+<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
+<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_viridis_b</span>(<span class="at">direction =</span> <span class="sc">-</span><span class="dv">1</span>, <span class="at">name =</span> <span class="st">"Unfallrate</span><span class="sc">\n</span><span class="st">(Unfälle pro</span><span class="sc">\n</span><span class="st">1 Mio. Kfz-km)"</span>) <span class="sc">+</span></span>
+<span id="cb14-25"><a href="#cb14-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Unfallraten nach Abschnitten der A38 im Jahr 2023"</span>) <span class="sc">+</span></span>
+<span id="cb14-26"><a href="#cb14-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb14-27"><a href="#cb14-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb14-28"><a href="#cb14-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb14-29"><a href="#cb14-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">14</span>, <span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">hjust =</span> <span class="fl">0.5</span>),</span>
+<span id="cb14-30"><a href="#cb14-30" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb14-31"><a href="#cb14-31" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text  =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb14-32"><a href="#cb14-32" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.ticks =</span> <span class="fu">element_blank</span>()</span>
+<span id="cb14-33"><a href="#cb14-33" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb14-34"><a href="#cb14-34" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="die-unfalldichte-ud" class="level3" data-number="2.2.2">
+<h3 data-number="2.2.2" class="anchored" data-anchor-id="die-unfalldichte-ud"><span class="header-section-number">2.2.2</span> Die Unfalldichte UD</h3>
+<p><strong>Unfalldichte berechnen</strong></p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>a43 <span class="ot">=</span> a43 <span class="sc">|&gt;</span> </span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">left_join</span>(autobahnen_accident_count, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"rownumber"</span> <span class="ot">=</span> <span class="st">"nearest_autobahn_id"</span>))</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>d_bfstn_gesamt <span class="ot">&lt;-</span> d_bfstn_gesamt <span class="sc">|&gt;</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">unfalldichte =</span> d_unfaelle_2023 <span class="sc">/</span> (laenge_km <span class="sc">*</span> t1))                             </span>
 <span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Plotten:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span> () <span class="sc">+</span></span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> a43, <span class="at">size =</span> <span class="dv">2</span>, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">color =</span> Anzahl_U_G)) <span class="sc">+</span></span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_distiller</span>(<span class="at">palette =</span> <span class="dv">8</span> , <span class="at">direction =</span> <span class="dv">1</span>, <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">2</span>,<span class="dv">14</span>,<span class="dv">2</span>)) <span class="sc">+</span></span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Anzahl der Verkehrsunfälle nach Abschnitten der A43 im Jahr 2022"</span>,</span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">color =</span> <span class="st">"Anzahl Verkehrsunfälle"</span>) <span class="sc">+</span></span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a> <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">10</span>))</span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-<section id="deutschland" class="level4" data-number="2.2.1.2">
-<h4 data-number="2.2.1.2" class="anchored" data-anchor-id="deutschland"><span class="header-section-number">2.2.1.2</span> Deutschland</h4>
-<p>Unfälle filtern:</p>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>d_A38_gesamt <span class="ot">&lt;-</span> d_bfstn_gesamt <span class="sc">|&gt;</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Str_Kennung <span class="sc">==</span> <span class="st">"A38"</span>)</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Graphische Darstellung</strong></p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>unfaelle_de <span class="ot">=</span> unfaelle <span class="sc">%&gt;%</span></span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Welche Autobahn ist am Nächsten</span></span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">nearest_autobahn_id =</span> <span class="fu">st_nearest_feature</span>(<span class="fu">st_zm</span>(.), strecke_de)) <span class="sc">%&gt;%</span> </span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Distanz zur nächsten Autobahn berechnen</span></span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">nearest_autobahn_distance =</span> <span class="fu">st_distance</span>(<span class="fu">st_zm</span>(.), strecke_de[nearest_autobahn_id, ], <span class="at">by_element =</span> <span class="cn">TRUE</span>))</span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Alles nicht in der Nähe von BAB raus:</p>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span> () <span class="sc">+</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> d_A38, <span class="at">colour =</span> <span class="st">"grey"</span>, <span class="at">size =</span> <span class="fl">0.4</span>) <span class="sc">+</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> d_staedte, <span class="at">color =</span> <span class="st">"red"</span>) <span class="sc">+</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf_text</span>(<span class="at">data =</span> d_staedte, <span class="fu">aes</span>(<span class="at">label=</span>stadt), <span class="at">nudge_y =</span> <span class="dv">5000</span>) <span class="sc">+</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_sf</span>(</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> d_A38_gesamt <span class="sc">|&gt;</span> <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(unfalldichte)), </span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="fl">2.5</span>, </span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">color =</span> unfalldichte)</span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_viridis_b</span>(<span class="at">direction =</span> <span class="sc">-</span><span class="dv">1</span>, <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">10</span>),  <span class="at">name =</span> <span class="st">"Unfalldichte</span><span class="sc">\n</span><span class="st">(Unfälle pro</span><span class="sc">\n</span><span class="st">km und Jahr)"</span>) <span class="sc">+</span></span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Unfalldichten nach Abschnitten der A38 im Jahr 2023"</span>) <span class="sc">+</span></span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">14</span>, <span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">hjust =</span> <span class="fl">0.5</span>),</span>
+<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text  =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.ticks =</span> <span class="fu">element_blank</span>()</span>
+<span id="cb17-20"><a href="#cb17-20" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb17-21"><a href="#cb17-21" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="die-unfallkostenrate-ukr" class="level3" data-number="2.2.3">
+<h3 data-number="2.2.3" class="anchored" data-anchor-id="die-unfallkostenrate-ukr"><span class="header-section-number">2.2.3</span> Die Unfallkostenrate UKR</h3>
+<p><strong>Unfalldaten einlesen und aufbereiten</strong></p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>unfaelle_de_autobahn <span class="ot">=</span> unfaelle_de <span class="sc">|&gt;</span> </span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="fu">as.double</span>(nearest_autobahn_distance) <span class="sc">&lt;=</span> <span class="dv">15</span>) <span class="sc">|&gt;</span></span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_zm</span>()</span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Unfälle zählen:</p>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>d_unfaelle_alle <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">read.csv2</span>(<span class="st">"daten/Unfallorte2023_LinRef.csv"</span>) <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">jahr =</span> <span class="dv">2023</span>),</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">read.csv2</span>(<span class="st">"daten/Unfallorte2022_LinRef.csv"</span>) <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">jahr =</span> <span class="dv">2022</span>),</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">read.csv2</span>(<span class="st">"daten/Unfallorte2021_LinRef.csv"</span>) <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">jahr =</span> <span class="dv">2021</span>),</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_as_sf</span>(<span class="at">coords =</span> <span class="fu">c</span>(<span class="st">"LINREFX"</span>, <span class="st">"LINREFY"</span>), <span class="at">crs =</span> <span class="dv">25832</span>) <span class="sc">|&gt;</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_zm</span>()</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>de_unfall_anzahl <span class="ot">=</span> unfaelle_de_autobahn <span class="sc">%&gt;%</span> </span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">as_tibble</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(<span class="sc">-</span>geometry) <span class="sc">%&gt;%</span></span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">count</span>(nearest_autobahn_id, UKATEGORIE) <span class="sc">%&gt;%</span> </span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">spread</span>(UKATEGORIE, n) <span class="sc">%&gt;%</span></span>
-<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">Anzahl_UK1 =</span> <span class="st">`</span><span class="at">1</span><span class="st">`</span>,<span class="at">Anzahl_UK2 =</span> <span class="st">`</span><span class="at">2</span><span class="st">`</span>, <span class="at">Anzahl_UK3 =</span> <span class="st">`</span><span class="at">3</span><span class="st">`</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">replace</span>(<span class="fu">is.na</span>(.), <span class="dv">0</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Anzahl_U_G =</span> Anzahl_UK1 <span class="sc">+</span> Anzahl_UK2 <span class="sc">+</span> Anzahl_UK3)</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>d_unfaelle_bab_alle <span class="ot">&lt;-</span> d_unfaelle_alle <span class="sc">|&gt;</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">abschnitt_id =</span> <span class="fu">st_nearest_feature</span>(geometry, d_bfstn),</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>      <span class="at">distanz =</span> <span class="fu">st_distance</span>(geometry, d_bfstn[abschnitt_id, ], <span class="at">by_element =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>      <span class="at">name =</span> d_bfstn<span class="sc">$</span>Str_Kennung[abschnitt_id]</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">as.double</span>(distanz) <span class="sc">&lt;=</span> <span class="dv">20</span>) <span class="sc">|&gt;</span></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(UKATEGORIE, name, abschnitt_id, jahr)</span>
 <span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Verbinden mit Daten:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>strecke_de <span class="ot">=</span> strecke_de <span class="sc">|&gt;</span> </span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">left_join</span>(de_unfall_anzahl, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"rownumber"</span> <span class="ot">=</span> <span class="st">"nearest_autobahn_id"</span>))</span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>strecke_de <span class="ot">=</span> strecke_de <span class="sc">|&gt;</span></span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">UD =</span> (Anzahl_U_G)<span class="sc">/</span>(Sk_Laenge_km))</span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Plotten:</p>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>d_unfaelle_abschnitt_alle <span class="ot">&lt;-</span> d_unfaelle_bab_alle <span class="sc">|&gt;</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_set_geometry</span>(<span class="cn">NULL</span>) <span class="sc">|&gt;</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(abschnitt_id, UKATEGORIE) <span class="sc">|&gt;</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise</span>(</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>      <span class="at">Unfaelle =</span> <span class="fu">n</span>(),</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>      <span class="at">.groups =</span> <span class="st">"drop"</span></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>  ) </span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Unfallschwere bestimmen</strong></p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span> () <span class="sc">+</span></span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> d_de, <span class="at">fill =</span> <span class="cn">NA</span>, <span class="at">size =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> strecke_de, <span class="at">size =</span> <span class="dv">2</span>, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">color =</span> Anzahl_U_G)) <span class="sc">+</span></span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_distiller</span>(<span class="at">palette =</span> <span class="dv">8</span> , <span class="at">direction =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Anzahl der Verkehrsunfälle nach Abschnitten der BAB im Jahr 2022"</span>,</span>
-<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">color =</span> <span class="st">"Anzahl Verkehrsunfälle"</span>) <span class="sc">+</span></span>
-<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a> <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">10</span>))</span>
-<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>d_unfaelle_sp_3j <span class="ot">&lt;-</span> d_unfaelle_abschnitt_alle <span class="sc">|&gt;</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(UKATEGORIE <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(abschnitt_id) <span class="sc">|&gt;</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">unfaelle_sp_summe_3j =</span> <span class="fu">sum</span>(Unfaelle, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups =</span> <span class="st">"drop"</span></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>d_unfaelle_lv_3j <span class="ot">&lt;-</span> d_unfaelle_abschnitt_alle <span class="sc">|&gt;</span></span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(UKATEGORIE <span class="sc">==</span> <span class="dv">3</span>) <span class="sc">|&gt;</span></span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(abschnitt_id) <span class="sc">|&gt;</span></span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">unfaelle_lv_summe_3j =</span> <span class="fu">sum</span>(Unfaelle, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups =</span> <span class="st">"drop"</span></span>
+<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>d_unfaelle_gesamt <span class="ot">&lt;-</span> d_unfaelle_sp_3j <span class="sc">|&gt;</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">full_join</span>(d_unfaelle_lv_3j, <span class="at">by =</span> <span class="st">"abschnitt_id"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">unfaelle_sp_summe_3j =</span> <span class="fu">replace_na</span>(unfaelle_sp_summe_3j, <span class="dv">0</span>),</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">unfaelle_lv_summe_3j =</span> <span class="fu">replace_na</span>(unfaelle_lv_summe_3j, <span class="dv">0</span>)</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>d_bfstn_gesamt <span class="ot">&lt;-</span> d_bfstn_gesamt <span class="sc">|&gt;</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">abschnitt_id =</span> <span class="fu">row_number</span>()) <span class="sc">|&gt;</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(d_unfaelle_gesamt, <span class="at">by =</span> <span class="st">"abschnitt_id"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Str_Kennung, laenge_km, DTV_2023, d_unfaelle_2023, abschnitt_id, laenge_km, unfallrate, unfalldichte, unfaelle_sp_summe_3j, unfaelle_lv_summe_3j)</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Dauerzählstellendaten einlesen und aufbereiten</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>d_dzs_alle <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">read_csv2</span>(<span class="st">"daten/Jawe2023.csv"</span>, <span class="at">locale =</span> <span class="fu">locale</span>(<span class="at">encoding =</span> <span class="st">'iso-8859-1'</span>)) <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">jahr =</span> <span class="dv">2023</span>),</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">read_csv2</span>(<span class="st">"daten/Jawe2022.csv"</span>, <span class="at">locale =</span> <span class="fu">locale</span>(<span class="at">encoding =</span> <span class="st">'iso-8859-1'</span>)) <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">jahr =</span> <span class="dv">2022</span>),</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">read_csv2</span>(<span class="st">"daten/Jawe2021.csv"</span>, <span class="at">locale =</span> <span class="fu">locale</span>(<span class="at">encoding =</span> <span class="st">'iso-8859-1'</span>)) <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">jahr =</span> <span class="dv">2021</span>),</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_as_sf</span>(<span class="at">coords =</span>  <span class="fu">c</span>(<span class="st">"Koor_UTM32_E"</span>, <span class="st">"Koor_UTM32_N"</span>),  <span class="at">crs =</span> <span class="dv">25832</span>) <span class="sc">|&gt;</span></span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_zm</span>()</span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>d_dzs_bab_alle <span class="ot">&lt;-</span> d_dzs_alle<span class="sc">|&gt;</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Str_Kl <span class="sc">==</span> <span class="st">"A"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>(DTV_Kfz_MobisSo_Q) <span class="sc">|&gt;</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">abschnitt_id =</span> <span class="fu">st_nearest_feature</span>(geometry, d_bfstn))</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>d_dzs_abschnitt_alle <span class="ot">&lt;-</span> d_dzs_bab_alle <span class="sc">|&gt;</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_set_geometry</span>(<span class="cn">NULL</span>) <span class="sc">|&gt;</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(abschnitt_id) <span class="sc">|&gt;</span></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">DTV =</span> <span class="fu">mean</span>(DTV_Kfz_MobisSo_Q, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>d_dzs_gesamt <span class="ot">&lt;-</span> d_dzs_abschnitt_alle <span class="sc">|&gt;</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(abschnitt_id) <span class="sc">|&gt;</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">dtv_mittelwert_3j =</span> <span class="fu">round</span>(<span class="fu">mean</span>(DTV, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)),</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups =</span> <span class="st">"drop"</span></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>d_bfstn_gesamt <span class="ot">&lt;-</span> d_bfstn_gesamt <span class="sc">|&gt;</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(d_dzs_gesamt, <span class="at">by =</span> <span class="st">"abschnitt_id"</span>)</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Unfallkostensätze definieren</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb29"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>WU_SP_bab <span class="ot">=</span> <span class="dv">325000</span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>WU_LV_bab <span class="ot">=</span> <span class="dv">31000</span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>t2 <span class="ot">=</span> <span class="dv">3</span></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Unfallkostenraten berechnen</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb30"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>d_bfstn_gesamt <span class="ot">&lt;-</span> d_bfstn_gesamt <span class="sc">|&gt;</span></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">unfallkosten =</span> unfaelle_sp_summe_3j <span class="sc">*</span> WU_SP_bab <span class="sc">+</span> unfaelle_lv_summe_3j <span class="sc">*</span> WU_LV_bab ,</span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">unfallkostenrate =</span> (<span class="dv">1000</span><span class="sc">*</span>unfallkosten)<span class="sc">/</span>(<span class="dv">365</span><span class="sc">*</span>dtv_mittelwert_3j<span class="sc">*</span>laenge_km<span class="sc">*</span>t2)</span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb31"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>d_A38_gesamt <span class="ot">&lt;-</span> d_bfstn_gesamt <span class="sc">|&gt;</span></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Str_Kennung <span class="sc">==</span> <span class="st">"A38"</span>)</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Graphische Darstellung</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb32"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span> () <span class="sc">+</span></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> d_A38, <span class="at">colour =</span> <span class="st">"grey"</span>, <span class="at">size =</span> <span class="fl">0.4</span>) <span class="sc">+</span></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> d_staedte, <span class="at">color =</span> <span class="st">"red"</span>) <span class="sc">+</span></span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf_text</span>(<span class="at">data =</span> d_staedte, <span class="fu">aes</span>(<span class="at">label=</span>stadt), <span class="at">nudge_y =</span> <span class="dv">5000</span>) <span class="sc">+</span></span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_sf</span>(</span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> d_A38_gesamt <span class="sc">|&gt;</span> <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(unfallkostenrate)), </span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="fl">2.5</span>, </span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">color =</span> unfallkostenrate)</span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
+<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_viridis_b</span>(<span class="at">direction =</span> <span class="sc">-</span><span class="dv">1</span>, <span class="at">name =</span> <span class="st">"Unfallkostenrate</span><span class="sc">\n</span><span class="st">(Euro pro</span><span class="sc">\n</span><span class="st">1000 Kfz und km und Jahr)"</span>) <span class="sc">+</span></span>
+<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Unfallkostenraten nach Abschnitten der A38 in den Jahren 2021 - 2023"</span>) <span class="sc">+</span></span>
+<span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb32-14"><a href="#cb32-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb32-15"><a href="#cb32-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb32-16"><a href="#cb32-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>, <span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">hjust =</span> <span class="fl">0.5</span>),</span>
+<span id="cb32-17"><a href="#cb32-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb32-18"><a href="#cb32-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text  =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb32-19"><a href="#cb32-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.ticks =</span> <span class="fu">element_blank</span>()</span>
+<span id="cb32-20"><a href="#cb32-20" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb32-21"><a href="#cb32-21" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
+<section id="unfallkostendichte-ukd" class="level3" data-number="2.2.4">
+<h3 data-number="2.2.4" class="anchored" data-anchor-id="unfallkostendichte-ukd"><span class="header-section-number">2.2.4</span> Unfallkostendichte UKD</h3>
+<p><strong>Unfallkostendichte berechnen</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb33"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>d_bfstn_gesamt <span class="ot">&lt;-</span> d_bfstn_gesamt <span class="sc">|&gt;</span></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">unfallkostendichte =</span> unfallkosten<span class="sc">/</span>(<span class="dv">1000</span><span class="sc">*</span>laenge_km<span class="sc">*</span>t2))</span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb34"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>d_A38_gesamt <span class="ot">&lt;-</span> d_bfstn_gesamt <span class="sc">|&gt;</span></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Str_Kennung <span class="sc">==</span> <span class="st">"A38"</span>)</span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Graphische Darstellung</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb35"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span> () <span class="sc">+</span></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> d_A38, <span class="at">colour =</span> <span class="st">"grey"</span>, <span class="at">size =</span> <span class="fl">0.4</span>) <span class="sc">+</span></span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> d_staedte, <span class="at">color =</span> <span class="st">"red"</span>) <span class="sc">+</span></span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf_text</span>(<span class="at">data =</span> d_staedte, <span class="fu">aes</span>(<span class="at">label=</span>stadt), <span class="at">nudge_y =</span> <span class="dv">5000</span>) <span class="sc">+</span></span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_sf</span>(</span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> d_A38_gesamt <span class="sc">|&gt;</span> <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(unfallkostendichte)), </span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="fl">2.5</span>, </span>
+<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">color =</span> unfallkostendichte)</span>
+<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
+<span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_viridis_b</span>(<span class="at">direction =</span> <span class="sc">-</span><span class="dv">1</span>, <span class="at">name =</span> <span class="st">"Unfallkostendichte</span><span class="sc">\n</span><span class="st">(1000 Euro pro</span><span class="sc">\n</span><span class="st">km und Jahr)"</span>) <span class="sc">+</span></span>
+<span id="cb35-12"><a href="#cb35-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Unfallkostendichten nach Abschnitten der A38 in den Jahren 2021 - 2023"</span>) <span class="sc">+</span></span>
+<span id="cb35-13"><a href="#cb35-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb35-14"><a href="#cb35-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb35-15"><a href="#cb35-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb35-16"><a href="#cb35-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>, <span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">hjust =</span> <span class="fl">0.5</span>),</span>
+<span id="cb35-17"><a href="#cb35-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb35-18"><a href="#cb35-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text  =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb35-19"><a href="#cb35-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.ticks =</span> <span class="fu">element_blank</span>()</span>
+<span id="cb35-20"><a href="#cb35-20" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb35-21"><a href="#cb35-21" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="unfallrate" class="level3" data-number="2.2.2">
-<h3 data-number="2.2.2" class="anchored" data-anchor-id="unfallrate"><span class="header-section-number">2.2.2</span> Unfallrate</h3>
-<section id="a43-1" class="level4" data-number="2.2.2.1">
-<h4 data-number="2.2.2.1" class="anchored" data-anchor-id="a43-1"><span class="header-section-number">2.2.2.1</span> A43</h4>
-</section>
-</section>
-<section id="deutschland-1" class="level3" data-number="2.2.3">
-<h3 data-number="2.2.3" class="anchored" data-anchor-id="deutschland-1"><span class="header-section-number">2.2.3</span> Deutschland</h3>
+<section id="sicherheitspotenzial-sipo" class="level3" data-number="2.2.5">
+<h3 data-number="2.2.5" class="anchored" data-anchor-id="sicherheitspotenzial-sipo"><span class="header-section-number">2.2.5</span> Sicherheitspotenzial SIPO</h3>
+<p><strong>Grundunfallkostenrate bestimmen</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb36"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>gUKR_bab <span class="ot">=</span> <span class="dv">11</span></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Sicherheitspotenzial berechnen</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb37"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>d_bfstn_gesamt <span class="ot">&lt;-</span> d_bfstn_gesamt <span class="sc">|&gt;</span></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">gUKD =</span> (gUKR_bab <span class="sc">*</span> dtv_mittelwert_3j <span class="sc">*</span> <span class="dv">365</span>)<span class="sc">/</span><span class="dv">10</span><span class="sc">^</span><span class="dv">6</span>,</span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">sicherheitspotenzial =</span> unfallkostendichte <span class="sc">-</span> gUKD</span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb38"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>d_A38_gesamt  <span class="ot">&lt;-</span> d_bfstn_gesamt <span class="sc">|&gt;</span></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Str_Kennung <span class="sc">==</span> <span class="st">"A38"</span>)</span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Graphische Darstellung</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb39"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span> () <span class="sc">+</span></span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> d_A38, <span class="at">colour =</span> <span class="st">"grey"</span>, <span class="at">size =</span> <span class="fl">0.4</span>) <span class="sc">+</span></span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> d_staedte, <span class="at">color =</span> <span class="st">"red"</span>) <span class="sc">+</span></span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf_text</span>(<span class="at">data =</span> d_staedte, <span class="fu">aes</span>(<span class="at">label=</span>stadt), <span class="at">nudge_y =</span> <span class="dv">5000</span>) <span class="sc">+</span></span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_sf</span>(</span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> d_A38_gesamt <span class="sc">|&gt;</span> <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(sicherheitspotenzial)), </span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="fl">2.5</span>, </span>
+<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">color =</span> sicherheitspotenzial)</span>
+<span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
+<span id="cb39-11"><a href="#cb39-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_viridis_b</span>(<span class="at">direction =</span> <span class="sc">-</span><span class="dv">1</span>, <span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">50</span>, <span class="dv">100</span>), <span class="at">name =</span> <span class="st">"Sicherheitspotenzial</span><span class="sc">\n</span><span class="st">(1000 Euro pro</span><span class="sc">\n</span><span class="st">km und Jahr)"</span>) <span class="sc">+</span></span>
+<span id="cb39-12"><a href="#cb39-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Sicherheitspotenziale nach Abschnitten der A38 in den Jahren 2021 - 2023"</span>) <span class="sc">+</span></span>
+<span id="cb39-13"><a href="#cb39-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb39-14"><a href="#cb39-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb39-15"><a href="#cb39-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb39-16"><a href="#cb39-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>, <span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">hjust =</span> <span class="fl">0.5</span>),</span>
+<span id="cb39-17"><a href="#cb39-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb39-18"><a href="#cb39-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text  =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb39-19"><a href="#cb39-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.ticks =</span> <span class="fu">element_blank</span>()</span>
+<span id="cb39-20"><a href="#cb39-20" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb39-21"><a href="#cb39-21" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
 
 
 </section>
@@ -822,12 +1036,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./aufgabe/aufgaben_sicherheitsanalyse.html" class="pagination-link" aria-label="Aufgaben zur Sicherheitsanalyse von Verkehrsnetzen">
+      <a href="./aufgabenstellung.html" class="pagination-link" aria-label="Aufgaben zur Sicherheitsanalyse von Verkehrsnetzen">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Aufgaben zur Sicherheitsanalyse von Verkehrsnetzen</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./sicherheitsanalyse.html" class="pagination-link" aria-label="Musterlösung mit Erläuterungen">
+      <a href="./musterloesung-erlaeutert.html" class="pagination-link" aria-label="Musterlösung mit Erläuterungen">
         <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Musterlösung mit Erläuterungen</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>

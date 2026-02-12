@@ -11,6 +11,7 @@
 <meta name="author" content="Florian Bagemihl">
 <meta name="author" content="Matthias Baitsch">
 <meta name="author" content="Marc Fehr">
+<meta name="author" content="Franca Hollmann">
 <meta name="author" content="Maik Poetzsch">
 <meta name="author" content="Sebastian Seipel">
 
@@ -37,7 +38,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./aufgabe/aufgaben_sicherheitsanalyse.html" rel="next">
+<link href="./aufgabenstellung.html" rel="next">
 <link href="./bilder/favicon_bcd_new.svg" rel="icon" type="image/svg+xml">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
@@ -130,7 +131,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./aufgabe/aufgaben_sicherheitsanalyse.html" class="sidebar-item-text sidebar-link">
+  <a href="./aufgabenstellung.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Aufgaben zur Sicherheitsanalyse von Verkehrsnetzen</span></span></a>
   </div>
 </li>
@@ -142,7 +143,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./sicherheitsanalyse.html" class="sidebar-item-text sidebar-link">
+  <a href="./musterloesung-erlaeutert.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Musterlösung mit Erläuterungen</span></span></a>
   </div>
 </li>
@@ -162,6 +163,7 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#voraussetzungen" id="toc-voraussetzungen" class="nav-link" data-scroll-target="#voraussetzungen">Voraussetzungen</a></li>
   <li><a href="#lernziele" id="toc-lernziele" class="nav-link" data-scroll-target="#lernziele">Lernziele</a></li>
   <li><a href="#verwendete-datensätze" id="toc-verwendete-datensätze" class="nav-link" data-scroll-target="#verwendete-datensätze">Verwendete Datensätze</a></li>
+  <li><a href="#literatur" id="toc-literatur" class="nav-link" data-scroll-target="#literatur">Literatur</a></li>
   </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/bausteine-der-datenanalyse/a-sicherheitsanalyse/blob/main/index.qmd" class="toc-action"><i class="bi bi-github"></i>Quellcode anzeigen</a></li></ul></div></nav>
@@ -186,6 +188,7 @@ ul.task-list li input[type="checkbox"] {
              <p>Florian Bagemihl </p>
              <p>Matthias Baitsch </p>
              <p>Marc Fehr </p>
+             <p>Franca Hollmann </p>
              <p>Maik Poetzsch </p>
              <p>Sebastian Seipel </p>
           </div>
@@ -194,7 +197,7 @@ ul.task-list li input[type="checkbox"] {
     <div>
     <div class="quarto-title-meta-heading">Veröffentlichungsdatum</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">28. Januar 2026</p>
+      <p class="date">12. Februar 2026</p>
     </div>
   </div>
   
@@ -215,17 +218,17 @@ ul.task-list li input[type="checkbox"] {
 <p><img src="https://mirrors.creativecommons.org/presskit/buttons/88x31/png/by.png" class="img-fluid" alt="Symbol des Lizenzhinweises Creative Commons BY"></p>
 </div>
 <div class="quarto-layout-cell" style="flex-basis: 80.0%;justify-content: flex-start;">
-<p>Bausteine Computergestützter Datenanalyse. “Sicherheitsanalyse” von Lukas Arnold, Simone Arnold, Florian Bagemihl, Matthias Baitsch, Marc Fehr, Maik Poetzsch und Sebastian Seipel ist lizensiert unter <a href="https://creativecommons.org/licenses/by/4.0/deed.de">CC BY 4.0</a>. Das Werk ist abrufbar unter <a href="https://github.com/bausteine-der-datenanalyse/a-sicherheitsanalyse" class="uri">https://github.com/bausteine-der-datenanalyse/a-sicherheitsanalyse</a>. Ausgenommen von der Lizenz sind alle Logos Dritter und anders gekennzeichnete Inhalte. 2025</p>
+<p>Bausteine Computergestützter Datenanalyse. “Anwendungsbaustein Sicherheitsanalyse” von Lukas Arnold, Simone Arnold, Florian Bagemihl, Matthias Baitsch, Marc Fehr, Franca Hollmann, Maik Poetzsch und Sebastian Seipel ist lizensiert unter <a href="https://creativecommons.org/licenses/by/4.0/deed.de">CC BY 4.0</a>. Das Werk ist abrufbar unter <a href="https://github.com/bausteine-der-datenanalyse/a-sicherheitsanalyse" class="uri">https://github.com/bausteine-der-datenanalyse/a-sicherheitsanalyse</a>. Ausgenommen von der Lizenz sind alle Logos Dritter und anders gekennzeichnete Inhalte. 2026</p>
 </div>
 </div>
 </div>
 <p>Zitiervorschlag</p>
-<p>Arnold, Lukas, Simone Arnold, Florian Bagemihl, Matthias Baitsch, Marc Fehr, Maik Poetzsch, und Sebastian Seipel. 2024. „Bausteine Computergestützter Datenanalyse. “Anwendungsbaustein Sicherheitsanalyse“. <a href="https://github.com/bausteine-der-datenanalyse/a-sicherheitsanalyse" class="uri">https://github.com/bausteine-der-datenanalyse/a-sicherheitsanalyse</a>.</p>
+<p>Arnold, Lukas, Simone Arnold, Florian Bagemihl, Matthias Baitsch, Marc Fehr, Franca Hollmann, Maik Poetzsch, und Sebastian Seipel. 2026. „Bausteine Computergestützter Datenanalyse. “Anwendungsbaustein Sicherheitsanalyse“. <a href="https://github.com/bausteine-der-datenanalyse/a-sicherheitsanalyse" class="uri">https://github.com/bausteine-der-datenanalyse/a-sicherheitsanalyse</a>.</p>
 <p>BibTeX-Vorlage</p>
-<pre><code>@misc{BCD-a-Sicherheitsanalyse-2025,
+<pre><code>@misc{BCD-a-Sicherheitsanalyse-2026,
  title={Bausteine Computergestützter Datenanalyse. Anwendungsbaustein Sicherheitsanalyse},
- author={Arnold, Lukas and Arnold, Simone and Bagemihl, Florian and Baitsch, Matthias and Fehr, Marc and Poetzsch, Maik and Seipel, Sebastian},
- year={2025},
+ author={Arnold, Lukas and Arnold, Simone and Bagemihl, Florian and Baitsch, Matthias and Fehr, Marc and Hollmann, Franca and Poetzsch, Maik and Seipel, Sebastian},
+ year={2026},
  url={https://github.com/bausteine-der-datenanalyse/a-sicherheitsanalyse}} </code></pre>
 </div>
 </section>
@@ -233,17 +236,21 @@ ul.task-list li input[type="checkbox"] {
 <h1>Einleitung</h1>
 <section id="voraussetzungen" class="level2">
 <h2 class="anchored" data-anchor-id="voraussetzungen">Voraussetzungen</h2>
-<p>Zum erfolgreichen Bearbeiten dieses Anwendungsbausteins benötigen Sie die Inhalte des Methodenbausteins Grundlagen der Statistik [Referenz] To-Do und des Werkzeugbausteins R [Referenz] To-Do. Außerdem sollten Grundbegriffe der verkehrlichen Sicherheitsanalyse wie die Unfallrate, Unfalldichte, Unfallkosten und Sicherheitspotentiale bekannt sein.</p>
+<p>Zum erfolgreichen Bearbeiten dieses Anwendungsbausteins benötigen Sie die Inhalte des Methodenbausteins Grundlagen der Statistik [https://github.com/bausteine-der-datenanalyse/bcd-bausteine-statistik] und des Werkzeugbausteins Datenanalyse in R [https://github.com/bausteine-der-datenanalyse/bcd-bausteine-r]. Außerdem sollten Grundbegriffe der verkehrlichen Sicherheitsanalyse wie die Unfallrate, Unfalldichte, Unfallkosten und Sicherheitspotentiale bekannt sein.</p>
 </section>
 <section id="lernziele" class="level2">
 <h2 class="anchored" data-anchor-id="lernziele">Lernziele</h2>
-<p>Ziel dieses Bausteins ist es, typische Inhalte von sicherheitsrelevanten Fragestellungen von Verkehrsnetzen in grafischer Form mithilfe der Programmiersprache R darzustellen. Dabei lernen Sie wo deutschsprachige Unfalldaten gefunden werden können, wie Unfalldaten eingelesen, aufbereitet und analysiert werden und welche verschiedenen Darstellungsformen sich für bestimmte Datentypen eignen.</p>
+<p>Ziel dieses Bausteins ist es, typische Inhalte von sicherheitsrelevanten Fragestellungen von Verkehrsnetzen in grafischer Form mithilfe der Programmiersprache R darzustellen. Dabei lernen Sie, wo deutschsprachige Unfalldaten gefunden werden können, wie Unfalldaten eingelesen, aufbereitet und analysiert werden und welche verschiedenen Darstellungsformen sich für bestimmte Datentypen eignen.</p>
 </section>
 <section id="verwendete-datensätze" class="level2">
 <h2 class="anchored" data-anchor-id="verwendete-datensätze">Verwendete Datensätze</h2>
 <p>Daten des Straßennetzes des Bundesinformationssystem Straße (BISStra) der Bundesanstalt für Straßen- und Verkehrswesen (BASt)</p>
 <p>Unfalldaten des Unfallatlas des Statistischen Bundesamts</p>
 <p>Verkehrsmengen der Dauerzählstellen der BASt</p>
+</section>
+<section id="literatur" class="level2">
+<h2 class="anchored" data-anchor-id="literatur">Literatur</h2>
+<p>Forschungsgesellschaft für Straßen- und Verkehrswesen (FGSV) (2003): Empfehlungen für die Sicherheitsanalyse von Straßennetzen (ESN)</p>
 
 
 </section>
@@ -654,7 +661,7 @@ ul.task-list li input[type="checkbox"] {
   <div class="nav-page nav-page-previous">
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./aufgabe/aufgaben_sicherheitsanalyse.html" class="pagination-link" aria-label="Aufgaben zur Sicherheitsanalyse von Verkehrsnetzen">
+      <a href="./aufgabenstellung.html" class="pagination-link" aria-label="Aufgaben zur Sicherheitsanalyse von Verkehrsnetzen">
         <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Aufgaben zur Sicherheitsanalyse von Verkehrsnetzen</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
