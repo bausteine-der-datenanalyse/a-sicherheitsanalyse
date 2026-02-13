@@ -6,6 +6,8 @@ execute:
   cache: false
   warning: false
 
+bibliography: bcd-baustein-sicherheitsanalyse.bib
+
 book:
   title: "Anwendungsbaustein Sicherheitsanalyse"
   author:

@@ -38,8 +38,8 @@ BibTeX-Vorlage
 ## Voraussetzungen
 
 Zum erfolgreichen Bearbeiten dieses Anwendungsbausteins benötigen Sie
-die Inhalte des Methodenbausteins Grundlagen der Statistik \[https://github.com/bausteine-der-datenanalyse/bcd-bausteine-statistik\]
-und des Werkzeugbausteins Datenanalyse in R \[https://github.com/bausteine-der-datenanalyse/bcd-bausteine-r\]. Außerdem sollten Grundbegriffe der verkehrlichen Sicherheitsanalyse wie die Unfallrate, Unfalldichte, Unfallkosten und Sicherheitspotentiale bekannt sein.
+die Inhalte des Methodenbausteins [Grundlagen der Statistik](https://github.com/bausteine-der-datenanalyse/bcd-bausteine-statistik)
+und des Werkzeugbausteins [Datenanalyse in R](https://github.com/bausteine-der-datenanalyse/bcd-bausteine-r). Außerdem sollten Grundbegriffe der verkehrlichen Sicherheitsanalyse wie die Unfallrate, Unfalldichte, Unfallkosten und Sicherheitspotentiale bekannt sein.
 
 ## Lernziele
 

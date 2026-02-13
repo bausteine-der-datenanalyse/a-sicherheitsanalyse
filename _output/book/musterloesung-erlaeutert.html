@@ -55,7 +55,27 @@ div.sourceCode
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -368,7 +388,7 @@ window.Quarto = {
 <h2 data-number="3.2" class="anchored" data-anchor-id="übungsaufgabe-1.2-unfallkenngrößen-auf-autobahnen"><span class="header-section-number">3.2</span> Übungsaufgabe 1.2 : Unfallkenngrößen auf Autobahnen</h2>
 <section id="die-unfallrate-ur" class="level3" data-number="3.2.1">
 <h3 data-number="3.2.1" class="anchored" data-anchor-id="die-unfallrate-ur"><span class="header-section-number">3.2.1</span> Die Unfallrate UR</h3>
-<p>“Die Unfallrate ist ein Maß für das (fahrleistungsbezogene) Risiko des Verkehrsteilnehmers, in einen Unfall verwickelt zu werden oder dabei zu verunglücken.” <span class="citation" data-cites="ESN2003">[@ESN2003, S. 5]</span> Die Formel lautet</p>
+<p>“Die Unfallrate ist ein Maß für das (fahrleistungsbezogene) Risiko des Verkehrsteilnehmers, in einen Unfall verwickelt zu werden oder dabei zu verunglücken.” <span class="citation" data-cites="ESN2003">(<a href="#ref-ESN2003" role="doc-biblioref">FGSV 2003, 5</a>)</span> Die Formel lautet</p>
 <p><span class="math display">\[
 UR = \frac{U \cdot 10^6}{DTV \cdot L \cdot 365 \cdot t}
 \]</span> mit den Kenngrößen</p>
@@ -503,7 +523,7 @@ UR = \frac{U \cdot 10^6}{DTV \cdot L \cdot 365 \cdot t}
 </section>
 <section id="die-unfalldichte-ud" class="level3" data-number="3.2.2">
 <h3 data-number="3.2.2" class="anchored" data-anchor-id="die-unfalldichte-ud"><span class="header-section-number">3.2.2</span> Die Unfalldichte UD</h3>
-<p>“Die [Unfalldichte] ist ein Maß für die (längenbezogene) Häufigkeit, mit der sich Unfälle während eines bestimmten Zeitraums auf einem bestimmten Straßenabschnitt ereignet haben” <span class="citation" data-cites="ESN2003">[@ESN2003, S. 6]</span>. Dementsprechend lautet die Formel:</p>
+<p>“Die [Unfalldichte] ist ein Maß für die (längenbezogene) Häufigkeit, mit der sich Unfälle während eines bestimmten Zeitraums auf einem bestimmten Straßenabschnitt ereignet haben” <span class="citation" data-cites="ESN2003">(<a href="#ref-ESN2003" role="doc-biblioref">FGSV 2003, 6</a>)</span>. Dementsprechend lautet die Formel:</p>
 <p><span class="math display">\[
 UD = \frac{U}{L \cdot t}
 \]</span></p>
@@ -550,7 +570,7 @@ UD = \frac{U}{L \cdot t}
 </section>
 <section id="die-unfallkostenrate-ukr" class="level3" data-number="3.2.3">
 <h3 data-number="3.2.3" class="anchored" data-anchor-id="die-unfallkostenrate-ukr"><span class="header-section-number">3.2.3</span> Die Unfallkostenrate UKR</h3>
-<p>“Unfallkostenraten UKR beschreiben die entsprechenden durchschnittlichen volkswirtschaftlichen Kosten durch Straßenverkehrsunfälle, die bei einer Fahrleistung von 1000 Kfz-km in diesem Straßenabschnitt entstanden sind.” <span class="citation" data-cites="ESN2003">[@ESN2003, S. 5]</span>. Die Formel lautet entsprechend:</p>
+<p>“Unfallkostenraten UKR beschreiben die entsprechenden durchschnittlichen volkswirtschaftlichen Kosten durch Straßenverkehrsunfälle, die bei einer Fahrleistung von 1000 Kfz-km in diesem Straßenabschnitt entstanden sind.” <span class="citation" data-cites="ESN2003">(<a href="#ref-ESN2003" role="doc-biblioref">FGSV 2003, 5</a>)</span>. Die Formel lautet entsprechend:</p>
 <p><span class="math display">\[
 UKR = \frac{1000 \cdot UK}{365 \cdot DTV \cdot L \cdot t}
 \]</span></p>
@@ -565,7 +585,7 @@ UK = U(SP) * WU(SP) + U(LV) * WU(LV)
 <li><strong>U(LV)</strong> : Unfälle mit leichtem Personenschaden</li>
 <li><strong>WU(LV)</strong> : Unfallkostensatz von Unfällen mit leichtem Personenschaden</li>
 </ul>
-<p>Die Unfallkostensätze werden den Empfehlungen für die Sicherheitsanalyse von Straßennetzen <span class="citation" data-cites="ESN2003">[@ESN2003]</span> entnommen.</p>
+<p>Die Unfallkostensätze werden den Empfehlungen für die Sicherheitsanalyse von Straßennetzen <span class="citation" data-cites="ESN2003">(<a href="#ref-ESN2003" role="doc-biblioref">FGSV 2003</a>)</span> entnommen.</p>
 <section id="schritt-1-unfalldaten" class="level4" data-number="3.2.3.1">
 <h4 data-number="3.2.3.1" class="anchored" data-anchor-id="schritt-1-unfalldaten"><span class="header-section-number">3.2.3.1</span> Schritt 1: Unfalldaten</h4>
 <p>Als erstes werden die Unfalldaten der Jahre 2023, 2022 und 2021 in das Projekt geladen, mit “bind_rows” zusammengefügt und aufbereitet (analog zur Aufbereitung der Unfalldaten in 2023 am Anfang).</p>
@@ -677,7 +697,7 @@ UK = U(SP) * WU(SP) + U(LV) * WU(LV)
 </section>
 <section id="schritt-3-unfallkostensätze-definieren" class="level4" data-number="3.2.3.3">
 <h4 data-number="3.2.3.3" class="anchored" data-anchor-id="schritt-3-unfallkostensätze-definieren"><span class="header-section-number">3.2.3.3</span> Schritt 3: Unfallkostensätze definieren</h4>
-<p>Die Unfallkostensätze werden nach den ESN <span class="citation" data-cites="ESN2003">[@ESN2003]</span> definiert. Dabei wird für die schweren Personenunfälle der Mittelwert aus den Bundesländern Sachsen, Sachsen-Anhalt, Thüringen, Niedersachsen gebildet, da die A38 durch diese vier Bundesländer verläuft. Die Länge je Bundesland wird hierbei außer Acht gelassen.</p>
+<p>Die Unfallkostensätze werden nach den ESN <span class="citation" data-cites="ESN2003">(<a href="#ref-ESN2003" role="doc-biblioref">FGSV 2003</a>)</span> definiert. Dabei wird für die schweren Personenunfälle der Mittelwert aus den Bundesländern Sachsen, Sachsen-Anhalt, Thüringen, Niedersachsen gebildet, da die A38 durch diese vier Bundesländer verläuft. Die Länge je Bundesland wird hierbei außer Acht gelassen.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>WU_SP_bab <span class="ot">=</span> <span class="dv">325000</span></span>
 <span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>WU_LV_bab <span class="ot">=</span> <span class="dv">31000</span></span>
@@ -737,7 +757,7 @@ UK = U(SP) * WU(SP) + U(LV) * WU(LV)
 </section>
 <section id="unfallkostendichte-ukd" class="level3" data-number="3.2.4">
 <h3 data-number="3.2.4" class="anchored" data-anchor-id="unfallkostendichte-ukd"><span class="header-section-number">3.2.4</span> Unfallkostendichte UKD</h3>
-<p>Die Unfallkostendichte UKD beschreibt “die mittleren volkswirtschaftlichen Kosten durch Straßenverkehrsunfälle, die auf 1 km Länge des Straßenabschnittes entfallen” <span class="citation" data-cites="ESN2003">[@ESN2003, S. 6]</span>.</p>
+<p>Die Unfallkostendichte UKD beschreibt “die mittleren volkswirtschaftlichen Kosten durch Straßenverkehrsunfälle, die auf 1 km Länge des Straßenabschnittes entfallen” <span class="citation" data-cites="ESN2003">(<a href="#ref-ESN2003" role="doc-biblioref">FGSV 2003, 6</a>)</span>.</p>
 <p>Die Formel lautet:</p>
 <p><span class="math display">\[
 UKD = \frac{UK}{1000 \cdot L \cdot t}
@@ -782,7 +802,7 @@ UKD = \frac{UK}{1000 \cdot L \cdot t}
 </section>
 <section id="sicherheitspotenzial-sipo" class="level3" data-number="3.2.5">
 <h3 data-number="3.2.5" class="anchored" data-anchor-id="sicherheitspotenzial-sipo"><span class="header-section-number">3.2.5</span> Sicherheitspotenzial SIPO</h3>
-<p>“Das Sicherheitspotenzial SIPO eines Straßenabschnittes ist definiert als Unterschied zwischen den Unfallkosten (Anzahl und Schwere der Unfälle), die bei richtliniengerechtem Ausbau zu erwarten wären, und den vorhandenen Unfallkosten. […] Kenngröße für das Sicherheitspotenzial SIPO ist die Differenz zwischen der vorhandenen Unfallkostendichte UKD eines Netzabschnittes im Betrachtungszeitraum und der Grundunfallkostendichte gUKD.” <span class="citation" data-cites="ESN2003">[@ESN2003, S. 8f.]</span></p>
+<p>“Das Sicherheitspotenzial SIPO eines Straßenabschnittes ist definiert als Unterschied zwischen den Unfallkosten (Anzahl und Schwere der Unfälle), die bei richtliniengerechtem Ausbau zu erwarten wären, und den vorhandenen Unfallkosten. […] Kenngröße für das Sicherheitspotenzial SIPO ist die Differenz zwischen der vorhandenen Unfallkostendichte UKD eines Netzabschnittes im Betrachtungszeitraum und der Grundunfallkostendichte gUKD.” <span class="citation" data-cites="ESN2003">(<a href="#ref-ESN2003" role="doc-biblioref">FGSV 2003, 8f</a>.)</span></p>
 <p><span class="math display">\[
 SIPO = UKD - gUKD
 \]</span></p>
@@ -790,7 +810,7 @@ SIPO = UKD - gUKD
 <p><span class="math display">\[
 gUKD = \frac{gUKR \cdot DTV \cdot 365}{10^6}
 \]</span></p>
-<p>mit der Grundunfallkostenrate gUKR, die den ESN <span class="citation" data-cites="ESN2003">[@ESN2003]</span> zu entnehmen ist.</p>
+<p>mit der Grundunfallkostenrate gUKR, die den ESN <span class="citation" data-cites="ESN2003">(<a href="#ref-ESN2003" role="doc-biblioref">FGSV 2003</a>)</span> zu entnehmen ist.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>gUKR_bab <span class="ot">=</span> <span class="dv">11</span></span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
@@ -838,6 +858,11 @@ gUKD = \frac{gUKR \cdot DTV \cdot 365}{10^6}
 <p>Ein Sicherheitspotenzial, dass kleiner gleich 0 ist, bedeutet, dass die Unfallkostendichte geringer als oder gleich der Grundunfallkostendichte ist. Das heißt, dass hier weniger (schwere) Unfälle aufgetreten sind, als aufgrund des Ausbaus zu erwarten wären. Das ist also etwas positives, hier gibt es (zumindest für den beobachteten Zeitraum) wenig Handlungsdruck. Je größer das Sicherheitspotenzial ist, desto mehr Bedarf besteht, die Infrastruktur sicherer zu gestalten. In unserer Grafik ist das vor allem der Abschnitt zwischen Nordhausen und Göttingen (SIPO zwischen 50 und 100), der schon bei der Unfallkostenrate auffällig war, sowie drei Abschnitte zwischen Nordhausen und Leipzig die ein Sicherheitspotential zwischen 0 und 50 haben.</p>
 
 
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-ESN2003" class="csl-entry" role="listitem">
+FGSV. 2003. <em>Empfehlungen für die Sicherheitsanalyse von Straßennetzen (ESN)</em>. Köln: Forschungsgesellschaft für Straßen- und Verkehrswesen (FGSV).
+</div>
+</div>
 </section>
 </section>
 
