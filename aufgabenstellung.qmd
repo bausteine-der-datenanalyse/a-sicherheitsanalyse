@@ -14,7 +14,7 @@ Die Formeln der Kenngrößen für die Sicherheitsbewertung werden den Empfehlung
 
 ## Anzahl der Verkehrsunfälle
 
-Erstellen Sie eine tabellarische Übersicht der Unfallzahlen nach Unfallkategorie für eine ausgewählte Autobahn und für Gesamtdeutschland in einem frei wählbaren Jahr.
+Erstellen Sie eine tabellarische Übersicht der Unfallzahlen nach Unfallkategorie für eine beliebige Autobahn und für Gesamtdeutschland für ein beliebiges Jahr.
 :::
 
 
@@ -22,7 +22,7 @@ Erstellen Sie eine tabellarische Übersicht der Unfallzahlen nach Unfallkategori
 
 ## Unfallkenngrößen auf Autobahnen
 
-Stellen Sie die folgende Unfallkenngrößen für eine ausgewählte Autobahn in einem frei wählbaren Jahr grafisch dar:
+Stellen Sie die folgenden Unfallkenngrößen für eine beliebige Autobahn für ein beliebiges Jahr grafisch dar:
 
 - die Unfallrate UR,
 - die Unfalldichte UD,

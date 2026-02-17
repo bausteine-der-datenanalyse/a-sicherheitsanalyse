@@ -10,7 +10,7 @@ library(curl)
 
 ## Übungsaufgabe 1.1 : Anzahl der Verkehrsunfälle
 
-Als frei wählbare Jahr wird 2023 gewählt und als frei wählbare Autobahn die A38.
+Gewählt wird das Jahr 2023 und die Autobahn A38.
 
 Als erstes werden die Daten vom Unfallatlas heruntergeladen und in R geladen. Danach wird der Datensatz mit "st_as_sf" in ein räumliches Punktobjekt umgewandelt. Die Koordinaten stammen aus den Spalten "LINREFX" und "LINREFY". Mit CRS (Coordinate Reference System) wird das Koordinatenreferenzsystem EPSG:25832 definiert. Falls sich in den geometrischen Daten noch Informationen zur Höhe (z-Dimension) oder Messwerte oder Attribute (m-Dimension) enthalten sind, werden diese nun entfernt, damit wir gleich sauber mit ihnen weiterrechnen können.
 
@@ -21,7 +21,7 @@ d_unfaelle_2023 = read_csv2("daten/Unfallorte2023_LinRef.csv") |>
 ```
 
 Als nächstes wird das Straßennetz der Bundesfernstraßen als Datensatz ins Projekt geladen. Diese Daten bekommen wir von der Bundesanstalt für Straßen- und Verkehrswesen (BASt). Das Bundesfernstraßennetz beinhaltet Daten zu Bundesautobahnen und Bundesstraßen. Aufgrund der Größe des Datensatzes kann dieser nicht auf Github zur Verfügung gestellt werden, daher fügen wir eine Funktion ein, die prüft, ob der Datensatz bereits im "daten"-Ordner liegt und falls nein, er direkt von der Webseite der BASt heruntergeladen, entpackt und an der richtigen Stelle gespeichert wird.
-Da für uns nur die Autobahnen relevant sind, filtern wir nur diese heraus. Wir wählen als Achse die Bestandsachse, da dies die mittlere Achse der Straße ist und wir keine Unterscheidung der Fahrtrichtung vornehmen müssen. Wir ergänzen eine Spalte ("mutate") mit der Zeilennummer (brauchen wir gleich für die Unfälle). Auch hier entfernen wir potentielle Daten der z- oder m-Dimension.
+Da für uns nur die Autobahnen relevant sind, filtern wir nur diese heraus. Wir wählen als Achse die Bestandsachse, da dies die mittlere Achse der Straße ist und wir keine Unterscheidung der Fahrtrichtung vornehmen müssen. Wir ergänzen eine Spalte ("mutate") mit der Zeilennummer (wird später zur Aufbereitung der Unfalldaten benötigt). Auch hier entfernen wir potentielle Daten der z- oder m-Dimension.
 
 ```{r}
 if (!file_exists("daten/BFStr_Netz_v2025q3.gpkg")) {
@@ -35,7 +35,8 @@ d_bfstn <- read_sf("daten/BFStr_Netz_v2025q3.gpkg") |>
   st_zm()
 ```
 
-Den Unfalldaten soll nun aufgrund ihrer Lage in Deutschland der nächstgelegene Autobahnabschnitt und die Entfernung zu diesem hinzugefügt werden. "st_nearest_feature" gibt dabei die Zeilennummer des nächstgelegenen Autobahnabschnitts im Datensatz "d_bfstn" wieder. "st_distance" berechnet die Entfernung vom Unfallpunkt zum nächstgelegenen Autobahnabschnitt, dies kann unter Umständen länger dauern. Außerdem suchen wir mit "d_bfstn$Str_Kennung[abschnitt_id]" aus dem Datensatz "d_bfstn" und der Spalte "Str_Kennung" genau den Eintrag, dessen Zeile durch "abschnitt_id" angegeben wird. Damit bekommen wir statt einer Nummer eines Autobahnabschnittes den Namen der Autobahn (z.B. A1). Zudem wollen wir nur Unfälle, die auf Autobahnen passiert sind, berücksichtigen. Dafür filtern wir nach Unfällen, die in einem 20 m Umkreis zur Bestandsachse der Autobahnen sind. Die 20 m wählen wir, um fast alle Unfälle auf den Fahrbahnen, auch bei 6- oder 8-spurigen Autobahnen, einzuschließen und fast alle Unfälle daneben auszuschließen. Es gibt uns aber keine Garantie, dass alle Unfälle, die wir nun filtern, tatsächlich auf Autobahnen liegen. Den Unterschied des Filters sehen wir im Environment: Der Unfalldatensatz aus 2023 beinhaltet 269.048 Unfälle insgesamt, der Unfalldatensatz für Autobahnen nur noch 22.114. Für mehr Übersichtlichkeit vereinfachen wir unseren Datensatz und lassen uns mit "select" nur bestimmte Spalten anzeigen.
+Den Unfalldaten soll nun aufgrund ihrer Lage in Deutschland der nächstgelegene Autobahnabschnitt und die Entfernung zu diesem hinzugefügt werden. "st_nearest_feature" gibt dabei die Zeilennummer des nächstgelegenen Autobahnabschnitts im Datensatz "d_bfstn" wieder. "st_distance" berechnet die Entfernung vom Unfallpunkt zum nächstgelegenen Autobahnabschnitt, dies kann unter Umständen länger dauern. Außerdem suchen wir mit "d_bfstn$Str_Kennung[abschnitt_id]" aus dem Datensatz "d_bfstn" und der Spalte "Str_Kennung" genau den Eintrag, dessen Zeile durch "abschnitt_id" angegeben wird. Darüber erhalten wir statt einer Nummer eines Autobahnabschnittes den Namen der Autobahn (z.B. A1). Zudem wollen wir nur Unfälle auf Autobahnen berücksichtigen. Dafür filtern wir nach Unfällen, die in einem 20 m Umkreis zur Bestandsachse der Autobahnen verortet sind. Die 20 m wählen wir, um möglichst alle Unfälle auf den Fahrbahnen, auch bei 6- oder 8-streifigen Autobahnen, einzuschließen. Es gibt aber keine Garantie, dass alle Unfälle, die wir nun filtern, tatsächlich auf Autobahnen liegen, zum Beispiel bei Unfällen auf Brücken über Autobahnen.
+Den Unterschied des Filters sehen wir im Environment: Der Unfalldatensatz aus 2023 beinhaltet 269.048 Unfälle insgesamt, der Unfalldatensatz für Autobahnen nur noch 22.114. Für mehr Übersichtlichkeit vereinfachen wir unseren Datensatz und lassen uns mit "select" nur bestimmte Spalten anzeigen.
 
 ```{r}
 d_unfaelle_bab_2023 = d_unfaelle_2023 |>
@@ -48,7 +49,7 @@ d_unfaelle_bab_2023 = d_unfaelle_2023 |>
   select(UKATEGORIE, name, abschnitt_id)
 ```
 
-Nun folgt die tabellarische Darstellung. Mit "st_drop_geometry()" entfernen wir die Geometriespalte, da für die Auswertung in Tabellenform nur die Attributdaten benötigt werden. Anschließend gruppieren wir die Unfalldaten nach ihrer Kategorie (1, 2 oder 3) und berechnen mit "summarise" die Anzahl der Unfälle je Unfallkategorie, einmal für die Autobahn 38 und einmal für alle Autobahnen. Um eine weitere Zeile mit den Summen hinzufügen zu können, muss die Spalte zur Unfallkategorie in einen Zeichenvektor umgewandelt werden ("mutate(UKATEGORIE = as.character(UKATEGORIE))"). Die neue Zeile hängen wir mit "bind_rows()" an. Diese letzte Zeile der Spalte UKATEGORIE („Summe“) enthält nun die Gesamtanzahl aller Unfälle über alle Kategorien hinweg und dient als übersichtliche Gesamtsumme in der Ergebnistabelle. Nun benennen wir noch die Zeilennamen um. Mit "kable()" stellen wir die Tabelle dar und können ihr noch eine Überschrift hinzufügen.
+Nun folgt die tabellarische Darstellung. Mit "st_drop_geometry()" entfernen wir die Geometriespalte, da für die Auswertung in Tabellenform nur die Attributdaten benötigt werden. Anschließend gruppieren wir die Unfalldaten nach der Unfallkategorie (1, 2 oder 3) und berechnen mit "summarise" die Anzahl der Unfälle je Unfallkategorie, einmal für die Autobahn 38 und einmal für alle Autobahnen. Um eine weitere Zeile mit den Summen hinzufügen zu können, muss die Spalte zur Unfallkategorie in einen Zeichenvektor umgewandelt werden ("mutate(UKATEGORIE = as.character(UKATEGORIE))"). Die neue Zeile hängen wir mit "bind_rows()" an. Diese letzte Zeile der Spalte UKATEGORIE („Summe“) enthält nun die Gesamtanzahl aller Unfälle über alle Unfallkategorien hinweg und dient als übersichtliche Gesamtsumme in der Ergebnistabelle. Nun benennen wir noch die Zeilennamen um. Mit "kable()" stellen wir die Tabelle dar und können noch eine Überschrift hinzufügen.
 
 ```{r}
 d_zaehle_unfaelle <- d_unfaelle_bab_2023 |>
@@ -119,7 +120,7 @@ d_dzs_2023 |>
   select(abschnitt_id, DZ_Nr, DTV_Kfz_MobisSo_Q)
 ```
 
-Wir sehen, dass unsere Annahme falsch ist und es tatsächlich einen Abschnitt mit zwei Zählstellen gibt und beide auch tatsächlich unterschiedliches Verkehrsaufkommen gibt. Zwischen den Zählstellen scheint es also auch die Möglichkeit zu geben, auf die Autobahn auf- oder von ihr abzufahren. Daher fassen wir die Verkehrsstärken nun auf Abschnittsebene zusammen. Hierzu wird die Geometrie entfernt und wir berechnen den mittlere DTV-Wert ("mean") von beiden Zählstellen je Abschnitt. Und auch bei diesem Datensatz reduzieren wir die Anzahl der Spalten für mehr Übersichtlichkeit.
+Wir sehen, dass unsere Annahme falsch ist und es tatsächlich einen Abschnitt mit zwei Zählstellen gibt und beide ein unterschiedliches Verkehrsaufkommen angeben. Zwischen den Zählstellen scheint es also auch die Möglichkeit zu geben, auf die Autobahn auf- oder von ihr abzufahren. Daher fassen wir die Verkehrsstärken nun auf Abschnittsebene zusammen. Hierzu wird die Geometrie entfernt und wir berechnen den mittlere DTV-Wert ("mean") von beiden Zählstellen je Abschnitt. Und auch bei diesem Datensatz reduzieren wir die Anzahl der Spalten für mehr Übersichtlichkeit.
 
 ```{r}
 d_dzs_abschnitt_2023 <- d_dzs_2023 |>
@@ -134,7 +135,7 @@ d_dzs_abschnitt_2023 <- d_dzs_2023 |>
 
 #### Verbinden der Datensätze des Bundesfernstraßennetzes mit den Zählstellen und den Unfällen
 
-Bisher haben wir allen Unfällen den nächstgelegenen Autobahnabschnitt und die Entfernung zu diesem zugewiesen. Nun wollen wir wissen, wie viele Unfälle es pro Abschnitt gibt. Das machen wir mit "group_by()" und "summarise()". Außerdem benennen wir die Spalte "abschnitt_id" mit "rename()" in "abschnitt_id" um, damit wir die Datensätze gleich sauber verknüpfen können.
+Bisher haben wir allen Unfällen den nächstgelegenen Autobahnabschnitt und die Entfernung zu diesem zugewiesen. Nun wollen wir wissen, wie viele Unfälle es pro Abschnitt gibt. Dies bestimmen wir mit "group_by()" und "summarise()". Außerdem benennen wir die Spalte "abschnitt_id" mit "rename()" in "abschnitt_id" um, damit wir die Datensätze gleich sauber verknüpfen können.
 
 ```{r}
 d_unfaelle_abschnitt_2023 <- d_unfaelle_bab_2023 |>
@@ -181,8 +182,9 @@ d_A38_gesamt <- d_bfstn_gesamt |>
   filter(Str_Kennung == "A38")
 ```
 
-Nun kommen wir zur grafischen Darstellung. Wir wollen im Hintergrund den Verlauf der A38 sehen, daher filtern wir uns aus dem Datensatz der Bundesautobahnen "d_bfstn" die Autobahn 38. Außerdem wollen wir uns drei Städte entlang der A38 für mehr Kontext darstellen. Dafür suchen wir uns die Koordinaten der Städte aus dem Internet. Diese sind allerdings in dem Koordinatenreferenzsystem 4326, daher transformieren ("st_transform") wir sie in das CRS der anderen Daten (25832).
-In unserem ggplot stellen wir nun den Verlauf der A38 ("data = d_A38") und die Städte ("data = d_staedte") dar und beschriften die Städte mit "geom_sf_text()". Und nun kommen endlich die Daten der Unfallraten. Diese filtern wir, dass nur Abschnitte mit Werten angezeigt werden ("filter(!is.na())"). Das machen wir erst hier und nicht schon eher, um die Zeilen nicht grundsätzlich aus dem Datensatz entfernen wollen, weil wir damit noch weiterrechnen.
+Nun kommen wir zur grafischen Darstellung. Wir wollen im Hintergrund den Verlauf der A38 sehen, daher filtern wir uns aus dem Datensatz der Bundesautobahnen "d_bfstn" die Autobahn 38. Außerdem wollen wir uns drei Städte entlang der A38 für eine bessere Übersicht darstellen. Dafür suchen wir uns die Koordinaten der Städte aus dem Internet. Diese sind allerdings in dem Koordinatenreferenzsystem 4326, daher transformieren ("st_transform") wir sie in das CRS der anderen Daten (25832).
+In unserem ggplot stellen wir nun den Verlauf der A38 ("data = d_A38") und die Städte ("data = d_staedte") dar und beschriften die Städte mit "geom_sf_text()". 
+Nun kommen die Daten der Unfallraten. Diese filtern wir, dass nur Abschnitte mit Werten angezeigt werden ("filter(!is.na())"). Das machen wir erst hier und nicht schon eher, um die Zeilen nicht grundsätzlich aus dem Datensatz zu entfernen, weil wir damit noch weiterrechnen.
 Für die Barrierefreiheit nutzen wir die Farbskala "scale_color_viridis_b" und beschriften unser Diagramm.
 
 ```{r}
@@ -237,14 +239,14 @@ d_bfstn_gesamt <- d_bfstn_gesamt |>
   mutate(unfalldichte = d_unfaelle_2023 / (laenge_km * t1))                             
 ```
 
-Auch für die Unfalldichte schauen wir uns unsere ausgewählte Autobahn 38 an.
+Auch für die Unfalldichte schauen wir uns die ausgewählte Autobahn 38 an.
 
 ```{r}
 d_A38_gesamt <- d_bfstn_gesamt |>
   filter(Str_Kennung == "A38")
 ```
 
-Die grafische Darstellung übernehmen wir von der Unfallrate und tauschen nur die Variablen und die Beschriftungen aus. Jedoch ergänzen wir noch Grenzen bei der Beschriftung, da uns die Darstellung damit besser gefällt.
+Die grafische Darstellung übernehmen wir von der Unfallrate und tauschen nur die Variablen und die Beschriftungen aus. Jedoch ergänzen wir noch Grenzen bei der Beschriftung, um eine bessere Darstellung zu erzeugen.
 
 ```{r}
 ggplot () +
@@ -268,7 +270,7 @@ ggplot () +
   )
 ```
 
-Im Gegensatz zur Unfallrate sehen wir deutlich mehr farbige Abschnitte. Das liegt daran, dass die Unfalldichte unabhängig von der DTV ist und wir daher auch Abschnitte ohne Zählstellen darstellen können. Die große Mehrheit der Abschnitte hat eine Unfalldichte von unter 2,5 Unfällen pro Kilometer und Jahr. Wir sehen aber auch hier die Auswirkung von kurzen Abschnitten, diese haben tendenziell höhere Unfalldichten als längere Abschnitte.
+Im Gegensatz zur Unfallrate sehen wir deutlich mehr farbige Abschnitte. Das liegt daran, dass die Unfalldichte unabhängig von der DTV ist und wir daher auch Abschnitte ohne Zählstellen darstellen können. Die große Mehrheit der Abschnitte hat eine Unfalldichte von unter 2,5 Unfällen pro Kilometer und Jahr. Wir sehen aber auch hier die Auswirkung von kurzen Abschnitten. Hier ist eine Kontrolle erforderlich, bevor die Ergebnisse blind interpretiert werden.
 
 
 ### Die Unfallkostenrate UKR
@@ -333,7 +335,7 @@ d_unfaelle_abschnitt_alle <- d_unfaelle_bab_alle |>
   ) 
 ```
 
-Nun wollen wir wissen, wie viele schwere und leichte Unfälle es je Abschnitt gibt. Schwere Unfälle sind Unfälle mit Schwerverletzten (Kategorie 2) und Getöteten (Kategorie 1). Leichte Unfälle sind die Unfallkategorie 3. Dazu filtern wir nach der oder den jeweiligen Kategorie, gruppieren nach Abschnitten und summieren die Unfallzahlen.
+Nun wollen wir wissen, wie viele Unfälle mit schwerem und leichtem Personenschaden es je Abschnitt gibt. "Schwere Unfälle" sind Unfälle mit Schwerverletzten (Kategorie 2) und Getöteten (Kategorie 1). "Leichte Unfälle" sind die Unfallkategorie 3. Dazu filtern wir nach der oder den jeweiligen Kategorien, gruppieren nach Abschnitten und summieren die Unfallzahlen.
 
 ```{r}
 d_unfaelle_sp_3j <- d_unfaelle_abschnitt_alle |>
@@ -375,7 +377,7 @@ d_bfstn_gesamt <- d_bfstn_gesamt |>
 
 #### Schritt 2: Dauerzählstellen
 
-Auch bei den Dauerzählstellen beginnen wir wieder mit dem laden, zusammenführen und aufbereiten der Daten. Dabei achten wir auf die richtige Encodierung.
+Auch bei den Dauerzählstellen beginnen wir wieder mit dem Laden, Zusammenführen und Aufbereiten der Daten. Dabei achten wir auf die richtige Encodierung.
 
 ```{r}
 d_dzs_alle <- bind_rows(

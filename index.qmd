@@ -45,8 +45,7 @@ und des Werkzeugbausteins [Datenanalyse in R](https://github.com/bausteine-der-d
 
 Ziel dieses Bausteins ist es, typische Inhalte von sicherheitsrelevanten
 Fragestellungen von Verkehrsnetzen in grafischer Form mithilfe der
-Programmiersprache R darzustellen. Dabei lernen Sie, wo deutschsprachige
-Unfalldaten gefunden werden können, wie Unfalldaten eingelesen, aufbereitet und
+Programmiersprache R darzustellen. Dabei lernen Sie, wie Unfalldaten eingelesen, aufbereitet und
 analysiert werden und welche verschiedenen Darstellungsformen sich für
 bestimmte Datentypen eignen.
 
@@ -55,7 +54,7 @@ bestimmte Datentypen eignen.
 Daten des Straßennetzes des Bundesinformationssystem Straße
 (BISStra) der Bundesanstalt für Straßen- und Verkehrswesen (BASt)
 
-Unfalldaten des Unfallatlas des Statistischen Bundesamts
+Unfalldaten des Statistischen Bundesamts (Unfallatlas)
 
 Verkehrsmengen der Dauerzählstellen der BASt
 
