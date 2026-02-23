@@ -21,12 +21,12 @@ d_unfaelle_2023 = read_csv2("daten/Unfallorte2023_LinRef.csv") |>
 ```
 
 ```{{r}}
-if (!file_exists("daten/BFStr_Netz_v2025q3.gpkg")) {
+if (!file_exists("daten/BFStr_Netz_v2025q4.gpkg")) {
   curl_download("https://www.bast.de/SharedDocs/Daten-TB/Daten-BISStra.zip?__blob=publicationFile&v=5", destfile = "daten/Daten-BISStra.zip", quiet = FALSE)
   unzip("daten/Daten-BISStra.zip", exdir = "daten/")
 }
 
-d_bfstn <- read_sf("daten/BFStr_Netz_v2025q3.gpkg") |>
+d_bfstn <- read_sf("daten/BFStr_Netz_v2025q4.gpkg") |>
   filter(Str_Klasse_kurz == "A" & Sk_Achse == "Bestandsachse") |>
   mutate(rownumber = row_number()) |>
   st_zm()
