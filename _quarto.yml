@@ -32,6 +32,8 @@ book:
     - aufgabenstellung.qmd
     - musterloesung.qmd
     - musterloesung-erlaeutert.qmd
+  downloads: 
+    - pdf
 
 format:
   html:
