@@ -1,6 +1,7 @@
 # Musterlösung mit Erläuterungen
 
 ```{r}
+#| warning: false
 library(tidyverse)
 library(kableExtra)
 library(sf)
@@ -15,6 +16,7 @@ Gewählt wird das Jahr 2023 und die Autobahn A38.
 Als erstes werden die Daten vom Unfallatlas heruntergeladen und in R geladen. Danach wird der Datensatz mit "st_as_sf" in ein räumliches Punktobjekt umgewandelt. Die Koordinaten stammen aus den Spalten "LINREFX" und "LINREFY". Mit CRS (Coordinate Reference System) wird das Koordinatenreferenzsystem EPSG:25832 definiert. Falls sich in den geometrischen Daten noch Informationen zur Höhe (z-Dimension) oder Messwerte oder Attribute (m-Dimension) enthalten sind, werden diese nun entfernt, damit wir gleich sauber mit ihnen weiterrechnen können.
 
 ```{r}
+#| warning: false
 d_unfaelle_2023 = read_csv2("daten/Unfallorte2023_LinRef.csv") |>
   st_as_sf(coords = c("LINREFX", "LINREFY"), crs = 25832) |>
   st_zm()
@@ -24,19 +26,28 @@ Als nächstes wird das Straßennetz der Bundesfernstraßen als Datensatz ins Pro
 Da für uns nur die Autobahnen relevant sind, filtern wir nur diese heraus. Wir wählen als Achse die Bestandsachse, da dies die mittlere Achse der Straße ist und wir keine Unterscheidung der Fahrtrichtung vornehmen müssen. Wir ergänzen eine Spalte ("mutate") mit der Zeilennummer (wird später zur Aufbereitung der Unfalldaten benötigt). Auch hier entfernen wir potentielle Daten der z- oder m-Dimension.
 
 ```{r}
-if (!file_exists("daten/BFStr_Netz_v2025q4.gpkg")) {
-  curl_download("https://www.bast.de/SharedDocs/Daten-TB/Daten-BISStra.zip?__blob=publicationFile&v=5", destfile = "daten/Daten-BISStra.zip", quiet = FALSE)
-  unzip("daten/Daten-BISStra.zip", exdir = "daten/")
+#| warning: false
+
+file <- list.files("daten/geo", pattern = "^BFStr_Netz.*\\.gpkg$", full.names = TRUE) |> tail(n = 1)
+
+if (length(file) == 0) {
+  curl_download(
+    "https://www.bast.de/SharedDocs/Daten-TB/Daten-BISStra.zip?__blob=publicationFile&v=5",
+    destfile = "daten/Daten-BISStra.zip",
+    quiet = FALSE
+  )
+  unzip("daten/Daten-BISStra.zip", exdir = "daten/geo/")
+  file <- list.files("daten/geo", pattern = "^BFStr_Netz.*\\.gpkg$", full.names = TRUE) |> tail(n = 1)
 }
 
-d_bfstn <- read_sf("daten/BFStr_Netz_v2025q4.gpkg") |>
+d_bfstn <- read_sf(file) |>
   filter(Str_Klasse_kurz == "A" & Sk_Achse == "Bestandsachse") |>
   mutate(rownumber = row_number()) |>
   st_zm()
 ```
 
 Den Unfalldaten soll nun aufgrund ihrer Lage in Deutschland der nächstgelegene Autobahnabschnitt und die Entfernung zu diesem hinzugefügt werden. "st_nearest_feature" gibt dabei die Zeilennummer des nächstgelegenen Autobahnabschnitts im Datensatz "d_bfstn" wieder. "st_distance" berechnet die Entfernung vom Unfallpunkt zum nächstgelegenen Autobahnabschnitt, dies kann unter Umständen länger dauern. Außerdem suchen wir mit "d_bfstn$Str_Kennung[abschnitt_id]" aus dem Datensatz "d_bfstn" und der Spalte "Str_Kennung" genau den Eintrag, dessen Zeile durch "abschnitt_id" angegeben wird. Darüber erhalten wir statt einer Nummer eines Autobahnabschnittes den Namen der Autobahn (z.B. A1). Zudem wollen wir nur Unfälle auf Autobahnen berücksichtigen. Dafür filtern wir nach Unfällen, die in einem 20 m Umkreis zur Bestandsachse der Autobahnen verortet sind. Die 20 m wählen wir, um möglichst alle Unfälle auf den Fahrbahnen, auch bei 6- oder 8-streifigen Autobahnen, einzuschließen. Es gibt aber keine Garantie, dass alle Unfälle, die wir nun filtern, tatsächlich auf Autobahnen liegen, zum Beispiel bei Unfällen auf Brücken über Autobahnen.
-Den Unterschied des Filters sehen wir im Environment: Der Unfalldatensatz aus 2023 beinhaltet 269.048 Unfälle insgesamt, der Unfalldatensatz für Autobahnen nur noch 22.114. Für mehr Übersichtlichkeit vereinfachen wir unseren Datensatz und lassen uns mit "select" nur bestimmte Spalten anzeigen.
+Den Unterschied des Filters sehen wir im Environment: Der Unfalldatensatz aus 2023 beinhaltet 269.048 Unfälle insgesamt, der Unfalldatensatz für Autobahnen nur noch 22.122. Für mehr Übersichtlichkeit vereinfachen wir unseren Datensatz und lassen uns mit "select" nur bestimmte Spalten anzeigen.
 
 ```{r}
 d_unfaelle_bab_2023 = d_unfaelle_2023 |>
@@ -102,6 +113,7 @@ Die DTV kann den Dauerzählstellen der BASt entnommen werden. Die Streckenlänge
 Als erstes laden wir die Daten der Dauerzählstellen in unser Projekt. Mit dem Argument "locale(encoding = "iso-8859-1")" stellen wir sicher, dass Umlaute und Sonderzeichen, die in deutschsprachigen Datensätzen häufig vorkommen, korrekt eingelesen werden. Da wir die Dauerzählstellen später mit dem Bundesfernstraßennetz verknüpfen möchten, berücksichtigen wir wie bei den anderen Datensätzen ausschließlich Autobahnen. Dazu filtern wir nach der Straßenklasse "Str_Kl == "A"". Anschließend entfernen wir mit "drop_na(DTV_Kfz_MobisSo_Q)" alle Beobachtungen, für die keine Verkehrsstärkewerte vorliegen, sodass nur vollständige und auswertbare Zählstellen verbleiben. Im nächsten Schritt wird der Datensatz in ein sf-Objekt umgewandelt. Aus den Koordinatenspalten "Koor_UTM32_E" und "Koor_UTM32_N" werden Punktgeometrien mit dem gleichen Koordinatensystem wie bei den anderen Datensätzen erzeugt. Dadurch sind spätere räumliche Operationen kompatibel. Wie auch bei den anderen räumlichen Datensätzen entfernen wir anschließend mögliche z- und m-Dimensionen aus den Geometrien. Im nächsten Schritt werden die Dauerzählstellen wie bei den Unfällen den nächstgelegenen Autobahnabschnitten des Bundesfernstraßennetzes zugeordnet. Mit "st_nearest_feature()" wird für jede Zählstelle der Index des nächstgelegenen Abschnitts ermittelt und als "abschnitt_id" gespeichert. Im Gegensatz zu den Unfalldaten müssen wir keine Entfernung zur Autobahn ermitteln, weil wir wissen, dass die Zählstellen tatsächlich an Autobahnen sind.
 
 ```{r}
+#| warning: false
 d_dzs_2023 <- read_csv2("daten/Jawe2023.csv", locale = locale(encoding = 'iso-8859-1')) |>
   filter(Str_Kl == "A") |>
   drop_na(DTV_Kfz_MobisSo_Q) |>
@@ -380,6 +392,7 @@ d_bfstn_gesamt <- d_bfstn_gesamt |>
 Auch bei den Dauerzählstellen beginnen wir wieder mit dem Laden, Zusammenführen und Aufbereiten der Daten. Dabei achten wir auf die richtige Encodierung.
 
 ```{r}
+#| warning: false
 d_dzs_alle <- bind_rows(
   read_csv2("daten/Jawe2023.csv", locale = locale(encoding = 'iso-8859-1')) |> mutate(jahr = 2023),
   read_csv2("daten/Jawe2022.csv", locale = locale(encoding = 'iso-8859-1')) |> mutate(jahr = 2022),

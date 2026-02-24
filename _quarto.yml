@@ -1,28 +1,26 @@
 lang: de-DE
 
-title: "Anwendungsbaustein Sicherheitsanalyse"
-author:
-  - Lukas Arnold
-  - Simone Arnold
-  - Florian Bagemihl
-  - Matthias Baitsch
-  - Marc Fehr
-  - Franca Hollmann
-  - Maik Poetzsch
-  - Sebastian Seipel
-date: today
-
 project:
   type: book
   output-dir: _output/book/
 
 execute:
-  cache: false
-  warning: false
+  cache: true
 
 bibliography: bcd-baustein-sicherheitsanalyse.bib
 
 book:
+  title: "Anwendungsbaustein Sicherheitsanalyse"
+  author:
+    - Lukas Arnold
+    - Simone Arnold
+    - Florian Bagemihl
+    - Matthias Baitsch
+    - Marc Fehr
+    - Franca Hollmann
+    - Maik Poetzsch
+    - Sebastian Seipel
+  date: today
   repo-url: "https://github.com/bausteine-der-datenanalyse/a-sicherheitsanalyse"
   repo-actions: [source]
   favicon: "bilder/favicon_bcd_new.svg"
@@ -41,8 +39,6 @@ format:
     lang: de
     toc: true
     toc-depth: 4
-    format-links:
+    format-links: 
       - pdf
   pdf: default
-
-
