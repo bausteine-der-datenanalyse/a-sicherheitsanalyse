@@ -1,22 +1,14 @@
-unfaelle_shiny_files/
-sicherheitsanalyse_cache/
-.Rhistory
-.RData
-.RDataTmp
-/data/geo
-/data/shp
-.Rproj.user
-*.Rproj
-csv/
-
 /.quarto/
-/sicherheitsanalyse_files
 
-**/*.quarto_ipynb
+.RData*
+.Rhistory
+.Rproj.user
 
-.RDataTmp1
-.RDataTmp2
-.RDataRmp3
-daten\BFStr_Netz_v2025q3.gpkg
-daten\BFStr_Netz_v2025q3.pdf
-daten\Daten-BISStra.zip
+_output
+*_cache
+*_files
+*.quarto_ipynb
+
+tmp*.tex
+daten/geo
+daten/Daten-BISStra.zip
