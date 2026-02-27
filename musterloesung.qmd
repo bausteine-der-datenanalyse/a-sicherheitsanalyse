@@ -26,9 +26,7 @@ Diese drei Datensätze speichern wir, damit sie, sofern sie vorhanden sind, nur 
 ```{r}
 #| warning: false
 
-file_rdata <- "daten/unfaelle.RData"
-
-if (!file.exists(file_rdata)) {
+if (!file.exists("daten/unfaelle.RData")) {
   # Fernstraßennetz
   curl_download(
     "https://www.bast.de/SharedDocs/Daten-TB/Daten-BISStra.zip?__blob=publicationFile&v=5",
@@ -71,10 +69,10 @@ if (!file.exists(file_rdata)) {
     d_bfstn,
     d_unfaelle_2023,
     d_unfaelle_bab_2023,
-    file = file_rdata
+    file = "daten/unfaelle.RData"
   )
 } else {
-  load(file = file_rdata)
+  load(file = "daten/unfaelle.RData")
 }
 
 ```
@@ -347,12 +345,10 @@ Die Unfallkostensätze werden den Empfehlungen für die Sicherheitsanalyse von S
 #### Schritt 1: Unfalldaten
 
 Als erstes werden die Unfalldaten der Jahre 2023, 2022 und 2021 in das Projekt geladen, mit "bind_rows" zusammengefügt und aufbereitet (analog zur Aufbereitung der Unfalldaten in 2023 am Anfang).
-Wie auch bei den Unfalldaten aus 2023 fügen wir den Unfalldaten den nächstgelegenen Autobahnabschnitt und die Entfernung zu diesem hinzu und filtern nach allen Unfällen, die maximal 20 Meter von einem Autobahnabschnitt entfernt sind. Damit wir diesen Schritt, der länger dauern kann, nicht jedes Mal durchführen müssen, speichern wir den Datensatz und rufen ihn beim nächsten Mal wieder auf.
+Wie auch bei den Unfalldaten aus 2023 fügen wir den Unfalldaten den nächstgelegenen Autobahnabschnitt und die Entfernung zu diesem hinzu und filtern nach allen Unfällen, die maximal 20 Meter von einem Autobahnabschnitt entfernt sind. Damit wir diese Schritte, die länger dauern können, nicht jedes Mal durchführen müssen, speichern wir die Datensätze und rufen sie beim nächsten Mal wieder auf.
 
 ```{r}
-file_unfaelle <- "daten/unfaelle_alle.RData"
-
-if (!file.exists(file_unfaelle)) {
+if (!file.exists("daten/unfaelle_alle.RData")) {
   
   d_unfaelle_alle <- bind_rows(
     read.csv2("daten/Unfallorte2023_LinRef.csv") |> mutate(jahr = 2023),
@@ -375,10 +371,10 @@ if (!file.exists(file_unfaelle)) {
   save(
     d_unfaelle_alle,
     d_unfaelle_bab_alle,
-    file = file_unfaelle
+    file = "daten/unfaelle_alle.RData"
   )
 } else {
-  load(file = file_unfaelle)
+  load(file = "daten/unfaelle_alle.RData")
 }
 
 ```
