@@ -42,4 +42,17 @@ format:
     toc-depth: 4
     format-links: 
       - pdf
-  pdf: default
+  pdf:
+    listings: true
+    include-in-header:
+      text: |
+        \usepackage{xcolor}
+        \definecolor{codebg}{HTML}{F0F0F0}
+        \lstset{
+          breaklines=true,
+          breakatwhitespace=false,
+          basicstyle=\ttfamily\small,
+          backgroundcolor=\color{codebg}
+        }
+    fig-width: 6
+    fig-height: 4

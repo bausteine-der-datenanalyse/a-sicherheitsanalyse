@@ -11,5 +11,10 @@ _output
 
 tmp*.tex
 daten/unfaelle.RData
+daten/unfaelle_alle.RData
 daten/geo
 daten/Daten-BISStra.zip
+
+**/*.quarto_ipynb
+
+site_libs*

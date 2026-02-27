@@ -110,7 +110,8 @@ tabelle_unfaelle <- d_zaehle_unfaelle |>
 
 kable(
   tabelle_unfaelle,
-  caption = "Anzahl der Verkehrsunfälle nach Unfallkategorie (A38 und alle deutschen Autobahnen) im Jahr 2023"
+  caption = "Anzahl der Verkehrsunfälle nach Unfallkategorie 
+  (A38 und alle deutschen Autobahnen) im Jahr 2023"
 )
 ```
 
@@ -208,7 +209,8 @@ Anschließend fügen wir dem Datensatz mit "mutate()" eine weitere Spalte mit de
 ```{r}
 d_bfstn_gesamt <- d_bfstn_gesamt |>
   mutate(
-    unfallrate = d_unfaelle_2023 * 10^6 / (DTV_2023 * laenge_km * 365 * t1)
+    unfallrate = d_unfaelle_2023 * 10^6 / 
+      (DTV_2023 * laenge_km * 365 * t1)
   )
 ```
 
@@ -257,7 +259,7 @@ ggplot() +
   theme_minimal() +
   theme(
     panel.grid = element_blank(),
-    plot.title = element_text(size = 14, face = "bold", hjust = 0.5),
+    plot.title = element_text(size = 10, face = "bold", hjust = 0.5),
     axis.title = element_blank(),
     axis.text = element_blank(),
     axis.ticks = element_blank()
@@ -309,7 +311,7 @@ ggplot() +
   theme_minimal() +
   theme(
     panel.grid = element_blank(),
-    plot.title = element_text(size = 14, face = "bold", hjust = 0.5),
+    plot.title = element_text(size = 10, face = "bold", hjust = 0.5),
     axis.title = element_blank(),
     axis.text = element_blank(),
     axis.ticks = element_blank()
@@ -345,28 +347,40 @@ Die Unfallkostensätze werden den Empfehlungen für die Sicherheitsanalyse von S
 #### Schritt 1: Unfalldaten
 
 Als erstes werden die Unfalldaten der Jahre 2023, 2022 und 2021 in das Projekt geladen, mit "bind_rows" zusammengefügt und aufbereitet (analog zur Aufbereitung der Unfalldaten in 2023 am Anfang).
+Wie auch bei den Unfalldaten aus 2023 fügen wir den Unfalldaten den nächstgelegenen Autobahnabschnitt und die Entfernung zu diesem hinzu und filtern nach allen Unfällen, die maximal 20 Meter von einem Autobahnabschnitt entfernt sind. Damit wir diesen Schritt, der länger dauern kann, nicht jedes Mal durchführen müssen, speichern wir den Datensatz und rufen ihn beim nächsten Mal wieder auf.
 
 ```{r}
-d_unfaelle_alle <- bind_rows(
-  read.csv2("daten/Unfallorte2023_LinRef.csv") |> mutate(jahr = 2023),
-  read.csv2("daten/Unfallorte2022_LinRef.csv") |> mutate(jahr = 2022),
-  read.csv2("daten/Unfallorte2021_LinRef.csv") |> mutate(jahr = 2021),
-) |>
-  st_as_sf(coords = c("LINREFX", "LINREFY"), crs = 25832) |>
-  st_zm()
-```
+file_unfaelle <- "daten/unfaelle_alle.RData"
 
-Wie auch bei den Unfalldaten aus 2023 fügen wir den Unfalldaten den nächstgelegenen Autobahnabschnitt und die Entfernung zu diesem hinzu und filtern nach allen Unfällen, die maximal 20 Meter von einem Autobahnabschnitt entfernt sind.
+if (!file.exists(file_unfaelle)) {
+  
+  d_unfaelle_alle <- bind_rows(
+    read.csv2("daten/Unfallorte2023_LinRef.csv") |> mutate(jahr = 2023),
+    read.csv2("daten/Unfallorte2022_LinRef.csv") |> mutate(jahr = 2022),
+    read.csv2("daten/Unfallorte2021_LinRef.csv") |> mutate(jahr = 2021)
+    ) |>
+    st_as_sf(coords = c("LINREFX", "LINREFY"), crs = 25832) |>
+    st_zm()
 
-```{r}
-d_unfaelle_bab_alle <- d_unfaelle_alle |>
-  mutate(
-    abschnitt_id = st_nearest_feature(geometry, d_bfstn),
-    distanz = st_distance(geometry, d_bfstn[abschnitt_id, ], by_element = TRUE),
-    name = d_bfstn$Str_Kennung[abschnitt_id]
-  ) |>
-  filter(as.double(distanz) <= 20) |>
-  select(UKATEGORIE, name, abschnitt_id, jahr)
+  d_unfaelle_bab_alle <- d_unfaelle_alle |>
+    mutate(
+      abschnitt_id = st_nearest_feature(geometry, d_bfstn),
+      distanz = st_distance(geometry, d_bfstn[abschnitt_id, ], 
+                            by_element = TRUE),
+      name = d_bfstn$Str_Kennung[abschnitt_id]
+    ) |>
+    filter(as.double(distanz) <= 20) |>
+    select(UKATEGORIE, name, abschnitt_id, jahr)  
+
+  save(
+    d_unfaelle_alle,
+    d_unfaelle_bab_alle,
+    file = file_unfaelle
+  )
+} else {
+  load(file = file_unfaelle)
+}
+
 ```
 
 Ebenfalls wie bei den Unfalldaten aus 2023 fassen wir die Unfalldaten je Abschnitt zusammen. Da wir gleich für die Unfallkosten aber auch die Unfallkategorie berücksichtigen werden, gruppieren wir nicht nur nach Abschnitten, sondern auch nach den Unfallkategorien.
@@ -532,10 +546,11 @@ ggplot() +
   ) +
   scale_color_viridis_b(
     direction = -1,
-    name = "Unfallkostenrate\n(Euro pro\n1000 Kfz und km und Jahr)"
+    name = "Unfallkostenrate\n(Euro pro\n1000 Kfz und km \nund Jahr)"
   ) +
   labs(
-    title = "Unfallkostenraten nach Abschnitten der A38 in den Jahren 2021 - 2023"
+    title = "Unfallkostenraten nach Abschnitten 
+    der A38 in den Jahren 2021 - 2023"
   ) +
   theme_minimal() +
   theme(
@@ -586,7 +601,8 @@ ggplot() +
     name = "Unfallkostendichte\n(1000 Euro pro\nkm und Jahr)"
   ) +
   labs(
-    title = "Unfallkostendichten nach Abschnitten der A38 in den Jahren 2021 - 2023"
+    title = "Unfallkostendichten nach Abschnitten 
+    der A38 in den Jahren 2021 - 2023"
   ) +
   theme_minimal() +
   theme(
@@ -652,7 +668,8 @@ ggplot() +
     name = "Sicherheitspotenzial\n(1000 Euro pro\nkm und Jahr)"
   ) +
   labs(
-    title = "Sicherheitspotenziale nach Abschnitten der A38 in den Jahren 2021 - 2023"
+    title = "Sicherheitspotenziale nach Abschnitten 
+    der A38 in den Jahren 2021 - 2023"
   ) +
   theme_minimal() +
   theme(
